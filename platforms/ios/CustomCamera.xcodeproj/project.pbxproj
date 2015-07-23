@@ -1,0 +1,886 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
+		301BF552109A68D80062928A /* libCordova.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 301BF535109A57CC0062928A /* libCordova.a */; };
+		305D5FD1115AB8F900A74A75 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 305D5FD0115AB8F900A74A75 /* MobileCoreServices.framework */; };
+		42C9C23318C150530084E231 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C9C22B18C150530084E231 /* AppDelegate.m */; };
+		42C9C23418C150530084E231 /* CustomCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C9C22D18C150530084E231 /* CustomCamera.m */; };
+		42C9C23518C150530084E231 /* CustomCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C9C22F18C150530084E231 /* CustomCameraViewController.m */; };
+		42C9C23618C150530084E231 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C9C23118C150530084E231 /* MainViewController.m */; };
+		42C9C23718C150530084E231 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42C9C23218C150530084E231 /* MainViewController.xib */; };
+		42C9C23A18C1506B0084E231 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 42C9C23918C1506B0084E231 /* main.m */; };
+		42C9C28C18C1511A0084E231 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 42C9C27018C1511A0084E231 /* Localizable.strings */; };
+		42C9C28D18C1511A0084E231 /* icon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 42C9C27518C1511A0084E231 /* icon-40.png */; };
+		42C9C28E18C1511A0084E231 /* icon-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42C9C27618C1511A0084E231 /* icon-40@2x.png */; };
+		42C9C28F18C1511A0084E231 /* icon-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 42C9C27718C1511A0084E231 /* icon-50.png */; };
+		42C9C29018C1511A0084E231 /* icon-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42C9C27818C1511A0084E231 /* icon-50@2x.png */; };
+		42C9C29118C1511A0084E231 /* icon-60.png in Resources */ = {isa = PBXBuildFile; fileRef = 42C9C27918C1511A0084E231 /* icon-60.png */; };
+		42C9C29218C1511A0084E231 /* icon-60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42C9C27A18C1511A0084E231 /* icon-60@2x.png */; };
+		42C9C29318C1511A0084E231 /* icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 42C9C27B18C1511A0084E231 /* icon-72.png */; };
+		42C9C29418C1511A0084E231 /* icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42C9C27C18C1511A0084E231 /* icon-72@2x.png */; };
+		42C9C29518C1511A0084E231 /* icon-76.png in Resources */ = {isa = PBXBuildFile; fileRef = 42C9C27D18C1511A0084E231 /* icon-76.png */; };
+		42C9C29618C1511A0084E231 /* icon-76@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42C9C27E18C1511A0084E231 /* icon-76@2x.png */; };
+		42C9C29718C1511A0084E231 /* icon-small.png in Resources */ = {isa = PBXBuildFile; fileRef = 42C9C27F18C1511A0084E231 /* icon-small.png */; };
+		42C9C29818C1511A0084E231 /* icon-small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42C9C28018C1511A0084E231 /* icon-small@2x.png */; };
+		42C9C29918C1511A0084E231 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 42C9C28118C1511A0084E231 /* icon.png */; };
+		42C9C29A18C1511A0084E231 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42C9C28218C1511A0084E231 /* icon@2x.png */; };
+		42C9C29B18C1511A0084E231 /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 42C9C28518C1511A0084E231 /* Default-568h@2x~iphone.png */; };
+		42C9C29C18C1511A0084E231 /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 42C9C28618C1511A0084E231 /* Default-Landscape@2x~ipad.png */; };
+		42C9C29D18C1511A0084E231 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 42C9C28718C1511A0084E231 /* Default-Landscape~ipad.png */; };
+		42C9C29E18C1511A0084E231 /* Default-Portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 42C9C28818C1511A0084E231 /* Default-Portrait@2x~ipad.png */; };
+		42C9C29F18C1511A0084E231 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 42C9C28918C1511A0084E231 /* Default-Portrait~ipad.png */; };
+		42C9C2A018C1511A0084E231 /* Default@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 42C9C28A18C1511A0084E231 /* Default@2x~iphone.png */; };
+		42C9C2A118C1511A0084E231 /* Default~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 42C9C28B18C1511A0084E231 /* Default~iphone.png */; };
+		5AEE5B35173C68D80009041E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AEE5B34173C68D80009041E /* CoreLocation.framework */; };
+		5B1594DD16A7569C00FEF299 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */; };
+		B77900B21B60C93E00E01518 /* UIImage+CameraFilters.m in Sources */ = {isa = PBXBuildFile; fileRef = B77900761B60C93E00E01518 /* UIImage+CameraFilters.m */; };
+		B77900B31B60C93E00E01518 /* TGCameraAuthorizationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B77900791B60C93E00E01518 /* TGCameraAuthorizationViewController.m */; };
+		B77900B41B60C93E00E01518 /* TGCameraNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = B779007B1B60C93E00E01518 /* TGCameraNavigationController.m */; };
+		B77900B51B60C93E00E01518 /* TGCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B779007D1B60C93E00E01518 /* TGCameraViewController.m */; };
+		B77900B61B60C93E00E01518 /* TGPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B779007F1B60C93E00E01518 /* TGPhotoViewController.m */; };
+		B77900B71B60C93E00E01518 /* TGAlbum.m in Sources */ = {isa = PBXBuildFile; fileRef = B77900821B60C93E00E01518 /* TGAlbum.m */; };
+		B77900B81B60C93E00E01518 /* TGAssetsLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = B77900841B60C93E00E01518 /* TGAssetsLibrary.m */; };
+		B77900B91B60C93E00E01518 /* TGCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = B77900861B60C93E00E01518 /* TGCamera.m */; };
+		B77900BA1B60C93E00E01518 /* TGCameraColor.m in Sources */ = {isa = PBXBuildFile; fileRef = B77900881B60C93E00E01518 /* TGCameraColor.m */; };
+		B77900BB1B60C93E00E01518 /* TGCameraFlash.m in Sources */ = {isa = PBXBuildFile; fileRef = B779008A1B60C93E00E01518 /* TGCameraFlash.m */; };
+		B77900BC1B60C93E00E01518 /* TGCameraFocus.m in Sources */ = {isa = PBXBuildFile; fileRef = B779008C1B60C93E00E01518 /* TGCameraFocus.m */; };
+		B77900BD1B60C93E00E01518 /* TGCameraGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = B779008F1B60C93E00E01518 /* TGCameraGrid.m */; };
+		B77900BE1B60C93E00E01518 /* TGCameraShot.m in Sources */ = {isa = PBXBuildFile; fileRef = B77900911B60C93E00E01518 /* TGCameraShot.m */; };
+		B77900BF1B60C93E00E01518 /* TGCameraToggle.m in Sources */ = {isa = PBXBuildFile; fileRef = B77900931B60C93E00E01518 /* TGCameraToggle.m */; };
+		B77900C01B60C93E00E01518 /* TGAssetImageFile.m in Sources */ = {isa = PBXBuildFile; fileRef = B77900961B60C93E00E01518 /* TGAssetImageFile.m */; };
+		B77900C11B60C93E00E01518 /* TGCameraFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = B77900991B60C93E00E01518 /* TGCameraFilterView.m */; };
+		B77900C21B60C93E00E01518 /* TGCameraFocusView.m in Sources */ = {isa = PBXBuildFile; fileRef = B779009B1B60C93E00E01518 /* TGCameraFocusView.m */; };
+		B77900C31B60C93E00E01518 /* TGCameraGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = B779009D1B60C93E00E01518 /* TGCameraGridView.m */; };
+		B77900C41B60C93E00E01518 /* TGCameraSlideDownView.m in Sources */ = {isa = PBXBuildFile; fileRef = B779009F1B60C93E00E01518 /* TGCameraSlideDownView.m */; };
+		B77900C51B60C93E00E01518 /* TGCameraSlideUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = B77900A11B60C93E00E01518 /* TGCameraSlideUpView.m */; };
+		B77900C61B60C93E00E01518 /* TGCameraSlideView.m in Sources */ = {isa = PBXBuildFile; fileRef = B77900A31B60C93E00E01518 /* TGCameraSlideView.m */; };
+		B77900C71B60C93E00E01518 /* TGTintedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B77900A51B60C93E00E01518 /* TGTintedButton.m */; };
+		B77900C81B60C93E00E01518 /* TGTintedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = B77900A71B60C93E00E01518 /* TGTintedLabel.m */; };
+		B77900C91B60C93E00E01518 /* TGCameraAuthorizationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B77900A91B60C93E00E01518 /* TGCameraAuthorizationViewController.xib */; };
+		B77900CA1B60C93E00E01518 /* TGCameraViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B77900AB1B60C93E00E01518 /* TGCameraViewController.xib */; };
+		B77900CB1B60C93E00E01518 /* TGPhotoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B77900AD1B60C93E00E01518 /* TGPhotoViewController.xib */; };
+		B77900CC1B60C93E00E01518 /* TGCameraViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B77900B01B60C93E00E01518 /* TGCameraViewController.bundle */; };
+		B77900CD1B60C93E00E01518 /* TGCameraViewController.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B77900B11B60C93E00E01518 /* TGCameraViewController.xcassets */; };
+		B77900CF1B60D56E00E01518 /* Reveal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77900CE1B60D56E00E01518 /* Reveal.framework */; };
+		B77900D11B60E3C400E01518 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B77900D01B60E3C400E01518 /* libz.dylib */; };
+		B77900D31B60E3CE00E01518 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77900D21B60E3CE00E01518 /* CFNetwork.framework */; };
+		B77900D51B60E3D500E01518 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77900D41B60E3D500E01518 /* QuartzCore.framework */; };
+		B77900D71B60E3F400E01518 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B77900D61B60E3F400E01518 /* CoreImage.framework */; };
+		F840E1F1165FE0F500CFE078 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = F840E1F0165FE0F500CFE078 /* config.xml */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		301BF534109A57CC0062928A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC07E0554694100DB518D;
+			remoteInfo = CordovaLib;
+		};
+		301BF550109A68C00062928A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC07D0554694100DB518D;
+			remoteInfo = CordovaLib;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1D6058910D05DD3D006BFB54 /* CustomCamera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CustomCamera.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CordovaLib.xcodeproj; path = CordovaLib/CordovaLib.xcodeproj; sourceTree = "<group>"; };
+		301BF56E109A69640062928A /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = SOURCE_ROOT; };
+		305D5FD0115AB8F900A74A75 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		425766C618BBDB3400559684 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		425766C818BBDB4F00559684 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		42C9C22A18C150530084E231 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = CustomCamera/Classes/AppDelegate.h; sourceTree = SOURCE_ROOT; };
+		42C9C22B18C150530084E231 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = CustomCamera/Classes/AppDelegate.m; sourceTree = SOURCE_ROOT; };
+		42C9C22C18C150530084E231 /* CustomCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomCamera.h; path = CustomCamera/Classes/CustomCamera.h; sourceTree = SOURCE_ROOT; };
+		42C9C22D18C150530084E231 /* CustomCamera.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomCamera.m; path = CustomCamera/Classes/CustomCamera.m; sourceTree = SOURCE_ROOT; };
+		42C9C22E18C150530084E231 /* CustomCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomCameraViewController.h; path = CustomCamera/Classes/CustomCameraViewController.h; sourceTree = SOURCE_ROOT; };
+		42C9C22F18C150530084E231 /* CustomCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomCameraViewController.m; path = CustomCamera/Classes/CustomCameraViewController.m; sourceTree = SOURCE_ROOT; };
+		42C9C23018C150530084E231 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = CustomCamera/Classes/MainViewController.h; sourceTree = SOURCE_ROOT; };
+		42C9C23118C150530084E231 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainViewController.m; path = CustomCamera/Classes/MainViewController.m; sourceTree = SOURCE_ROOT; };
+		42C9C23218C150530084E231 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MainViewController.xib; path = CustomCamera/Classes/MainViewController.xib; sourceTree = SOURCE_ROOT; };
+		42C9C23818C1506B0084E231 /* CustomCamera-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "CustomCamera-Prefix.pch"; path = "CustomCamera/CustomCamera-Prefix.pch"; sourceTree = SOURCE_ROOT; };
+		42C9C23918C1506B0084E231 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = CustomCamera/main.m; sourceTree = SOURCE_ROOT; };
+		42C9C27118C1511A0084E231 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		42C9C27218C1511A0084E231 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		42C9C27318C1511A0084E231 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		42C9C27518C1511A0084E231 /* icon-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-40.png"; sourceTree = "<group>"; };
+		42C9C27618C1511A0084E231 /* icon-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-40@2x.png"; sourceTree = "<group>"; };
+		42C9C27718C1511A0084E231 /* icon-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-50.png"; sourceTree = "<group>"; };
+		42C9C27818C1511A0084E231 /* icon-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-50@2x.png"; sourceTree = "<group>"; };
+		42C9C27918C1511A0084E231 /* icon-60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-60.png"; sourceTree = "<group>"; };
+		42C9C27A18C1511A0084E231 /* icon-60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-60@2x.png"; sourceTree = "<group>"; };
+		42C9C27B18C1511A0084E231 /* icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-72.png"; sourceTree = "<group>"; };
+		42C9C27C18C1511A0084E231 /* icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-72@2x.png"; sourceTree = "<group>"; };
+		42C9C27D18C1511A0084E231 /* icon-76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-76.png"; sourceTree = "<group>"; };
+		42C9C27E18C1511A0084E231 /* icon-76@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-76@2x.png"; sourceTree = "<group>"; };
+		42C9C27F18C1511A0084E231 /* icon-small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-small.png"; sourceTree = "<group>"; };
+		42C9C28018C1511A0084E231 /* icon-small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-small@2x.png"; sourceTree = "<group>"; };
+		42C9C28118C1511A0084E231 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		42C9C28218C1511A0084E231 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
+		42C9C28318C1511A0084E231 /* se */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = se; path = se.lproj/Localizable.strings; sourceTree = "<group>"; };
+		42C9C28518C1511A0084E231 /* Default-568h@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x~iphone.png"; sourceTree = "<group>"; };
+		42C9C28618C1511A0084E231 /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
+		42C9C28718C1511A0084E231 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
+		42C9C28818C1511A0084E231 /* Default-Portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait@2x~ipad.png"; sourceTree = "<group>"; };
+		42C9C28918C1511A0084E231 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = "<group>"; };
+		42C9C28A18C1511A0084E231 /* Default@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x~iphone.png"; sourceTree = "<group>"; };
+		42C9C28B18C1511A0084E231 /* Default~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default~iphone.png"; sourceTree = "<group>"; };
+		5AEE5B34173C68D80009041E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		B77900751B60C93E00E01518 /* UIImage+CameraFilters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+CameraFilters.h"; sourceTree = "<group>"; };
+		B77900761B60C93E00E01518 /* UIImage+CameraFilters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+CameraFilters.m"; sourceTree = "<group>"; };
+		B77900781B60C93E00E01518 /* TGCameraAuthorizationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGCameraAuthorizationViewController.h; sourceTree = "<group>"; };
+		B77900791B60C93E00E01518 /* TGCameraAuthorizationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGCameraAuthorizationViewController.m; sourceTree = "<group>"; };
+		B779007A1B60C93E00E01518 /* TGCameraNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGCameraNavigationController.h; sourceTree = "<group>"; };
+		B779007B1B60C93E00E01518 /* TGCameraNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGCameraNavigationController.m; sourceTree = "<group>"; };
+		B779007C1B60C93E00E01518 /* TGCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGCameraViewController.h; sourceTree = "<group>"; };
+		B779007D1B60C93E00E01518 /* TGCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGCameraViewController.m; sourceTree = "<group>"; };
+		B779007E1B60C93E00E01518 /* TGPhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGPhotoViewController.h; sourceTree = "<group>"; };
+		B779007F1B60C93E00E01518 /* TGPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGPhotoViewController.m; sourceTree = "<group>"; };
+		B77900811B60C93E00E01518 /* TGAlbum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGAlbum.h; sourceTree = "<group>"; };
+		B77900821B60C93E00E01518 /* TGAlbum.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGAlbum.m; sourceTree = "<group>"; };
+		B77900831B60C93E00E01518 /* TGAssetsLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGAssetsLibrary.h; sourceTree = "<group>"; };
+		B77900841B60C93E00E01518 /* TGAssetsLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGAssetsLibrary.m; sourceTree = "<group>"; };
+		B77900851B60C93E00E01518 /* TGCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGCamera.h; sourceTree = "<group>"; };
+		B77900861B60C93E00E01518 /* TGCamera.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGCamera.m; sourceTree = "<group>"; };
+		B77900871B60C93E00E01518 /* TGCameraColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGCameraColor.h; sourceTree = "<group>"; };
+		B77900881B60C93E00E01518 /* TGCameraColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGCameraColor.m; sourceTree = "<group>"; };
+		B77900891B60C93E00E01518 /* TGCameraFlash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGCameraFlash.h; sourceTree = "<group>"; };
+		B779008A1B60C93E00E01518 /* TGCameraFlash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGCameraFlash.m; sourceTree = "<group>"; };
+		B779008B1B60C93E00E01518 /* TGCameraFocus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGCameraFocus.h; sourceTree = "<group>"; };
+		B779008C1B60C93E00E01518 /* TGCameraFocus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGCameraFocus.m; sourceTree = "<group>"; };
+		B779008D1B60C93E00E01518 /* TGCameraFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGCameraFunctions.h; sourceTree = "<group>"; };
+		B779008E1B60C93E00E01518 /* TGCameraGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGCameraGrid.h; sourceTree = "<group>"; };
+		B779008F1B60C93E00E01518 /* TGCameraGrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGCameraGrid.m; sourceTree = "<group>"; };
+		B77900901B60C93E00E01518 /* TGCameraShot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGCameraShot.h; sourceTree = "<group>"; };
+		B77900911B60C93E00E01518 /* TGCameraShot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGCameraShot.m; sourceTree = "<group>"; };
+		B77900921B60C93E00E01518 /* TGCameraToggle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGCameraToggle.h; sourceTree = "<group>"; };
+		B77900931B60C93E00E01518 /* TGCameraToggle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGCameraToggle.m; sourceTree = "<group>"; };
+		B77900951B60C93E00E01518 /* TGAssetImageFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGAssetImageFile.h; sourceTree = "<group>"; };
+		B77900961B60C93E00E01518 /* TGAssetImageFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGAssetImageFile.m; sourceTree = "<group>"; };
+		B77900981B60C93E00E01518 /* TGCameraFilterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGCameraFilterView.h; sourceTree = "<group>"; };
+		B77900991B60C93E00E01518 /* TGCameraFilterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGCameraFilterView.m; sourceTree = "<group>"; };
+		B779009A1B60C93E00E01518 /* TGCameraFocusView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGCameraFocusView.h; sourceTree = "<group>"; };
+		B779009B1B60C93E00E01518 /* TGCameraFocusView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGCameraFocusView.m; sourceTree = "<group>"; };
+		B779009C1B60C93E00E01518 /* TGCameraGridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGCameraGridView.h; sourceTree = "<group>"; };
+		B779009D1B60C93E00E01518 /* TGCameraGridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGCameraGridView.m; sourceTree = "<group>"; };
+		B779009E1B60C93E00E01518 /* TGCameraSlideDownView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGCameraSlideDownView.h; sourceTree = "<group>"; };
+		B779009F1B60C93E00E01518 /* TGCameraSlideDownView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGCameraSlideDownView.m; sourceTree = "<group>"; };
+		B77900A01B60C93E00E01518 /* TGCameraSlideUpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGCameraSlideUpView.h; sourceTree = "<group>"; };
+		B77900A11B60C93E00E01518 /* TGCameraSlideUpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGCameraSlideUpView.m; sourceTree = "<group>"; };
+		B77900A21B60C93E00E01518 /* TGCameraSlideView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGCameraSlideView.h; sourceTree = "<group>"; };
+		B77900A31B60C93E00E01518 /* TGCameraSlideView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGCameraSlideView.m; sourceTree = "<group>"; };
+		B77900A41B60C93E00E01518 /* TGTintedButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGTintedButton.h; sourceTree = "<group>"; };
+		B77900A51B60C93E00E01518 /* TGTintedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGTintedButton.m; sourceTree = "<group>"; };
+		B77900A61B60C93E00E01518 /* TGTintedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGTintedLabel.h; sourceTree = "<group>"; };
+		B77900A71B60C93E00E01518 /* TGTintedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGTintedLabel.m; sourceTree = "<group>"; };
+		B77900AA1B60C93E00E01518 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TGCameraAuthorizationViewController.xib; sourceTree = "<group>"; };
+		B77900AC1B60C93E00E01518 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TGCameraViewController.xib; sourceTree = "<group>"; };
+		B77900AE1B60C93E00E01518 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TGPhotoViewController.xib; sourceTree = "<group>"; };
+		B77900B01B60C93E00E01518 /* TGCameraViewController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TGCameraViewController.bundle; sourceTree = "<group>"; };
+		B77900B11B60C93E00E01518 /* TGCameraViewController.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = TGCameraViewController.xcassets; sourceTree = "<group>"; };
+		B77900CE1B60D56E00E01518 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reveal.framework; sourceTree = "<group>"; };
+		B77900D01B60E3C400E01518 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		B77900D21B60E3CE00E01518 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		B77900D41B60E3D500E01518 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		B77900D61B60E3F400E01518 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = CustomCamera/config.xml; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1D60588F0D05DD3D006BFB54 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B77900D71B60E3F400E01518 /* CoreImage.framework in Frameworks */,
+				B77900D51B60E3D500E01518 /* QuartzCore.framework in Frameworks */,
+				B77900D31B60E3CE00E01518 /* CFNetwork.framework in Frameworks */,
+				B77900D11B60E3C400E01518 /* libz.dylib in Frameworks */,
+				5B1594DD16A7569C00FEF299 /* AssetsLibrary.framework in Frameworks */,
+				B77900CF1B60D56E00E01518 /* Reveal.framework in Frameworks */,
+				301BF552109A68D80062928A /* libCordova.a in Frameworks */,
+				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
+				305D5FD1115AB8F900A74A75 /* MobileCoreServices.framework in Frameworks */,
+				5AEE5B35173C68D80009041E /* CoreLocation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				B77900721B60C93E00E01518 /* TGCameraViewController */,
+				42C9C22A18C150530084E231 /* AppDelegate.h */,
+				42C9C22B18C150530084E231 /* AppDelegate.m */,
+				42C9C22C18C150530084E231 /* CustomCamera.h */,
+				42C9C22D18C150530084E231 /* CustomCamera.m */,
+				42C9C22E18C150530084E231 /* CustomCameraViewController.h */,
+				42C9C22F18C150530084E231 /* CustomCameraViewController.m */,
+				42C9C23018C150530084E231 /* MainViewController.h */,
+				42C9C23118C150530084E231 /* MainViewController.m */,
+				42C9C23218C150530084E231 /* MainViewController.xib */,
+			);
+			name = Classes;
+			path = CustomCamera/Classes;
+			sourceTree = SOURCE_ROOT;
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1D6058910D05DD3D006BFB54 /* CustomCamera.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
+			isa = PBXGroup;
+			children = (
+				080E96DDFE201D6D7F000001 /* Classes */,
+				F840E1F0165FE0F500CFE078 /* config.xml */,
+				301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				307C750510C5A3420062BCA9 /* Plugins */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+				42C9C26F18C1511A0084E231 /* Resources */,
+				301BF56E109A69640062928A /* www */,
+			);
+			name = CustomTemplate;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				42C9C23818C1506B0084E231 /* CustomCamera-Prefix.pch */,
+				42C9C23918C1506B0084E231 /* main.m */,
+			);
+			name = "Other Sources";
+			path = CustomCamera;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B77900D61B60E3F400E01518 /* CoreImage.framework */,
+				B77900D41B60E3D500E01518 /* QuartzCore.framework */,
+				B77900D21B60E3CE00E01518 /* CFNetwork.framework */,
+				B77900D01B60E3C400E01518 /* libz.dylib */,
+				B77900CE1B60D56E00E01518 /* Reveal.framework */,
+				425766C818BBDB4F00559684 /* AVFoundation.framework */,
+				425766C618BBDB3400559684 /* CoreMedia.framework */,
+				5AEE5B34173C68D80009041E /* CoreLocation.framework */,
+				5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */,
+				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
+				305D5FD0115AB8F900A74A75 /* MobileCoreServices.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		301BF52E109A57CC0062928A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				301BF535109A57CC0062928A /* libCordova.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		307C750510C5A3420062BCA9 /* Plugins */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Plugins;
+			path = CustomCamera/Plugins;
+			sourceTree = SOURCE_ROOT;
+		};
+		42C9C26F18C1511A0084E231 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				42C9C27018C1511A0084E231 /* Localizable.strings */,
+				42C9C27418C1511A0084E231 /* icons */,
+				42C9C28418C1511A0084E231 /* splash */,
+			);
+			name = Resources;
+			path = CustomCamera/Resources;
+			sourceTree = "<group>";
+		};
+		42C9C27418C1511A0084E231 /* icons */ = {
+			isa = PBXGroup;
+			children = (
+				42C9C27518C1511A0084E231 /* icon-40.png */,
+				42C9C27618C1511A0084E231 /* icon-40@2x.png */,
+				42C9C27718C1511A0084E231 /* icon-50.png */,
+				42C9C27818C1511A0084E231 /* icon-50@2x.png */,
+				42C9C27918C1511A0084E231 /* icon-60.png */,
+				42C9C27A18C1511A0084E231 /* icon-60@2x.png */,
+				42C9C27B18C1511A0084E231 /* icon-72.png */,
+				42C9C27C18C1511A0084E231 /* icon-72@2x.png */,
+				42C9C27D18C1511A0084E231 /* icon-76.png */,
+				42C9C27E18C1511A0084E231 /* icon-76@2x.png */,
+				42C9C27F18C1511A0084E231 /* icon-small.png */,
+				42C9C28018C1511A0084E231 /* icon-small@2x.png */,
+				42C9C28118C1511A0084E231 /* icon.png */,
+				42C9C28218C1511A0084E231 /* icon@2x.png */,
+			);
+			path = icons;
+			sourceTree = "<group>";
+		};
+		42C9C28418C1511A0084E231 /* splash */ = {
+			isa = PBXGroup;
+			children = (
+				42C9C28518C1511A0084E231 /* Default-568h@2x~iphone.png */,
+				42C9C28618C1511A0084E231 /* Default-Landscape@2x~ipad.png */,
+				42C9C28718C1511A0084E231 /* Default-Landscape~ipad.png */,
+				42C9C28818C1511A0084E231 /* Default-Portrait@2x~ipad.png */,
+				42C9C28918C1511A0084E231 /* Default-Portrait~ipad.png */,
+				42C9C28A18C1511A0084E231 /* Default@2x~iphone.png */,
+				42C9C28B18C1511A0084E231 /* Default~iphone.png */,
+			);
+			path = splash;
+			sourceTree = "<group>";
+		};
+		B77900721B60C93E00E01518 /* TGCameraViewController */ = {
+			isa = PBXGroup;
+			children = (
+				B77900731B60C93E00E01518 /* Classes */,
+				B77900AF1B60C93E00E01518 /* Resources */,
+				B77900B11B60C93E00E01518 /* TGCameraViewController.xcassets */,
+			);
+			path = TGCameraViewController;
+			sourceTree = "<group>";
+		};
+		B77900731B60C93E00E01518 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				B77900741B60C93E00E01518 /* Category */,
+				B77900771B60C93E00E01518 /* Control */,
+				B77900801B60C93E00E01518 /* Helper */,
+				B77900941B60C93E00E01518 /* Model */,
+				B77900971B60C93E00E01518 /* UI */,
+				B77900A81B60C93E00E01518 /* View */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		B77900741B60C93E00E01518 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				B77900751B60C93E00E01518 /* UIImage+CameraFilters.h */,
+				B77900761B60C93E00E01518 /* UIImage+CameraFilters.m */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
+		B77900771B60C93E00E01518 /* Control */ = {
+			isa = PBXGroup;
+			children = (
+				B77900781B60C93E00E01518 /* TGCameraAuthorizationViewController.h */,
+				B77900791B60C93E00E01518 /* TGCameraAuthorizationViewController.m */,
+				B779007A1B60C93E00E01518 /* TGCameraNavigationController.h */,
+				B779007B1B60C93E00E01518 /* TGCameraNavigationController.m */,
+				B779007C1B60C93E00E01518 /* TGCameraViewController.h */,
+				B779007D1B60C93E00E01518 /* TGCameraViewController.m */,
+				B779007E1B60C93E00E01518 /* TGPhotoViewController.h */,
+				B779007F1B60C93E00E01518 /* TGPhotoViewController.m */,
+			);
+			path = Control;
+			sourceTree = "<group>";
+		};
+		B77900801B60C93E00E01518 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				B77900811B60C93E00E01518 /* TGAlbum.h */,
+				B77900821B60C93E00E01518 /* TGAlbum.m */,
+				B77900831B60C93E00E01518 /* TGAssetsLibrary.h */,
+				B77900841B60C93E00E01518 /* TGAssetsLibrary.m */,
+				B77900851B60C93E00E01518 /* TGCamera.h */,
+				B77900861B60C93E00E01518 /* TGCamera.m */,
+				B77900871B60C93E00E01518 /* TGCameraColor.h */,
+				B77900881B60C93E00E01518 /* TGCameraColor.m */,
+				B77900891B60C93E00E01518 /* TGCameraFlash.h */,
+				B779008A1B60C93E00E01518 /* TGCameraFlash.m */,
+				B779008B1B60C93E00E01518 /* TGCameraFocus.h */,
+				B779008C1B60C93E00E01518 /* TGCameraFocus.m */,
+				B779008D1B60C93E00E01518 /* TGCameraFunctions.h */,
+				B779008E1B60C93E00E01518 /* TGCameraGrid.h */,
+				B779008F1B60C93E00E01518 /* TGCameraGrid.m */,
+				B77900901B60C93E00E01518 /* TGCameraShot.h */,
+				B77900911B60C93E00E01518 /* TGCameraShot.m */,
+				B77900921B60C93E00E01518 /* TGCameraToggle.h */,
+				B77900931B60C93E00E01518 /* TGCameraToggle.m */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
+		B77900941B60C93E00E01518 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B77900951B60C93E00E01518 /* TGAssetImageFile.h */,
+				B77900961B60C93E00E01518 /* TGAssetImageFile.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		B77900971B60C93E00E01518 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				B77900981B60C93E00E01518 /* TGCameraFilterView.h */,
+				B77900991B60C93E00E01518 /* TGCameraFilterView.m */,
+				B779009A1B60C93E00E01518 /* TGCameraFocusView.h */,
+				B779009B1B60C93E00E01518 /* TGCameraFocusView.m */,
+				B779009C1B60C93E00E01518 /* TGCameraGridView.h */,
+				B779009D1B60C93E00E01518 /* TGCameraGridView.m */,
+				B779009E1B60C93E00E01518 /* TGCameraSlideDownView.h */,
+				B779009F1B60C93E00E01518 /* TGCameraSlideDownView.m */,
+				B77900A01B60C93E00E01518 /* TGCameraSlideUpView.h */,
+				B77900A11B60C93E00E01518 /* TGCameraSlideUpView.m */,
+				B77900A21B60C93E00E01518 /* TGCameraSlideView.h */,
+				B77900A31B60C93E00E01518 /* TGCameraSlideView.m */,
+				B77900A41B60C93E00E01518 /* TGTintedButton.h */,
+				B77900A51B60C93E00E01518 /* TGTintedButton.m */,
+				B77900A61B60C93E00E01518 /* TGTintedLabel.h */,
+				B77900A71B60C93E00E01518 /* TGTintedLabel.m */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		B77900A81B60C93E00E01518 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B77900A91B60C93E00E01518 /* TGCameraAuthorizationViewController.xib */,
+				B77900AB1B60C93E00E01518 /* TGCameraViewController.xib */,
+				B77900AD1B60C93E00E01518 /* TGPhotoViewController.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		B77900AF1B60C93E00E01518 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B77900B01B60C93E00E01518 /* TGCameraViewController.bundle */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1D6058900D05DD3D006BFB54 /* CustomCamera */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "CustomCamera" */;
+			buildPhases = (
+				304B58A110DAC018002A0835 /* Copy www directory */,
+				1D60588D0D05DD3D006BFB54 /* Resources */,
+				1D60588E0D05DD3D006BFB54 /* Sources */,
+				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				301BF551109A68C00062928A /* PBXTargetDependency */,
+			);
+			name = CustomCamera;
+			productName = CustomCamera;
+			productReference = 1D6058910D05DD3D006BFB54 /* CustomCamera.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 500;
+			};
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "CustomCamera" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+				en,
+				es,
+				de,
+				se,
+				Base,
+			);
+			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 301BF52E109A57CC0062928A /* Products */;
+					ProjectRef = 301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				1D6058900D05DD3D006BFB54 /* CustomCamera */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		301BF535109A57CC0062928A /* libCordova.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libCordova.a;
+			remoteRef = 301BF534109A57CC0062928A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1D60588D0D05DD3D006BFB54 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B77900CC1B60C93E00E01518 /* TGCameraViewController.bundle in Resources */,
+				B77900CA1B60C93E00E01518 /* TGCameraViewController.xib in Resources */,
+				42C9C29818C1511A0084E231 /* icon-small@2x.png in Resources */,
+				B77900CB1B60C93E00E01518 /* TGPhotoViewController.xib in Resources */,
+				42C9C29018C1511A0084E231 /* icon-50@2x.png in Resources */,
+				42C9C2A018C1511A0084E231 /* Default@2x~iphone.png in Resources */,
+				42C9C29418C1511A0084E231 /* icon-72@2x.png in Resources */,
+				42C9C29E18C1511A0084E231 /* Default-Portrait@2x~ipad.png in Resources */,
+				B77900CD1B60C93E00E01518 /* TGCameraViewController.xcassets in Resources */,
+				42C9C29A18C1511A0084E231 /* icon@2x.png in Resources */,
+				42C9C28D18C1511A0084E231 /* icon-40.png in Resources */,
+				42C9C29918C1511A0084E231 /* icon.png in Resources */,
+				42C9C29118C1511A0084E231 /* icon-60.png in Resources */,
+				42C9C29B18C1511A0084E231 /* Default-568h@2x~iphone.png in Resources */,
+				B77900C91B60C93E00E01518 /* TGCameraAuthorizationViewController.xib in Resources */,
+				42C9C29618C1511A0084E231 /* icon-76@2x.png in Resources */,
+				42C9C2A118C1511A0084E231 /* Default~iphone.png in Resources */,
+				F840E1F1165FE0F500CFE078 /* config.xml in Resources */,
+				42C9C29518C1511A0084E231 /* icon-76.png in Resources */,
+				42C9C28C18C1511A0084E231 /* Localizable.strings in Resources */,
+				42C9C29C18C1511A0084E231 /* Default-Landscape@2x~ipad.png in Resources */,
+				42C9C29318C1511A0084E231 /* icon-72.png in Resources */,
+				42C9C29D18C1511A0084E231 /* Default-Landscape~ipad.png in Resources */,
+				42C9C23718C150530084E231 /* MainViewController.xib in Resources */,
+				42C9C29718C1511A0084E231 /* icon-small.png in Resources */,
+				42C9C29218C1511A0084E231 /* icon-60@2x.png in Resources */,
+				42C9C29F18C1511A0084E231 /* Default-Portrait~ipad.png in Resources */,
+				42C9C28E18C1511A0084E231 /* icon-40@2x.png in Resources */,
+				42C9C28F18C1511A0084E231 /* icon-50.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		304B58A110DAC018002A0835 /* Copy www directory */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy www directory";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cordova/lib/copy-www-build-step.sh";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1D60588E0D05DD3D006BFB54 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				42C9C23A18C1506B0084E231 /* main.m in Sources */,
+				B77900C51B60C93E00E01518 /* TGCameraSlideUpView.m in Sources */,
+				B77900C31B60C93E00E01518 /* TGCameraGridView.m in Sources */,
+				B77900B91B60C93E00E01518 /* TGCamera.m in Sources */,
+				B77900B41B60C93E00E01518 /* TGCameraNavigationController.m in Sources */,
+				42C9C23318C150530084E231 /* AppDelegate.m in Sources */,
+				B77900C11B60C93E00E01518 /* TGCameraFilterView.m in Sources */,
+				B77900B21B60C93E00E01518 /* UIImage+CameraFilters.m in Sources */,
+				42C9C23518C150530084E231 /* CustomCameraViewController.m in Sources */,
+				B77900C21B60C93E00E01518 /* TGCameraFocusView.m in Sources */,
+				B77900BB1B60C93E00E01518 /* TGCameraFlash.m in Sources */,
+				B77900C41B60C93E00E01518 /* TGCameraSlideDownView.m in Sources */,
+				B77900B51B60C93E00E01518 /* TGCameraViewController.m in Sources */,
+				B77900C81B60C93E00E01518 /* TGTintedLabel.m in Sources */,
+				B77900B61B60C93E00E01518 /* TGPhotoViewController.m in Sources */,
+				B77900BE1B60C93E00E01518 /* TGCameraShot.m in Sources */,
+				B77900B31B60C93E00E01518 /* TGCameraAuthorizationViewController.m in Sources */,
+				B77900BA1B60C93E00E01518 /* TGCameraColor.m in Sources */,
+				42C9C23618C150530084E231 /* MainViewController.m in Sources */,
+				B77900B71B60C93E00E01518 /* TGAlbum.m in Sources */,
+				42C9C23418C150530084E231 /* CustomCamera.m in Sources */,
+				B77900BD1B60C93E00E01518 /* TGCameraGrid.m in Sources */,
+				B77900BC1B60C93E00E01518 /* TGCameraFocus.m in Sources */,
+				B77900B81B60C93E00E01518 /* TGAssetsLibrary.m in Sources */,
+				B77900BF1B60C93E00E01518 /* TGCameraToggle.m in Sources */,
+				B77900C71B60C93E00E01518 /* TGTintedButton.m in Sources */,
+				B77900C61B60C93E00E01518 /* TGCameraSlideView.m in Sources */,
+				B77900C01B60C93E00E01518 /* TGAssetImageFile.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		301BF551109A68C00062928A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CordovaLib;
+			targetProxy = 301BF550109A68C00062928A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		42C9C27018C1511A0084E231 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				42C9C27118C1511A0084E231 /* de */,
+				42C9C27218C1511A0084E231 /* en */,
+				42C9C27318C1511A0084E231 /* es */,
+				42C9C28318C1511A0084E231 /* se */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		B77900A91B60C93E00E01518 /* TGCameraAuthorizationViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B77900AA1B60C93E00E01518 /* Base */,
+			);
+			name = TGCameraAuthorizationViewController.xib;
+			sourceTree = "<group>";
+		};
+		B77900AB1B60C93E00E01518 /* TGCameraViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B77900AC1B60C93E00E01518 /* Base */,
+			);
+			name = TGCameraViewController.xib;
+			sourceTree = "<group>";
+		};
+		B77900AD1B60C93E00E01518 /* TGPhotoViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B77900AE1B60C93E00E01518 /* Base */,
+			);
+			name = TGPhotoViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1D6058940D05DD3E006BFB54 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SYSTEM_APPS_DIR)/Reveal.app/Contents/SharedSupport/iOS-Libraries",
+					"$(PROJECT_DIR)",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CustomCamera/CustomCamera-Prefix.pch";
+				GCC_THUMB_SUPPORT = NO;
+				GCC_VERSION = "";
+				INFOPLIST_FILE = "CustomCamera/CustomCamera-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = (
+					"-weak_framework",
+					CoreFoundation,
+					"-weak_framework",
+					UIKit,
+					"-weak_framework",
+					AVFoundation,
+					"-weak_framework",
+					CoreMedia,
+					"-weak-lSystem",
+					"-force_load",
+					"\"$(BUILT_PRODUCTS_DIR)/libCordova.a\"",
+					"-ObjC",
+				);
+				PRODUCT_NAME = CustomCamera;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "$(ARCHS_STANDARD)";
+			};
+			name = Debug;
+		};
+		1D6058950D05DD3E006BFB54 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SYSTEM_APPS_DIR)/Reveal.app/Contents/SharedSupport/iOS-Libraries",
+					"$(PROJECT_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CustomCamera/CustomCamera-Prefix.pch";
+				GCC_THUMB_SUPPORT = NO;
+				GCC_VERSION = "";
+				INFOPLIST_FILE = "CustomCamera/CustomCamera-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = (
+					"-weak_framework",
+					CoreFoundation,
+					"-weak_framework",
+					UIKit,
+					"-weak_framework",
+					AVFoundation,
+					"-weak_framework",
+					CoreMedia,
+					"-weak-lSystem",
+					"-force_load",
+					"\"$(BUILT_PRODUCTS_DIR)/libCordova.a\"",
+					"-ObjC",
+				);
+				PRODUCT_NAME = CustomCamera;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "$(ARCHS_STANDARD)";
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_THUMB_SUPPORT = NO;
+				GCC_VERSION = "";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"\"$(TARGET_BUILD_DIR)/usr/local/lib/include\"",
+					"\"$(OBJROOT)/UninstalledProducts/include\"",
+					"\"$(BUILT_PRODUCTS_DIR)\"",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"-weak_framework",
+					CoreFoundation,
+					"-weak_framework",
+					UIKit,
+					"-weak_framework",
+					AVFoundation,
+					"-weak_framework",
+					CoreMedia,
+					"-weak-lSystem",
+					"-force_load",
+					"\"$(BUILT_PRODUCTS_DIR)/libCordova.a\"",
+					"-ObjC",
+				);
+				PRODUCT_NAME = CustomCamera;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = NO;
+				USER_HEADER_SEARCH_PATHS = "";
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_THUMB_SUPPORT = NO;
+				GCC_VERSION = "";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"\"$(TARGET_BUILD_DIR)/usr/local/lib/include\"",
+					"\"$(OBJROOT)/UninstalledProducts/include\"",
+					"\"$(BUILT_PRODUCTS_DIR)\"",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_LDFLAGS = (
+					"-weak_framework",
+					CoreFoundation,
+					"-weak_framework",
+					UIKit,
+					"-weak_framework",
+					AVFoundation,
+					"-weak_framework",
+					CoreMedia,
+					"-weak-lSystem",
+					"-force_load",
+					"\"$(BUILT_PRODUCTS_DIR)/libCordova.a\"",
+					"-ObjC",
+				);
+				PRODUCT_NAME = CustomCamera;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = NO;
+				USER_HEADER_SEARCH_PATHS = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "CustomCamera" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D6058940D05DD3E006BFB54 /* Debug */,
+				1D6058950D05DD3E006BFB54 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "CustomCamera" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}
