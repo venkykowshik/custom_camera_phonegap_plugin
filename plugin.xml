@@ -42,14 +42,14 @@
      <header-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/Helper/TGCameraShot.h"/>
      <header-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/Helper/TGCameraToggle.h"/>
      <header-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/Model/TGAssetImageFile.h">
-     <header-file src=platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/UI/TGCameraFilterView.h"">
-     <header-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/UI/TGCameraFocusView.h">
+     <header-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/UI/TGCameraFilterView.h" />
+     <header-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/UI/TGCameraFocusView.h" />
      <header-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/UI/TGCameraGridView.h">
-     <header-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/UI/TGCameraSlideDownView.h">
-     <header-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/UI/TGCameraSlideUpView.h">
-     <header-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/UI/TGCameraSlideView.h">
-     <header-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/UI/TGTintedButton.h">
-     <header-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/UI/TGTintedLabel.h">
+     <header-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/UI/TGCameraSlideDownView.h" />
+     <header-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/UI/TGCameraSlideUpView.h" />
+     <header-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/UI/TGCameraSlideView.h" />
+     <header-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/UI/TGTintedButton.h" />
+     <header-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/UI/TGTintedLabel.h" />
     
     <source-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/Category/UIImage+CameraFilters.m"/>
     <source-file src="platforms/ios/CustomCamera/Classes/CustomCamera.m" />
@@ -58,24 +58,24 @@
     <source-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/Control/TGCameraNavigationController.m"/>
     <source-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/Control/TGCameraViewController.m"/>
     <source-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/Control/TGPhotoViewController.m"/>
-    <source-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/Helper/TGAlbum.m">
-    <source-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/Helper/TGAssetsLibrary.m">
-    <source-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/Helper/TGCamera.m">
-    <source-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/Helper/TGCameraColor.m">
-    <source-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/Helper/TGCameraFlash.m">
-    <source-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/Helper/TGCameraFocus.m">
-    <source-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/Helper/TGCameraGrid.m">
-    <source-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/Helper/TGCameraShot.m">
-    <source-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/Helper/TGCameraToggle.m">
-    <source-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/Model/TGAssetImageFile.m">
-    <source-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/UI/TGCameraFilterView.m">
-    <source-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/UI/TGCameraFocusView.m">
-    <source-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/UI/TGCameraGridView.m">
-    <source-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/UI/TGCameraSlideDownView.m">
-    <source-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/UI/TGCameraSlideUpView.m">
-    <source-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/UI/TGCameraSlideView.m">
-    <source-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/UI/TGTintedButton.m">
-    <source-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/UI/TGTintedLabel.m">
+    <source-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/Helper/TGAlbum.m" />
+    <source-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/Helper/TGAssetsLibrary.m" />
+    <source-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/Helper/TGCamera.m" />
+    <source-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/Helper/TGCameraColor.m" />
+    <source-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/Helper/TGCameraFlash.m" />
+    <source-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/Helper/TGCameraFocus.m" />
+    <source-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/Helper/TGCameraGrid.m" />
+    <source-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/Helper/TGCameraShot.m" />
+    <source-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/Helper/TGCameraToggle.m" />
+    <source-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/Model/TGAssetImageFile.m" />
+    <source-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/UI/TGCameraFilterView.m" />
+    <source-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/UI/TGCameraFocusView.m" />
+    <source-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/UI/TGCameraGridView.m" />
+    <source-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/UI/TGCameraSlideDownView.m" />
+    <source-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/UI/TGCameraSlideUpView.m" />
+    <source-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/UI/TGCameraSlideView.m" />
+    <source-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/UI/TGTintedButton.m" />
+    <source-file src="platforms/ios/CustomCamera/Classes/TGCameraViewController/Classes/UI/TGTintedLabel.m" />
     
 </platform>
 
