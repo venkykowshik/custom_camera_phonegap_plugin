@@ -2,6 +2,7 @@
 package com.performanceactive.plugins.camera;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -18,11 +19,11 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
+import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -34,11 +35,12 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.List;
 
+
 import static android.hardware.Camera.Parameters.FLASH_MODE_OFF;
 import static android.hardware.Camera.Parameters.FOCUS_MODE_AUTO;
 import static android.hardware.Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE;
 
-public class CustomCameraActivity extends Activity {
+public class CustomCameraActivity extends Fragment {
 
     private static final String TAG = CustomCameraActivity.class.getSimpleName();
     private static final float ASPECT_RATIO = 126.0f / 86;
@@ -61,7 +63,7 @@ public class CustomCameraActivity extends Activity {
     private ImageButton captureButton;
 
     @Override
-    protected void onResume() {
+	public void onResume() {
         super.onResume();
         try {
             camera = Camera.open();
@@ -87,11 +89,11 @@ public class CustomCameraActivity extends Activity {
 
     private void displayCameraPreview() {
         cameraPreviewView.removeAllViews();
-        cameraPreviewView.addView(new CustomCameraPreview(this, camera));
+        cameraPreviewView.addView(new CustomCameraPreview(getActivity(), camera));
     }
 
     @Override
-    protected void onPause() {
+	public void onPause() {
         super.onPause();
         releaseCamera();
     }
@@ -103,33 +105,55 @@ public class CustomCameraActivity extends Activity {
         }
     }
 
+//    @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        getActivity().requestWindowFeature(Window.FEATURE_NO_TITLE);
+////        layout = new RelativeLayout(this);
+////        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+////        layout.setLayoutParams(layoutParams);
+//        createCameraPreview();
+//        createTopLeftBorder();
+//        createTopRightBorder();
+//        createBottomLeftBorder();
+//        createBottomRightBorder();
+//        layoutBottomBorderImagesRespectingAspectRatio();
+//        createCaptureButton();
+//        setContentView(layout);
+//    }
+    
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        layout = new RelativeLayout(this);
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-        layout.setLayoutParams(layoutParams);
-        createCameraPreview();
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    		Bundle savedInstanceState) {
+    	View view = inflater
+				.inflate(R.layout.fragment_camera, container, false);
+    	 getActivity().requestWindowFeature(Window.FEATURE_NO_TITLE);
+    	 
+    	 cameraPreviewView = (FrameLayout) view.findViewById(R.id.camera_preview);
+    	 captureButton = (ImageButton) view.findViewById(R.id.button_capture);
+    	 
+    	createCameraPreview();
         createTopLeftBorder();
         createTopRightBorder();
         createBottomLeftBorder();
         createBottomRightBorder();
         layoutBottomBorderImagesRespectingAspectRatio();
         createCaptureButton();
-        setContentView(layout);
+    	return view;
     }
+    
+    
 
     private void createCameraPreview() {
-        cameraPreviewView = new FrameLayout(this);
-        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-        cameraPreviewView.setLayoutParams(layoutParams);
+//        cameraPreviewView = new FrameLayout(this);
+//        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+//        cameraPreviewView.setLayoutParams(layoutParams);
         layout.addView(cameraPreviewView);
     }
 
     private void createTopLeftBorder() {
-        borderTopLeft = new ImageView(this);
+        borderTopLeft = new ImageView(getActivity());
         setBitmap(borderTopLeft, "border_top_left.png");
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(dpToPixels(50), dpToPixels(50));
         layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
@@ -149,7 +173,7 @@ public class CustomCameraActivity extends Activity {
     }
 
     private void createTopRightBorder() {
-        borderTopRight = new ImageView(this);
+        borderTopRight = new ImageView(getActivity());
         setBitmap(borderTopRight, "border_top_right.png");
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(dpToPixels(50), dpToPixels(50));
         layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
@@ -169,7 +193,7 @@ public class CustomCameraActivity extends Activity {
     }
 
     private void createBottomLeftBorder() {
-        borderBottomLeft = new ImageView(this);
+        borderBottomLeft = new ImageView(getActivity());
         setBitmap(borderBottomLeft, "border_bottom_left.png");
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(dpToPixels(50), dpToPixels(50));
         layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
@@ -186,7 +210,7 @@ public class CustomCameraActivity extends Activity {
     }
 
     private void createBottomRightBorder() {
-        borderBottomRight = new ImageView(this);
+        borderBottomRight = new ImageView(getActivity());
         setBitmap(borderBottomRight, "border_bottom_right.png");
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(dpToPixels(50), dpToPixels(50));
         layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
@@ -216,18 +240,17 @@ public class CustomCameraActivity extends Activity {
 
     private int screenWidthInPixels() {
         Point size = new Point();
-        getWindowManager().getDefaultDisplay().getSize(size);
+        getActivity().getWindowManager().getDefaultDisplay().getSize(size);
         return size.x;
     }
 
     private int screenHeightInPixels() {
         Point size = new Point();
-        getWindowManager().getDefaultDisplay().getSize(size);
+        getActivity().getWindowManager().getDefaultDisplay().getSize(size);
         return size.y;
     }
 
     private void createCaptureButton() {
-        captureButton = new ImageButton(getApplicationContext());
         setBitmap(captureButton, "capture_button.png");
         captureButton.setBackgroundColor(Color.TRANSPARENT);
         captureButton.setScaleType(ScaleType.FIT_CENTER);
@@ -261,7 +284,7 @@ public class CustomCameraActivity extends Activity {
     }
 
     private void takePictureWithAutoFocus() {
-        if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_AUTOFOCUS)) {
+        if (getActivity().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_AUTOFOCUS)) {
             camera.autoFocus(new AutoFocusCallback() {
                 @Override
                 public void onAutoFocus(boolean success, Camera camera) {
@@ -291,16 +314,16 @@ public class CustomCameraActivity extends Activity {
         @Override
         protected Void doInBackground(byte[]... jpegData) {
             try {
-                String filename = getIntent().getStringExtra(FILENAME);
-                int quality = getIntent().getIntExtra(QUALITY, 80);
-                File capturedImageFile = new File(getCacheDir(), filename);
+                String filename = getActivity().getIntent().getStringExtra(FILENAME);
+                int quality = getActivity().getIntent().getIntExtra(QUALITY, 80);
+                File capturedImageFile = new File(getActivity().getCacheDir(), filename);
                 Bitmap capturedImage = getScaledBitmap(jpegData[0]);
                 capturedImage = correctCaptureImageOrientation(capturedImage);
                 capturedImage.compress(CompressFormat.JPEG, quality, new FileOutputStream(capturedImageFile));
                 Intent data = new Intent();
                 data.putExtra(IMAGE_URI, Uri.fromFile(capturedImageFile).toString());
-                setResult(RESULT_OK, data);
-                finish();
+                getActivity().setResult(Activity.RESULT_OK, data);
+                getActivity().finish();
             } catch (Exception e) {
                 finishWithError("Failed to save image");
             }
@@ -310,8 +333,8 @@ public class CustomCameraActivity extends Activity {
     }
 
     private Bitmap getScaledBitmap(byte[] jpegData) {
-        int targetWidth = getIntent().getIntExtra(TARGET_WIDTH, -1);
-        int targetHeight = getIntent().getIntExtra(TARGET_HEIGHT, -1);
+        int targetWidth = getActivity().getIntent().getIntExtra(TARGET_WIDTH, -1);
+        int targetHeight = getActivity().getIntent().getIntExtra(TARGET_HEIGHT, -1);
         if (targetWidth <= 0 && targetHeight <= 0) {
             return BitmapFactory.decodeByteArray(jpegData, 0, jpegData.length);
         }
@@ -362,8 +385,8 @@ public class CustomCameraActivity extends Activity {
 
     private void finishWithError(String message) {
         Intent data = new Intent().putExtra(ERROR_MESSAGE, message);
-        setResult(RESULT_ERROR, data);
-        finish();
+        getActivity().setResult(RESULT_ERROR, data);
+        getActivity().finish();
     }
 
     private int dpToPixels(int dp) {
@@ -383,7 +406,7 @@ public class CustomCameraActivity extends Activity {
 
     private void setBitmap(ImageView imageView, String imageName) {
         try {
-            InputStream imageStream = getAssets().open("www/img/cameraoverlay/" + imageName);
+            InputStream imageStream = getActivity().getAssets().open("www/img/cameraoverlay/" + imageName);
             Bitmap bitmap = BitmapFactory.decodeStream(imageStream);
             imageView.setImageBitmap(bitmap);
             imageStream.close();
