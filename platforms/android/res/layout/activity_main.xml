@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/fragment_place"
-        android:name="com.javacodegeeks.android.fragmentstest.FragmentCamera"
+       android:name="com.performanceactive.plugins.camera.CustomCameraActivity"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_above="@+id/ll" />
