@@ -1,4 +1,3 @@
-
 package com.performanceactive.plugins.camera;
 
 import static android.hardware.Camera.Parameters.FOCUS_MODE_AUTO;
@@ -29,7 +28,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 public class CustomCameraActivity extends Activity {
@@ -43,7 +41,7 @@ public class CustomCameraActivity extends Activity {
     public static String ERROR_MESSAGE = "ErrorMessage";
 
     private Camera camera;
-    private LinearLayout layout;
+    private RelativeLayout layout;
     private FrameLayout cameraPreviewView;
     private ImageView borderTopLeft;
     private ImageView borderTopRight;
@@ -56,14 +54,10 @@ public class CustomCameraActivity extends Activity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        layout = new RelativeLayout(this);
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        layout.setLayoutParams(layoutParams);
         
-        setContentView(R.layout.fragment_camera);
-        
-        layout = (LinearLayout) findViewById(R.id.ll);
-        cameraPreviewView = (FrameLayout) findViewById(R.id.fragment_place);
-//        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-//        layout.setLayoutParams(layoutParams);
-//        
         createCameraPreview();
         createTopLeftBorder();
         createTopRightBorder();
@@ -71,14 +65,14 @@ public class CustomCameraActivity extends Activity {
         createBottomRightBorder();
         //layoutBottomBorderImagesRespectingAspectRatio();
         createCaptureButton();
-       // setContentView(layout);
+        setContentView(layout);
     }
 
     private void createCameraPreview() {
-//        cameraPreviewView = new FrameLayout(this);
-//        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
-//        cameraPreviewView.setLayoutParams(layoutParams);
-//        layout.addView(cameraPreviewView);
+        cameraPreviewView = new FrameLayout(this);
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
+        cameraPreviewView.setLayoutParams(layoutParams);
+        layout.addView(cameraPreviewView);
     }
 
     private void createTopLeftBorder() {
@@ -177,15 +171,15 @@ public class CustomCameraActivity extends Activity {
 //    }
 
     private void createCaptureButton() {
-        captureButton =  (ImageButton)findViewById(R.id.button_capture);
+        captureButton = new ImageButton(getApplicationContext());
         setBitmap(captureButton, "capture_button.png");
         captureButton.setBackgroundColor(Color.parseColor("#90226a"));
         captureButton.setScaleType(ScaleType.FIT_CENTER);
-//        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, dpToPixels(75));
-//        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-//        layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, dpToPixels(75));
+        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
         //layoutParams.bottomMargin = dpToPixels(10);
-      //  captureButton.setLayoutParams(layoutParams);
+        captureButton.setLayoutParams(layoutParams);
         captureButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -199,7 +193,7 @@ public class CustomCameraActivity extends Activity {
                 takePicture();
             }
         });
-   //     layout.addView(captureButton);
+        layout.addView(captureButton);
     }
 
     private void setCaptureButtonImageForEvent(MotionEvent event) {
