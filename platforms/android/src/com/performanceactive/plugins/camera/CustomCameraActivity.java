@@ -24,10 +24,12 @@ import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 public class CustomCameraActivity extends Activity {
@@ -194,6 +196,21 @@ public class CustomCameraActivity extends Activity {
             }
         });
         layout.addView(captureButton);
+       
+        LinearLayout row = new LinearLayout(this);
+        row.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+
+        for (int j = 0; j < 2; j++) {
+            Button btnTag = new Button(this);
+            btnTag.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+            btnTag.setText("Button " + (j + 1 + (1 * 4)));
+            btnTag.setId(j + 1 + (1 * 4));
+            row.addView(btnTag);
+        }
+
+        layout.addView(row);    
+     
+        
     }
 
     private void setCaptureButtonImageForEvent(MotionEvent event) {
