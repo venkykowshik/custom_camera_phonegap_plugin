@@ -96,7 +96,7 @@
     </config-file>
     <source-file src="platforms/android/src/com/performanceactive/plugins/camera/CustomCamera.java" target-dir="src/com/performanceactive/plugins/camera" />
     <source-file src="platforms/android/src/com/performanceactive/plugins/camera/CustomCameraActivity.java" target-dir="src/com/performanceactive/plugins/camera" />
-    <source-file src="platforms/android/src/com/performanceactive/plugins/camera/CustomCameraPreview.java" target-dir="src/com/performanceactive/plugins/camera" />
+    <source-file src="platforms/android/src/com/performanceactive/plugins/camera/CameraPreview.java" target-dir="src/com/performanceactive/plugins/camera" />
 </platform>
 
 </plugin>
