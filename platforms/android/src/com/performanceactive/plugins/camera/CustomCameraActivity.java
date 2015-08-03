@@ -362,18 +362,18 @@ public class CustomCameraActivity extends Activity {
 			@Override
 			public void onPictureTaken(byte[] jpegData, Camera camera) {
 				// make a new picture file
-				File pictureFile = getOutputMediaFile();
+				// File pictureFile = getOutputMediaFile();
 
-				if (pictureFile == null) {
-					return;
-				}
+				// if (pictureFile == null) {
+				// 	return;
+				// }
 				try {
 					// write the file
-					FileOutputStream fos = new FileOutputStream(pictureFile);
-					fos.write(jpegData);
-					fos.close();
+					// FileOutputStream fos = new FileOutputStream(pictureFile);
+					// fos.write(jpegData);
+					// fos.close();
 					Toast toast = Toast.makeText(myContext, "Picture saved: "
-							+ pictureFile.getName(), Toast.LENGTH_LONG);
+							, Toast.LENGTH_LONG);
 					toast.show();
 					String filename = getIntent().getStringExtra(FILENAME);
 					int quality = getIntent().getIntExtra(QUALITY, 80);
