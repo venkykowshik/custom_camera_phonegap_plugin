@@ -1,6 +1,8 @@
 package com.performanceactive.plugins.camera;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -20,10 +22,9 @@ import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.hardware.Camera.Parameters;
 import android.hardware.Camera.PictureCallback;
-import android.net.Uri;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
-
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.View;
