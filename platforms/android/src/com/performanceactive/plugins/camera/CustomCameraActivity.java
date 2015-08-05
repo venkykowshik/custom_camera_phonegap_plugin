@@ -383,7 +383,7 @@ public class CustomCameraActivity extends Activity {
 							jpegData.length);
 					bitmap.compress(CompressFormat.JPEG, quality,
 							new FileOutputStream(capturedImageFile));
-					InputStream inputStream = new FileInputStream(filename);//You can get an inputStream using any IO API
+					InputStream inputStream = new FileInputStream(capturedImageFile.getPath());//You can get an inputStream using any IO API
 					byte[] bytes;
 					byte[] buffer = new byte[8192];
 					int bytesRead;
