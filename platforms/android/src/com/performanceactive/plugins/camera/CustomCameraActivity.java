@@ -372,7 +372,7 @@ public class CustomCameraActivity extends Activity {
 					// FileOutputStream fos = new FileOutputStream(pictureFile);
 					// fos.write(jpegData);
 					// fos.close();
-					Toast toast = Toast.makeText(myContext, "Picture saved: "
+				Toast toast = Toast.makeText(myContext, "Picture saved: "
 							, Toast.LENGTH_LONG);
 					toast.show();
 					String filename = getIntent().getStringExtra(FILENAME);
@@ -382,9 +382,22 @@ public class CustomCameraActivity extends Activity {
 							jpegData.length);
 					bitmap.compress(CompressFormat.JPEG, quality,
 							new FileOutputStream(capturedImageFile));
+					InputStream inputStream = new FileInputStream(filename);//You can get an inputStream using any IO API
+					byte[] bytes;
+					byte[] buffer = new byte[8192];
+					int bytesRead;
+					ByteArrayOutputStream output = new ByteArrayOutputStream();
+					try {
+					    while ((bytesRead = inputStream.read(buffer)) != -1) {
+					    output.write(buffer, 0, bytesRead);
+					}
+					} catch (IOException e) {
+					e.printStackTrace();
+					}
+					bytes = output.toByteArray();
+					String encodedString = Base64.encodeToString(bytes, Base64.DEFAULT);
 					Intent data = new Intent();
-					data.putExtra(IMAGE_URI, Uri.fromFile(capturedImageFile)
-							.toString());
+					data.putExtra(IMAGE_URI, encodedString);
 					setResult(RESULT_OK, data);
 					finish();
 
