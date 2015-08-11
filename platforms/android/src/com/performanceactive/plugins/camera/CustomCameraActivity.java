@@ -1,14 +1,8 @@
 package com.performanceactive.plugins.camera;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import android.app.Activity;
 import android.content.Context;
@@ -18,12 +12,13 @@ import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.hardware.Camera.Parameters;
 import android.hardware.Camera.PictureCallback;
+import android.net.Uri;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.Surface;
@@ -54,6 +49,8 @@ public class CustomCameraActivity extends Activity {
 	public static String QUALITY = "Quality";
 	public static String IMAGE_URI = "ImageUri";
 	public static String ERROR_MESSAGE = "ErrorMessage";
+	public static String TARGET_WIDTH = "TargetWidth";
+	public static String TARGET_HEIGHT = "TargetHeight";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -185,7 +182,7 @@ public class CustomCameraActivity extends Activity {
 	private void setBitmap(ImageView imageView, String imageName) {
 		try {
 			InputStream imageStream = getAssets().open(
-					"www/img/cameraoverlay/" + imageName);
+					"cameraoverlay/" + imageName);
 			Bitmap bitmap = BitmapFactory.decodeStream(imageStream);
 			imageView.setImageBitmap(bitmap);
 			imageStream.close();
@@ -362,54 +359,21 @@ public class CustomCameraActivity extends Activity {
 
 			@Override
 			public void onPictureTaken(byte[] jpegData, Camera camera) {
-				// make a new picture file
-				// File pictureFile = getOutputMediaFile();
+				 try {
+		                String filename = getIntent().getStringExtra(FILENAME);
+		                int quality = getIntent().getIntExtra(QUALITY, 80);
+		                File capturedImageFile = new File(getCacheDir(), filename);
+		                Bitmap capturedImage = getScaledBitmap(jpegData);
+		                capturedImage = correctCaptureImageOrientation(capturedImage);
+		                capturedImage.compress(CompressFormat.JPEG, quality, new FileOutputStream(capturedImageFile));
+		                Intent data = new Intent();
+		                data.putExtra(IMAGE_URI, Uri.fromFile(capturedImageFile).toString());
+		                setResult(RESULT_OK, data);
+		                finish();
+		            } catch (Exception e) {
+		                finishWithError("Failed to save image");
+		            }
 
-				// if (pictureFile == null) {
-				// 	return;
-				// }
-				try {
-					// write the file
-					// FileOutputStream fos = new FileOutputStream(pictureFile);
-					// fos.write(jpegData);
-					// fos.close();
-				Toast toast = Toast.makeText(myContext, "Picture saved: "
-							, Toast.LENGTH_LONG);
-					toast.show();
-					String filename = getIntent().getStringExtra(FILENAME);
-					int quality = getIntent().getIntExtra(QUALITY, 80);
-					File capturedImageFile = new File(getCacheDir(), filename);
-					Bitmap bitmap = BitmapFactory.decodeByteArray(jpegData, 0,
-							jpegData.length);
-					bitmap.compress(CompressFormat.JPEG, quality,
-							new FileOutputStream(capturedImageFile));
-					InputStream inputStream = new FileInputStream(capturedImageFile.getPath());//You can get an inputStream using any IO API
-					byte[] bytes;
-					byte[] buffer = new byte[8192];
-					int bytesRead;
-					ByteArrayOutputStream output = new ByteArrayOutputStream();
-					try {
-					    while ((bytesRead = inputStream.read(buffer)) != -1) {
-					    output.write(buffer, 0, bytesRead);
-					}
-					} catch (IOException e) {
-					e.printStackTrace();
-					}
-					bytes = output.toByteArray();
-					String encodedString = Base64.encodeToString(bytes, Base64.DEFAULT);
-					Intent data = new Intent();
-					data.putExtra(IMAGE_URI, encodedString);
-					setResult(RESULT_OK, data);
-					finish();
-
-				} catch (FileNotFoundException e) {
-					finishWithError("Failed to save image");
-				} catch (IOException e) {
-					finishWithError("Failed to save image with unknown exception");
-				}
-
-				// refresh camera to continue preview
-				mPreview.refreshCamera(mCamera);
 			}
 		};
 		return picture;
@@ -422,29 +386,64 @@ public class CustomCameraActivity extends Activity {
 		}
 	};
 
-	// make picture and save to a folder
-	private static File getOutputMediaFile() {
-		// make a new file directory inside the "sdcard" folder
-		File mediaStorageDir = new File("/sdcard/", "JCG Camera");
-
-		// if this "JCGCamera folder does not exist
-		if (!mediaStorageDir.exists()) {
-			// if you cannot make this folder return
-			if (!mediaStorageDir.mkdirs()) {
-				return null;
-			}
+	private Bitmap getScaledBitmap(byte[] jpegData) {
+		int targetWidth = getIntent().getIntExtra(TARGET_WIDTH, -1);
+		int targetHeight = getIntent().getIntExtra(TARGET_HEIGHT, -1);
+		if (targetWidth <= 0 && targetHeight <= 0) {
+			return BitmapFactory.decodeByteArray(jpegData, 0, jpegData.length);
 		}
 
-		// take the current timeStamp
-		String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss")
-				.format(new Date());
-		File mediaFile;
-		// and make a media file:
-		mediaFile = new File(mediaStorageDir.getPath() + File.separator
-				+ "IMG_" + timeStamp + ".jpg");
+		// get dimensions of image without scaling
+		BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inJustDecodeBounds = true;
+		BitmapFactory.decodeByteArray(jpegData, 0, jpegData.length, options);
 
-		return mediaFile;
+		// decode image as close to requested scale as possible
+		options.inJustDecodeBounds = false;
+		options.inSampleSize = calculateInSampleSize(options, targetWidth,
+				targetHeight);
+		Bitmap bitmap = BitmapFactory.decodeByteArray(jpegData, 0,
+				jpegData.length, options);
+
+		// set missing width/height based on aspect ratio
+		float aspectRatio = ((float) options.outHeight) / options.outWidth;
+		if (targetWidth > 0 && targetHeight <= 0) {
+			targetHeight = Math.round(targetWidth * aspectRatio);
+		} else if (targetWidth <= 0 && targetHeight > 0) {
+			targetWidth = Math.round(targetHeight / aspectRatio);
+		}
+
+		// make sure we also
+		Matrix matrix = new Matrix();
+		matrix.postRotate(90);
+		return Bitmap.createScaledBitmap(bitmap, targetWidth, targetHeight,
+				true);
 	}
+
+	private int calculateInSampleSize(BitmapFactory.Options options,
+			int requestedWidth, int requestedHeight) {
+		int originalHeight = options.outHeight;
+		int originalWidth = options.outWidth;
+		int inSampleSize = 1;
+		if (originalHeight > requestedHeight || originalWidth > requestedWidth) {
+			int halfHeight = originalHeight / 2;
+			int halfWidth = originalWidth / 2;
+			while ((halfHeight / inSampleSize) > requestedHeight
+					&& (halfWidth / inSampleSize) > requestedWidth) {
+				inSampleSize *= 2;
+			}
+		}
+		return inSampleSize;
+	}
+
+	private Bitmap correctCaptureImageOrientation(Bitmap bitmap) {
+		Matrix matrix = new Matrix();
+		matrix.postRotate(90);
+		return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(),
+				bitmap.getHeight(), matrix, true);
+	}
+
+	
 
 	private void releaseCamera() {
 		// stop and release camera
