@@ -186,7 +186,7 @@ public class CustomCameraActivity extends Activity {
 				return false;
 			}
 		});
-		gallery.setOnClickListener(switchCameraListener);
+		gallery.setOnClickListener(galleryListner);
 		layout.addView(gallery);
 	}
 
@@ -330,6 +330,17 @@ public class CustomCameraActivity extends Activity {
 						Toast.LENGTH_LONG);
 				toast.show();
 			}
+		}
+	};
+	
+	OnClickListener galleryListner = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			Intent intent = new Intent();
+                        intent.setType("image/*");
+                        intent.setAction(Intent.ACTION_GET_CONTENT);
+                        startActivityForResult(Intent.createChooser(intent,
+                                "Select Picture"), SELECT_PICTURE);
 		}
 	};
 
