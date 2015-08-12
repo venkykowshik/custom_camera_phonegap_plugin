@@ -528,4 +528,35 @@ public class CustomCameraActivity extends Activity {
 		}
 		camera.setDisplayOrientation(result);
 	}
+	
+	@Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        try {
+            // When an Image is picked
+            if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK
+                    && null != data) {
+                // Get the Image from data
+ 
+                Uri selectedImage = data.getData();
+              //  String[] filePathColumn = { MediaStore.Images.Media.DATA };
+ 
+                Intent intent = new Intent();
+                intent.putExtra(IMAGE_URI, selectedImage.toString());
+                setResult(RESULT_OK, intent);
+                finish();
+            
+ 
+            } else {
+                Toast.makeText(this, "You haven't picked Image",
+                        Toast.LENGTH_LONG).show();
+                finishWithError("Failed to save image");
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG)
+                    .show();
+            finishWithError("Failed to save image");
+        }
+ 
+    }
 }
