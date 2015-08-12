@@ -37,7 +37,7 @@ public class CustomCameraActivity extends Activity {
 	private Camera mCamera;
 	private CameraPreview mPreview;
 	private PictureCallback mPicture;
-	private ImageButton capture, switchCamera, flash;
+	private ImageButton capture, switchCamera, flash, gallery;
 	private Context myContext;
 	private LinearLayout cameraPreview;
 	private boolean cameraFront = false;
@@ -163,6 +163,30 @@ public class CustomCameraActivity extends Activity {
 		});
 		flash.setOnClickListener(flashCameraListener);
 		layout.addView(flash);
+	}
+	
+	private void createRotateButton() {
+
+		// roatate camera button...
+		gallery = new ImageButton(getApplicationContext());
+		setBitmap(gallery, "capture_button.png");
+		gallery.setBackgroundColor(Color.parseColor("#567678"));
+		gallery.setScaleType(ScaleType.FIT_CENTER);
+		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+				dpToPixels(75), dpToPixels(75));
+		layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+		layoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+		// layoutParams.bottomMargin = dpToPixels(10);
+		gallery.setLayoutParams(layoutParams);
+		gallery.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				setCaptureButtonImageForEvent(gallery, event);
+				return false;
+			}
+		});
+		gallery.setOnClickListener(switchCameraListener);
+		layout.addView(gallery);
 	}
 
 	private int dpToPixels(int dp) {
