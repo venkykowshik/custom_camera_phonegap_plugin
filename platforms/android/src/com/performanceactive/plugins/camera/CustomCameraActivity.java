@@ -51,6 +51,8 @@ public class CustomCameraActivity extends Activity {
 	public static String ERROR_MESSAGE = "ErrorMessage";
 	public static String TARGET_WIDTH = "TargetWidth";
 	public static String TARGET_HEIGHT = "TargetHeight";
+	
+	 private static int RESULT_LOAD_IMG = 1;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -336,11 +338,11 @@ public class CustomCameraActivity extends Activity {
 	OnClickListener galleryListner = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			Intent intent = new Intent();
-                        intent.setType("image/*");
-                        intent.setAction(Intent.ACTION_GET_CONTENT);
-                        startActivityForResult(Intent.createChooser(intent,
-                                "Select Picture"), SELECT_PICTURE);
+		// Create intent to Open Image applications like Gallery, Google Photos
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        // Start the Intent
+        startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
 		}
 	};
 
