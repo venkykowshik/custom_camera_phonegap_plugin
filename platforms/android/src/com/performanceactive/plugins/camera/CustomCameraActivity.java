@@ -83,6 +83,7 @@ public class CustomCameraActivity extends Activity {
 		createCaptureButton();
 		createRotateButton();
 		createFlashButton();
+		createGalleryButton();
 
 		// capture = (Button) findViewById(R.id.button_capture);
 		// capture.setOnClickListener(captrureListener);
@@ -165,7 +166,7 @@ public class CustomCameraActivity extends Activity {
 		layout.addView(flash);
 	}
 	
-	private void createRotateButton() {
+	private void createGalleryButton() {
 
 		// roatate camera button...
 		gallery = new ImageButton(getApplicationContext());
