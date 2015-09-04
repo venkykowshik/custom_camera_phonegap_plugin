@@ -278,6 +278,14 @@ public class CustomCameraActivity extends Activity {
 			mPreview.refreshCamera(mCamera);
 		}
 	}
+	
+	@Override
+public void onBackPressed()
+{
+     // code here to show dialog
+     finishWithError("Camera View Closed");
+     super.onBackPressed();  // optional depending on your needs
+}
 
 	OnClickListener flashCameraListener = new OnClickListener() {
 
