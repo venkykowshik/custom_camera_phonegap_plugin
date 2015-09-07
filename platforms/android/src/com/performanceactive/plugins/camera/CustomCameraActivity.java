@@ -15,6 +15,7 @@ import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.drawable.Drawable;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.hardware.Camera.Parameters;
@@ -102,7 +103,7 @@ public class CustomCameraActivity extends Activity {
 	}
 
 	private void createCaptureButton() {
-		capture = new ImageButton(getApplicationContext());
+		capture = new ImageButton(this);
 		setBitmap(capture, "capture_button.png");
 		capture.setBackgroundColor(Color.parseColor("#90226a"));
 		capture.setScaleType(ScaleType.FIT_CENTER);
@@ -127,7 +128,7 @@ public class CustomCameraActivity extends Activity {
 	private void createRotateButton() {
 
 		// roatate camera button...
-		switchCamera = new ImageButton(getApplicationContext());
+		switchCamera = new ImageButton(this);
 		setBitmap(switchCamera, "capture_button.png");
 		switchCamera.setBackgroundColor(Color.parseColor("#567678"));
 		switchCamera.setScaleType(ScaleType.FIT_CENTER);
@@ -150,7 +151,7 @@ public class CustomCameraActivity extends Activity {
 
 	private void createFlashButton() {
 		// flash button....
-		flash = new ImageButton(getApplicationContext());
+		flash = new ImageButton(this);
 		setBitmap(flash, "capture_button.png");
 		flash.setBackgroundColor(Color.parseColor("#567678"));
 		flash.setScaleType(ScaleType.FIT_CENTER);
@@ -174,7 +175,7 @@ public class CustomCameraActivity extends Activity {
 	private void createGalleryButton() {
 
 		// roatate camera button...
-		gallery = new ImageButton(getApplicationContext());
+		gallery = new ImageButton(this);
 		setBitmap(gallery, "capture_button.png");
 		gallery.setBackgroundColor(Color.parseColor("#567678"));
 		gallery.setScaleType(ScaleType.FIT_CENTER);
@@ -211,9 +212,8 @@ public class CustomCameraActivity extends Activity {
 
 	private void setBitmap(ImageView imageView, String imageName) {
 		try {
-			Bitmap icon = BitmapFactory.decodeResource(this.getResources(),
-                    R.drawable.icon);
-			imageView.setImageBitmap(icon);
+		
+			imageView.setImageDrawable(getDrawable("icon.png"));
 //			InputStream imageStream = this.getAssets().open(
 //					"www/img/cameraoverlay/" + imageName);
 //			Bitmap bitmap = BitmapFactory.decodeStream(imageStream);
@@ -222,6 +222,12 @@ public class CustomCameraActivity extends Activity {
 		} catch (Exception e) {
 			Log.e("dsnjnsdnjk", "Could load image", e);
 		}
+	}
+	
+	public  Drawable getDrawable(String name) {
+	   
+	    int resourceId = getResources().getIdentifier(name, "drawable", getPackageName());
+	    return this.getResources().getDrawable(resourceId);
 	}
 
 	private int findFrontFacingCamera() {
@@ -509,7 +515,7 @@ public void onBackPressed()
 		Intent data = new Intent().putExtra(ERROR_MESSAGE, message);
 		setResult(RESULT_CANCELED, data);
 		finish();
-	}
+	} 
 
 	public void setCameraDisplayOrientation(Activity activity, int cameraId,
 			android.hardware.Camera camera) {
