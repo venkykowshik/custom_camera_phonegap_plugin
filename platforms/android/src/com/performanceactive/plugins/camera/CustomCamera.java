@@ -27,7 +27,7 @@ public class CustomCamera extends CordovaPlugin {
 	        return false;
 	    }
 	    this.callbackContext = callbackContext;
-	    Context context = cordova.getActivity().getApplicationContext();
+	    Context context = this.cordova.getActivity();
 	    Intent intent = new Intent(context, CustomCameraActivity.class);
 	    intent.putExtra(FILENAME, args.getString(0));
 	    intent.putExtra(QUALITY, args.getInt(1));
@@ -45,7 +45,10 @@ public class CustomCamera extends CordovaPlugin {
 	    if (resultCode == Activity.RESULT_OK) {
 	        callbackContext.success(intent.getExtras().getString(IMAGE_URI));
 	    } else {
-	        String errorMessage = intent.getExtras().getString(ERROR_MESSAGE);
+	    	String errorMessage = null;
+	    	if (intent != null) {
+	    		 errorMessage = intent.getExtras().getString(ERROR_MESSAGE);
+			} 
 	        if (errorMessage != null) {
 	            callbackContext.error(errorMessage);
 	        } else {
