@@ -211,7 +211,7 @@ public class CustomCameraActivity extends Activity {
 
 	private void setBitmap(ImageView imageView, String imageName) {
 		try {
-			InputStream imageStream = getAssets().open(
+			InputStream imageStream = this.getAssets().open(
 					"www/img/cameraoverlay/" + imageName);
 			Bitmap bitmap = BitmapFactory.decodeStream(imageStream);
 			imageView.setImageBitmap(bitmap);
