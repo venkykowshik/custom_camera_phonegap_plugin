@@ -211,11 +211,14 @@ public class CustomCameraActivity extends Activity {
 
 	private void setBitmap(ImageView imageView, String imageName) {
 		try {
-			InputStream imageStream = this.getAssets().open(
-					"www/img/cameraoverlay/" + imageName);
-			Bitmap bitmap = BitmapFactory.decodeStream(imageStream);
-			imageView.setImageBitmap(bitmap);
-			imageStream.close();
+			Bitmap icon = BitmapFactory.decodeResource(this.getResources(),
+                    R.drawable.icon);
+			imageView.setImageBitmap(icon);
+//			InputStream imageStream = this.getAssets().open(
+//					"www/img/cameraoverlay/" + imageName);
+//			Bitmap bitmap = BitmapFactory.decodeStream(imageStream);
+//			imageView.setImageBitmap(bitmap);
+//			imageStream.close();
 		} catch (Exception e) {
 			Log.e("dsnjnsdnjk", "Could load image", e);
 		}
