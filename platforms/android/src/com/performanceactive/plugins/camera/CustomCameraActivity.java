@@ -31,6 +31,7 @@ import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -73,7 +74,7 @@ public class CustomCameraActivity extends Activity {
 		// RelativeLayout.LayoutParams(
 		// LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 		// layout.setLayoutParams(layoutParams);
-
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		fakeR = new FakeR(this);
 		setContentView(fakeR.getId("layout", "activity_main"));
 
@@ -120,9 +121,9 @@ public class CustomCameraActivity extends Activity {
 		capture.setBackgroundResource(fakeR.getId("drawable", "capture_button.png"));
 		
         ShapeDrawable biggerCircle= new ShapeDrawable( new OvalShape());
-        biggerCircle.setIntrinsicHeight( 60 );
-        biggerCircle.setIntrinsicWidth( 60);
-        biggerCircle.setBounds(new Rect(0, 0, 60, 60));
+        biggerCircle.setIntrinsicHeight( capture.getWidth() );
+        biggerCircle.setIntrinsicWidth( capture.getHeight());
+        biggerCircle.setBounds(new Rect(0, 0, capture.getWidth(), capture.getHeight()));
         biggerCircle.getPaint().setColor(Color.WHITE);
 
 //        ShapeDrawable smallerCircle= new ShapeDrawable( new OvalShape());
