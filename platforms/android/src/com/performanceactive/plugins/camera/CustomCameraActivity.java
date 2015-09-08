@@ -111,7 +111,8 @@ public class CustomCameraActivity extends Activity {
 	private void createCaptureButton() {
 		capture = (Button) findViewById(fakeR.getId("id", "capture"));
 	//	setBitmap(capture, "capture_button.png");
-		capture.setBackgroundColor(Color.parseColor("#90226a"));
+		//capture.setBackgroundColor(Color.parseColor("#90226a"));
+		capture.setBackgroundResource(fakeR.getId("drawable", "capture_button.png"));
 //		capture.setScaleType(ScaleType.FIT_CENTER);
 //		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
 //				dpToPixels(75), dpToPixels(75));
@@ -136,7 +137,7 @@ public class CustomCameraActivity extends Activity {
 		// roatate camera button...
 		switchCamera = (Button) findViewById(fakeR.getId("id", "switch_camera"));
 	//	setBitmap(switchCamera, "capture_button.png");
-		switchCamera.setBackgroundColor(Color.parseColor("#567678"));
+		//switchCamera.setBackgroundColor(Color.parseColor("#567678"));
 		//switchCamera.setScaleType(ScaleType.FIT_CENTER);
 		//RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
 			//	dpToPixels(75), dpToPixels(75));
@@ -159,7 +160,7 @@ public class CustomCameraActivity extends Activity {
 		// flash button....
 		flash = (Button) findViewById(fakeR.getId("id", "flash"));
 		//setBitmap(flash, "capture_button.png");
-		flash.setBackgroundColor(Color.parseColor("#567678"));
+		//flash.setBackgroundColor(Color.parseColor("#567678"));
 		//flash.setScaleType(ScaleType.FIT_CENTER);
 //		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
 //				dpToPixels(75), dpToPixels(75));
@@ -183,7 +184,7 @@ public class CustomCameraActivity extends Activity {
 		// roatate camera button...
 		gallery = (Button) findViewById(fakeR.getId("id", "gallery"));
 		//setBitmap(gallery, "capture_button.png");
-		gallery.setBackgroundColor(Color.parseColor("#567678"));
+		//gallery.setBackgroundColor(Color.parseColor("#567678"));
 		//gallery.setScaleType(ScaleType.FIT_CENTER);
 //		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
 //				dpToPixels(75), dpToPixels(75));
