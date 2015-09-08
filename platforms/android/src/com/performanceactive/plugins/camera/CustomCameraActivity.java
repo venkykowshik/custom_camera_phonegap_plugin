@@ -36,7 +36,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.performanceactive.plugins.camera.R;
 
 
 public class CustomCameraActivity extends Activity {
@@ -59,6 +58,8 @@ public class CustomCameraActivity extends Activity {
 	public static String TARGET_HEIGHT = "TargetHeight";
 	
 	 private static int RESULT_LOAD_IMG = 1;
+	 
+	 private FakeR fakeR;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -73,15 +74,18 @@ public class CustomCameraActivity extends Activity {
 		layout.setLayoutParams(layoutParams);
 
 		
-		 setContentView(R.layout.activity_main);
+		  fakeR = new FakeR(this);
+	        setContentView(fakeR.getId("layout", "activity_main"));
+		
+		// setContentView(R.layout.activity_main);
 		//setContentView(layout);
 		 initialize();
 		 
 	}
 
 	public void initialize() {
-		//cameraPreview = new LinearLayout(myContext);
-		cameraPreview = (LinearLayout) findViewById(R.id.camera_perview);
+		//cameraPreview = new LinearLayout(myContext);fakeR.getId("id", "camera_perview")
+		cameraPreview = (LinearLayout) findViewById(fakeR.getId("id", "camera_perview"));
 		
 		cameraPreview.setLayoutParams(new LinearLayout.LayoutParams(
 				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
