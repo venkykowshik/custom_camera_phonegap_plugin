@@ -9,14 +9,39 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical"
-        android:layout_above="@+id/ll" />
+        android:layout_above="@+id/ll2" />
+    
+    <LinearLayout
+        android:id="@+id/ll2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_above="@+id/ll" >
+        
+       
+         <ImageButton
+            android:id="@+id/switch_camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"/>
+           <ImageButton
+            android:id="@+id/capture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"/>
+          <ImageButton
+            android:id="@+id/flash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"/>
+         
+        </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:padding="5dp" >
+        android:layout_alignParentBottom="true" >
 
         <Button
             android:id="@+id/photo"
@@ -26,7 +51,7 @@
             
             android:text="Photo" />
 
-        <Button
+        <ImageButton
             android:id="@+id/gallery"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
