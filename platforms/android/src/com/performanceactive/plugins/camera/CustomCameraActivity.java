@@ -93,7 +93,7 @@ public class CustomCameraActivity extends Activity {
 
 		mPreview = new CameraPreview(myContext, mCamera);
 		cameraPreview.addView(mPreview);
-		layout.addView(cameraPreview);
+		//layout.addView(cameraPreview);
 
 //		createCaptureButton();
 //		createRotateButton();
