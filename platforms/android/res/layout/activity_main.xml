@@ -23,18 +23,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:onClick="selectFrag"
-           style="@android:style/Holo.ButtonBar"
-            android:text="@string/photo" />
+            
+            android:text="Photo" />
 
         <Button
             android:id="@+id/gallery"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-             style="@android:style/Holo.ButtonBar"
-            android:onClick="selectFrag"
-            android:text="@string/gallery" />
+           
+            android:text="Gallery" />
         
     </LinearLayout>
 
