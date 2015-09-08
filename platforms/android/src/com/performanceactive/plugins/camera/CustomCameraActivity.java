@@ -15,7 +15,6 @@ import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Matrix;
-import android.graphics.drawable.Drawable;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.hardware.Camera.Parameters;
@@ -27,13 +26,11 @@ import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 
@@ -42,7 +39,7 @@ public class CustomCameraActivity extends Activity {
 	private Camera mCamera;
 	private CameraPreview mPreview;
 	private PictureCallback mPicture;
-	private ImageButton capture, switchCamera, flash, gallery;
+	private Button capture, switchCamera, flash, gallery;
 	private Context myContext;
 	private LinearLayout cameraPreview;
 	private boolean cameraFront = false;
@@ -112,8 +109,8 @@ public class CustomCameraActivity extends Activity {
 	}
 
 	private void createCaptureButton() {
-		capture = (ImageButton) findViewById(fakeR.getId("id", "capture"));
-		setBitmap(capture, "capture_button.png");
+		capture = (Button) findViewById(fakeR.getId("id", "capture"));
+	//	setBitmap(capture, "capture_button.png");
 		capture.setBackgroundColor(Color.parseColor("#90226a"));
 //		capture.setScaleType(ScaleType.FIT_CENTER);
 //		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
@@ -123,13 +120,13 @@ public class CustomCameraActivity extends Activity {
 //
 //		// layoutParams.bottomMargin = dpToPixels(10);
 //		capture.setLayoutParams(layoutParams);
-		capture.setOnTouchListener(new View.OnTouchListener() {
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				setCaptureButtonImageForEvent(capture, event);
-				return false;
-			}
-		});
+//		capture.setOnTouchListener(new View.OnTouchListener() {
+//			@Override
+//			public boolean onTouch(View v, MotionEvent event) {
+//			//	setCaptureButtonImageForEvent(capture, event);
+//				return false;
+//			}
+//		});
 		capture.setOnClickListener(captrureListener);
 		//layout.addView(capture);
 	}
@@ -137,8 +134,8 @@ public class CustomCameraActivity extends Activity {
 	private void createRotateButton() {
 
 		// roatate camera button...
-		switchCamera = (ImageButton) findViewById(fakeR.getId("id", "switch_camera"));
-		setBitmap(switchCamera, "capture_button.png");
+		switchCamera = (Button) findViewById(fakeR.getId("id", "switch_camera"));
+	//	setBitmap(switchCamera, "capture_button.png");
 		switchCamera.setBackgroundColor(Color.parseColor("#567678"));
 		//switchCamera.setScaleType(ScaleType.FIT_CENTER);
 		//RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
@@ -147,21 +144,21 @@ public class CustomCameraActivity extends Activity {
 		//layoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
 		// layoutParams.bottomMargin = dpToPixels(10);
 	//	switchCamera.setLayoutParams(layoutParams);
-		switchCamera.setOnTouchListener(new View.OnTouchListener() {
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				setCaptureButtonImageForEvent(switchCamera, event);
-				return false;
-			}
-		});
+//		switchCamera.setOnTouchListener(new View.OnTouchListener() {
+//			@Override
+//			public boolean onTouch(View v, MotionEvent event) {
+//				setCaptureButtonImageForEvent(switchCamera, event);
+//				return false;
+//			}
+//		});
 		switchCamera.setOnClickListener(switchCameraListener);
 		//layout.addView(switchCamera);
 	}
 
 	private void createFlashButton() {
 		// flash button....
-		flash = (ImageButton) findViewById(fakeR.getId("id", "flash"));
-		setBitmap(flash, "capture_button.png");
+		flash = (Button) findViewById(fakeR.getId("id", "flash"));
+		//setBitmap(flash, "capture_button.png");
 		flash.setBackgroundColor(Color.parseColor("#567678"));
 		//flash.setScaleType(ScaleType.FIT_CENTER);
 //		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
@@ -170,13 +167,13 @@ public class CustomCameraActivity extends Activity {
 //		layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
 		// layoutParams.bottomMargin = dpToPixels(10);
 		//flash.setLayoutParams(layoutParams);
-		flash.setOnTouchListener(new View.OnTouchListener() {
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				setCaptureButtonImageForEvent(flash, event);
-				return false;
-			}
-		});
+//		flash.setOnTouchListener(new View.OnTouchListener() {
+//			@Override
+//			public boolean onTouch(View v, MotionEvent event) {
+//				setCaptureButtonImageForEvent(flash, event);
+//				return false;
+//			}
+//		});
 		flash.setOnClickListener(flashCameraListener);
 		//layout.addView(flash);
 	}
@@ -184,8 +181,8 @@ public class CustomCameraActivity extends Activity {
 	private void createGalleryButton() {
 
 		// roatate camera button...
-		gallery = (ImageButton) findViewById(fakeR.getId("id", "gallery"));
-		setBitmap(gallery, "capture_button.png");
+		gallery = (Button) findViewById(fakeR.getId("id", "gallery"));
+		//setBitmap(gallery, "capture_button.png");
 		gallery.setBackgroundColor(Color.parseColor("#567678"));
 		//gallery.setScaleType(ScaleType.FIT_CENTER);
 //		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
@@ -194,13 +191,13 @@ public class CustomCameraActivity extends Activity {
 //		layoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
 		// layoutParams.bottomMargin = dpToPixels(10);
 		//gallery.setLayoutParams(layoutParams);
-		gallery.setOnTouchListener(new View.OnTouchListener() {
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				setCaptureButtonImageForEvent(gallery, event);
-				return false;
-			}
-		});
+//		gallery.setOnTouchListener(new View.OnTouchListener() {
+//			@Override
+//			public boolean onTouch(View v, MotionEvent event) {
+//				setCaptureButtonImageForEvent(gallery, event);
+//				return false;
+//			}
+//		});
 		gallery.setOnClickListener(galleryListner);
 	//	layout.addView(gallery);
 	}
