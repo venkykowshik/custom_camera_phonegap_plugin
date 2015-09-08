@@ -13,13 +13,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.Matrix;
-import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.OvalShape;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.hardware.Camera.Parameters;
@@ -33,9 +27,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -175,7 +167,7 @@ public class CustomCameraActivity extends Activity {
 		flash = (ImageButton) findViewById(fakeR.getId("id", "flash"));
 		
 	//	Bitmap tmpHolderBitmap = BitmapFactory.decodeResource(getResources(), fakeR.getId("drawable", "capture_button"));
-		flash.setBackgroundResource(fakeR.getId("drawable", "flash_off"));
+		//flash.setBackgroundResource(fakeR.getId("drawable", "flash_off"));
 		 setBitmap(flash, "flash_on");
 		// flash.setBackgroundColor(Color.parseColor("#567678"));
 		// flash.setScaleType(ScaleType.FIT_CENTER);
