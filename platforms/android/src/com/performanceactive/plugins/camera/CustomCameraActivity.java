@@ -118,25 +118,11 @@ public class CustomCameraActivity extends Activity {
 		capture = (Button) findViewById(fakeR.getId("id", "capture"));
 	//	setBitmap(capture, "capture_button.png");
 		//capture.setBackgroundColor(Color.parseColor("#90226a"));
-		capture.setBackgroundResource(fakeR.getId("drawable", "capture_button.png"));
+		capture.setBackgroundResource(fakeR.getId("drawable", "capture_button"));
 		
-        ShapeDrawable biggerCircle= new ShapeDrawable( new OvalShape());
-        biggerCircle.setIntrinsicHeight( capture.getWidth() );
-        biggerCircle.setIntrinsicWidth( capture.getHeight());
-        biggerCircle.setBounds(new Rect(0, 0, capture.getWidth(), capture.getHeight()));
-        biggerCircle.getPaint().setColor(Color.WHITE);
+      
 
-//        ShapeDrawable smallerCircle= new ShapeDrawable( new OvalShape());
-//        smallerCircle.setIntrinsicHeight( 10 );
-//        smallerCircle.setIntrinsicWidth( 10);
-//        smallerCircle.setBounds(new Rect(0, 0, 10, 10));
-//        smallerCircle.getPaint().setColor(Color.BLACK);
-//        smallerCircle.setPadding(50,50,50,50);
-        Drawable[] d = {biggerCircle};
-
-        LayerDrawable composite1 = new LayerDrawable(d);
-
-        capture.setBackgroundDrawable(composite1);  
+        
 		
 		
 //		capture.setScaleType(ScaleType.FIT_CENTER);
@@ -162,6 +148,7 @@ public class CustomCameraActivity extends Activity {
 
 		// roatate camera button...
 		switchCamera = (Button) findViewById(fakeR.getId("id", "switch_camera"));
+		switchCamera.setBackgroundResource(fakeR.getId("drawable", "switch_camera"));
 		// setBitmap(switchCamera, "capture_button.png");
 		// switchCamera.setBackgroundColor(Color.parseColor("#567678"));
 		// switchCamera.setScaleType(ScaleType.FIT_CENTER);
@@ -187,8 +174,8 @@ public class CustomCameraActivity extends Activity {
 		// flash button....
 		flash = (Button) findViewById(fakeR.getId("id", "flash"));
 		
-		Bitmap tmpHolderBitmap = BitmapFactory.decodeResource(getResources(), fakeR.getId("drawable", "capture_button"));
-		flash.setBackgroundResource(fakeR.getId("drawable", "capture_button"));
+	//	Bitmap tmpHolderBitmap = BitmapFactory.decodeResource(getResources(), fakeR.getId("drawable", "capture_button"));
+		flash.setBackgroundResource(fakeR.getId("drawable", "flash_on"));
 		// setBitmap(flash, "capture_button.png");
 		// flash.setBackgroundColor(Color.parseColor("#567678"));
 		// flash.setScaleType(ScaleType.FIT_CENTER);
@@ -214,6 +201,7 @@ public class CustomCameraActivity extends Activity {
 
 		// roatate camera button...
 		gallery = (Button) findViewById(fakeR.getId("id", "gallery"));
+		gallery.setBackgroundResource(fakeR.getId("drawable", "gallery"));
 		// setBitmap(gallery, "capture_button.png");
 		// gallery.setBackgroundColor(Color.parseColor("#567678"));
 		// gallery.setScaleType(ScaleType.FIT_CENTER);
