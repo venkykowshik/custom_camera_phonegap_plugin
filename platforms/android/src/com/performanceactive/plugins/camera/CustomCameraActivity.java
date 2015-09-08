@@ -36,6 +36,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.performanceactive.plugins.camera.R;
+
 
 public class CustomCameraActivity extends Activity {
 	private Camera mCamera;
