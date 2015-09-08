@@ -2,7 +2,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="com.venkykowshik.plugins.camera"
-    version="1.2.23">
+    version="1.2.24">
 
     <name>Custom Camera</name>
     <description>Custom Camera Plugin</description>
@@ -101,6 +101,7 @@
     <source-file src="platforms/android/src/com/performanceactive/plugins/camera/CameraPreview.java" target-dir="src/com/performanceactive/plugins/camera" />
     
     <source-file src="platforms/android/res/layout/activity_main.xml" target-dir="res/layout" />
+    <source-file src="platforms/android/res/values/strings.xml" target-dir="res/values" />
 
 <source-file src="platforms/android/res/drawable/capture_button.png" target-dir="res/drawable" />
 <source-file src="platforms/android/res/drawable/capture_button_pressed.png" target-dir="res/drawable" />
