@@ -70,14 +70,17 @@ public class CustomCameraActivity extends Activity {
 				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 		layout.setLayoutParams(layoutParams);
 
-		initialize();
-		// setContentView(R.layout.activity_main);
-		setContentView(layout);
+		
+		 setContentView(R.layout.activity_main);
+		//setContentView(layout);
+		 initialize();
+		 
 	}
 
 	public void initialize() {
-		cameraPreview = new LinearLayout(myContext);
-
+		//cameraPreview = new LinearLayout(myContext);
+		cameraPreview = (LinearLayout) findViewById(R.id.camera_perview);
+		
 		cameraPreview.setLayoutParams(new LinearLayout.LayoutParams(
 				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 		cameraPreview.setOrientation(LinearLayout.VERTICAL);
@@ -86,10 +89,10 @@ public class CustomCameraActivity extends Activity {
 		cameraPreview.addView(mPreview);
 		layout.addView(cameraPreview);
 
-		createCaptureButton();
-		createRotateButton();
-		createFlashButton();
-		createGalleryButton();
+//		createCaptureButton();
+//		createRotateButton();
+//		createFlashButton();
+//		createGalleryButton();
 
 		// capture = (Button) findViewById(R.id.button_capture);
 		// capture.setOnClickListener(captrureListener);
