@@ -64,27 +64,27 @@
                 android:layout_weight="1"
                 android:orientation="vertical" >
 
-                <Button
+                <ImageButton
                     android:id="@+id/gallery"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@android:drawable/ic_menu_gallery" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/switch_camera"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@android:drawable/ic_menu_rotate" />
             </LinearLayout>
 
-            <Button
+            <ImageButton
                 android:id="@+id/capture"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:background="@android:drawable/ic_menu_save" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/flash"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
