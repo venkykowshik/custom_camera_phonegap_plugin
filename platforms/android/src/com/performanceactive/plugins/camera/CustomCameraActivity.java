@@ -237,7 +237,7 @@ public class CustomCameraActivity extends Activity {
 		}
 	}
 
-	private void setBitmap(ImageView imageView, String imageName) {
+	private void setBitmap(ImageButton imageView, String imageName) {
 		try {
 
 			imageView.setImageResource(getDrawable(imageName));
