@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
-    
+
     <LinearLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
@@ -34,63 +34,64 @@
                 android:textColor="@android:color/white"
                 android:textSize="20dp" />
         </LinearLayout>
-        </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/camera_perview"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:layout_above="@+id/ll2"
-        android:layout_below="@+id/header"
-        android:orientation="vertical" />
-    
-    <LinearLayout
-        android:id="@+id/ll2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="3"
-        android:layout_above="@+id/ll" >
-        
-       
-         <Button
-            android:id="@+id/switch_camera"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="switch"
-            android:background="#179EC3"
-            android:layout_weight="1"/>
-           <Button
-            android:id="@+id/capture"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-             android:background="#179EC3"
-            android:text="capture"
-            android:layout_weight="1"/>
-          <Button
-            android:id="@+id/flash"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="flash"
-             android:background="#179EC3"
-            android:layout_weight="1"/>
-         
-        </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/ll"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" >
-
-        <Button
-            android:id="@+id/gallery"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:background="#179EC3"
-            android:text="Gallery" />
-        
     </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/header" >
+
+        <LinearLayout
+            android:id="@+id/camera_perview"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_above="@+id/button_views"
+            android:orientation="vertical" />
+
+        <LinearLayout
+            android:id="@+id/button_views"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="#003300"
+            android:orientation="horizontal"
+            android:weightSum="3" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <Button
+                    android:id="@+id/gallery"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/ic_menu_gallery" />
+
+                <Button
+                    android:id="@+id/switch_camera"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:drawable/ic_menu_rotate" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/capture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:drawable/ic_menu_save" />
+
+            <Button
+                android:id="@+id/flash"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:background="@android:drawable/ic_menu_upload" />
+        </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>
