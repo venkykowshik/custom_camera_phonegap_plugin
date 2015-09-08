@@ -68,10 +68,10 @@ public class CustomCameraActivity extends Activity {
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		myContext = this;
 
-		layout = new RelativeLayout(this);
-		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-		layout.setLayoutParams(layoutParams);
+//		layout = new RelativeLayout(this);
+//		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+//				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+//		layout.setLayoutParams(layoutParams);
 
 		
 		  fakeR = new FakeR(this);
@@ -87,9 +87,9 @@ public class CustomCameraActivity extends Activity {
 		//cameraPreview = new LinearLayout(myContext);fakeR.getId("id", "camera_perview")
 		cameraPreview = (LinearLayout) findViewById(fakeR.getId("id", "camera_perview"));
 		
-		cameraPreview.setLayoutParams(new LinearLayout.LayoutParams(
-				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-		cameraPreview.setOrientation(LinearLayout.VERTICAL);
+//		cameraPreview.setLayoutParams(new LinearLayout.LayoutParams(
+//				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+//		cameraPreview.setOrientation(LinearLayout.VERTICAL);
 
 		mPreview = new CameraPreview(myContext, mCamera);
 		cameraPreview.addView(mPreview);
