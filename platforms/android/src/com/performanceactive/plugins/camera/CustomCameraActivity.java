@@ -15,6 +15,11 @@ import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.hardware.Camera.Parameters;
@@ -33,8 +38,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-
-
 public class CustomCameraActivity extends Activity {
 	private Camera mCamera;
 	private CameraPreview mPreview;
@@ -45,7 +48,7 @@ public class CustomCameraActivity extends Activity {
 	private boolean cameraFront = false;
 	private boolean isLighOn = false;
 
-	//private RelativeLayout layout;
+	// private RelativeLayout layout;
 
 	public static String FILENAME = "Filename";
 	public static String QUALITY = "Quality";
@@ -53,10 +56,10 @@ public class CustomCameraActivity extends Activity {
 	public static String ERROR_MESSAGE = "ErrorMessage";
 	public static String TARGET_WIDTH = "TargetWidth";
 	public static String TARGET_HEIGHT = "TargetHeight";
-	
-	 private static int RESULT_LOAD_IMG = 1;
-	 
-	 private FakeR fakeR;
+
+	private static int RESULT_LOAD_IMG = 1;
+
+	private FakeR fakeR;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -65,32 +68,34 @@ public class CustomCameraActivity extends Activity {
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		myContext = this;
 
-//		layout = new RelativeLayout(this);
-//		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-//				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-//		layout.setLayoutParams(layoutParams);
+		// layout = new RelativeLayout(this);
+		// RelativeLayout.LayoutParams layoutParams = new
+		// RelativeLayout.LayoutParams(
+		// LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+		// layout.setLayoutParams(layoutParams);
 
-		
-		  fakeR = new FakeR(this);
-	        setContentView(fakeR.getId("layout", "activity_main"));
-		
+		fakeR = new FakeR(this);
+		setContentView(fakeR.getId("layout", "activity_main"));
+
 		// setContentView(R.layout.activity_main);
-		//setContentView(layout);
-		 initialize();
-		 
+		// setContentView(layout);
+		initialize();
+
 	}
 
 	public void initialize() {
-		//cameraPreview = new LinearLayout(myContext);fakeR.getId("id", "camera_perview")
-		cameraPreview = (LinearLayout) findViewById(fakeR.getId("id", "camera_perview"));
-		
-//		cameraPreview.setLayoutParams(new LinearLayout.LayoutParams(
-//				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-//		cameraPreview.setOrientation(LinearLayout.VERTICAL);
+		// cameraPreview = new LinearLayout(myContext);fakeR.getId("id",
+		// "camera_perview")
+		cameraPreview = (LinearLayout) findViewById(fakeR.getId("id",
+				"camera_perview"));
+
+		// cameraPreview.setLayoutParams(new LinearLayout.LayoutParams(
+		// LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+		// cameraPreview.setOrientation(LinearLayout.VERTICAL);
 
 		mPreview = new CameraPreview(myContext, mCamera);
 		cameraPreview.addView(mPreview);
-		//layout.addView(cameraPreview);
+		// layout.addView(cameraPreview);
 
 		createCaptureButton();
 		createRotateButton();
@@ -113,6 +118,26 @@ public class CustomCameraActivity extends Activity {
 	//	setBitmap(capture, "capture_button.png");
 		//capture.setBackgroundColor(Color.parseColor("#90226a"));
 		capture.setBackgroundResource(fakeR.getId("drawable", "capture_button.png"));
+		
+        ShapeDrawable biggerCircle= new ShapeDrawable( new OvalShape());
+        biggerCircle.setIntrinsicHeight( 60 );
+        biggerCircle.setIntrinsicWidth( 60);
+        biggerCircle.setBounds(new Rect(0, 0, 60, 60));
+        biggerCircle.getPaint().setColor(Color.WHITE);
+
+//        ShapeDrawable smallerCircle= new ShapeDrawable( new OvalShape());
+//        smallerCircle.setIntrinsicHeight( 10 );
+//        smallerCircle.setIntrinsicWidth( 10);
+//        smallerCircle.setBounds(new Rect(0, 0, 10, 10));
+//        smallerCircle.getPaint().setColor(Color.BLACK);
+//        smallerCircle.setPadding(50,50,50,50);
+        Drawable[] d = {biggerCircle};
+
+        LayerDrawable composite1 = new LayerDrawable(d);
+
+        capture.setBackgroundDrawable(composite1);  
+		
+		
 //		capture.setScaleType(ScaleType.FIT_CENTER);
 //		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
 //				dpToPixels(75), dpToPixels(75));
@@ -136,71 +161,74 @@ public class CustomCameraActivity extends Activity {
 
 		// roatate camera button...
 		switchCamera = (Button) findViewById(fakeR.getId("id", "switch_camera"));
-	//	setBitmap(switchCamera, "capture_button.png");
-		//switchCamera.setBackgroundColor(Color.parseColor("#567678"));
-		//switchCamera.setScaleType(ScaleType.FIT_CENTER);
-		//RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-			//	dpToPixels(75), dpToPixels(75));
-		//layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-		//layoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+		// setBitmap(switchCamera, "capture_button.png");
+		// switchCamera.setBackgroundColor(Color.parseColor("#567678"));
+		// switchCamera.setScaleType(ScaleType.FIT_CENTER);
+		// RelativeLayout.LayoutParams layoutParams = new
+		// RelativeLayout.LayoutParams(
+		// dpToPixels(75), dpToPixels(75));
+		// layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+		// layoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
 		// layoutParams.bottomMargin = dpToPixels(10);
-	//	switchCamera.setLayoutParams(layoutParams);
-//		switchCamera.setOnTouchListener(new View.OnTouchListener() {
-//			@Override
-//			public boolean onTouch(View v, MotionEvent event) {
-//				setCaptureButtonImageForEvent(switchCamera, event);
-//				return false;
-//			}
-//		});
+		// switchCamera.setLayoutParams(layoutParams);
+		// switchCamera.setOnTouchListener(new View.OnTouchListener() {
+		// @Override
+		// public boolean onTouch(View v, MotionEvent event) {
+		// setCaptureButtonImageForEvent(switchCamera, event);
+		// return false;
+		// }
+		// });
 		switchCamera.setOnClickListener(switchCameraListener);
-		//layout.addView(switchCamera);
+		// layout.addView(switchCamera);
 	}
 
 	private void createFlashButton() {
 		// flash button....
 		flash = (Button) findViewById(fakeR.getId("id", "flash"));
-		//setBitmap(flash, "capture_button.png");
-		//flash.setBackgroundColor(Color.parseColor("#567678"));
-		//flash.setScaleType(ScaleType.FIT_CENTER);
-//		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-//				dpToPixels(75), dpToPixels(75));
-//		layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-//		layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+		// setBitmap(flash, "capture_button.png");
+		// flash.setBackgroundColor(Color.parseColor("#567678"));
+		// flash.setScaleType(ScaleType.FIT_CENTER);
+		// RelativeLayout.LayoutParams layoutParams = new
+		// RelativeLayout.LayoutParams(
+		// dpToPixels(75), dpToPixels(75));
+		// layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+		// layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
 		// layoutParams.bottomMargin = dpToPixels(10);
-		//flash.setLayoutParams(layoutParams);
-//		flash.setOnTouchListener(new View.OnTouchListener() {
-//			@Override
-//			public boolean onTouch(View v, MotionEvent event) {
-//				setCaptureButtonImageForEvent(flash, event);
-//				return false;
-//			}
-//		});
+		// flash.setLayoutParams(layoutParams);
+		// flash.setOnTouchListener(new View.OnTouchListener() {
+		// @Override
+		// public boolean onTouch(View v, MotionEvent event) {
+		// setCaptureButtonImageForEvent(flash, event);
+		// return false;
+		// }
+		// });
 		flash.setOnClickListener(flashCameraListener);
-		//layout.addView(flash);
+		// layout.addView(flash);
 	}
-	
+
 	private void createGalleryButton() {
 
 		// roatate camera button...
 		gallery = (Button) findViewById(fakeR.getId("id", "gallery"));
-		//setBitmap(gallery, "capture_button.png");
-		//gallery.setBackgroundColor(Color.parseColor("#567678"));
-		//gallery.setScaleType(ScaleType.FIT_CENTER);
-//		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-//				dpToPixels(75), dpToPixels(75));
-//		layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-//		layoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+		// setBitmap(gallery, "capture_button.png");
+		// gallery.setBackgroundColor(Color.parseColor("#567678"));
+		// gallery.setScaleType(ScaleType.FIT_CENTER);
+		// RelativeLayout.LayoutParams layoutParams = new
+		// RelativeLayout.LayoutParams(
+		// dpToPixels(75), dpToPixels(75));
+		// layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+		// layoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
 		// layoutParams.bottomMargin = dpToPixels(10);
-		//gallery.setLayoutParams(layoutParams);
-//		gallery.setOnTouchListener(new View.OnTouchListener() {
-//			@Override
-//			public boolean onTouch(View v, MotionEvent event) {
-//				setCaptureButtonImageForEvent(gallery, event);
-//				return false;
-//			}
-//		});
+		// gallery.setLayoutParams(layoutParams);
+		// gallery.setOnTouchListener(new View.OnTouchListener() {
+		// @Override
+		// public boolean onTouch(View v, MotionEvent event) {
+		// setCaptureButtonImageForEvent(gallery, event);
+		// return false;
+		// }
+		// });
 		gallery.setOnClickListener(galleryListner);
-	//	layout.addView(gallery);
+		// layout.addView(gallery);
 	}
 
 	private int dpToPixels(int dp) {
@@ -219,21 +247,21 @@ public class CustomCameraActivity extends Activity {
 
 	private void setBitmap(ImageView imageView, String imageName) {
 		try {
-		
+
 			imageView.setImageResource(getDrawable(imageName));
-//			InputStream imageStream = this.getAssets().open(
-//					"www/img/cameraoverlay/" + imageName);
-//			Bitmap bitmap = BitmapFactory.decodeStream(imageStream);
-//			imageView.setImageBitmap(bitmap);
-//			imageStream.close();
+			// InputStream imageStream = this.getAssets().open(
+			// "www/img/cameraoverlay/" + imageName);
+			// Bitmap bitmap = BitmapFactory.decodeStream(imageStream);
+			// imageView.setImageBitmap(bitmap);
+			// imageStream.close();
 		} catch (Exception e) {
 			Log.e("dsnjnsdnjk", "Could load image", e);
 		}
 	}
-	
-	public  int getDrawable(String name) {
-	   
-	return	fakeR.getId("drawable", name);
+
+	public int getDrawable(String name) {
+
+		return fakeR.getId("drawable", name);
 	}
 
 	private int findFrontFacingCamera() {
@@ -293,14 +321,13 @@ public class CustomCameraActivity extends Activity {
 			mPreview.refreshCamera(mCamera);
 		}
 	}
-	
+
 	@Override
-public void onBackPressed()
-{
-     // code here to show dialog
-     finishWithError("Camera View Closed");
-     super.onBackPressed();  // optional depending on your needs
-}
+	public void onBackPressed() {
+		// code here to show dialog
+		finishWithError("Camera View Closed");
+		super.onBackPressed(); // optional depending on your needs
+	}
 
 	OnClickListener flashCameraListener = new OnClickListener() {
 
@@ -360,15 +387,17 @@ public void onBackPressed()
 			}
 		}
 	};
-	
+
 	OnClickListener galleryListner = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-		// Create intent to Open Image applications like Gallery, Google Photos
-        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        // Start the Intent
-        startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
+			// Create intent to Open Image applications like Gallery, Google
+			// Photos
+			Intent galleryIntent = new Intent(
+					Intent.ACTION_PICK,
+					android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+			// Start the Intent
+			startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
 		}
 	};
 
@@ -423,20 +452,22 @@ public void onBackPressed()
 
 			@Override
 			public void onPictureTaken(byte[] jpegData, Camera camera) {
-				 try {
-		                String filename = getIntent().getStringExtra(FILENAME);
-		                int quality = getIntent().getIntExtra(QUALITY, 80);
-		                File capturedImageFile = new File(getCacheDir(), filename);
-		                Bitmap capturedImage = getScaledBitmap(jpegData);
-		                capturedImage = correctCaptureImageOrientation(capturedImage);
-		                capturedImage.compress(CompressFormat.JPEG, quality, new FileOutputStream(capturedImageFile));
-		                Intent data = new Intent();
-		                data.putExtra(IMAGE_URI, Uri.fromFile(capturedImageFile).toString());
-		                setResult(RESULT_OK, data);
-		                finish();
-		            } catch (Exception e) {
-		                finishWithError("Failed to save image");
-		            }
+				try {
+					String filename = getIntent().getStringExtra(FILENAME);
+					int quality = getIntent().getIntExtra(QUALITY, 80);
+					File capturedImageFile = new File(getCacheDir(), filename);
+					Bitmap capturedImage = getScaledBitmap(jpegData);
+					capturedImage = correctCaptureImageOrientation(capturedImage);
+					capturedImage.compress(CompressFormat.JPEG, quality,
+							new FileOutputStream(capturedImageFile));
+					Intent data = new Intent();
+					data.putExtra(IMAGE_URI, Uri.fromFile(capturedImageFile)
+							.toString());
+					setResult(RESULT_OK, data);
+					finish();
+				} catch (Exception e) {
+					finishWithError("Failed to save image");
+				}
 
 			}
 		};
@@ -507,8 +538,6 @@ public void onBackPressed()
 				bitmap.getHeight(), matrix, true);
 	}
 
-	
-
 	private void releaseCamera() {
 		// stop and release camera
 		if (mCamera != null) {
@@ -521,7 +550,7 @@ public void onBackPressed()
 		Intent data = new Intent().putExtra(ERROR_MESSAGE, message);
 		setResult(RESULT_CANCELED, data);
 		finish();
-	} 
+	}
 
 	public void setCameraDisplayOrientation(Activity activity, int cameraId,
 			android.hardware.Camera camera) {
@@ -554,55 +583,57 @@ public void onBackPressed()
 		}
 		camera.setDisplayOrientation(result);
 	}
-	
-	@Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        try {
-            // When an Image is picked
-            if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK
-                    && null != data) {
-                // Get the Image from data
- 
-                Uri selectedImage = data.getData();
-              //  String[] filePathColumn = { MediaStore.Images.Media.DATA };
-                InputStream iStream =   getContentResolver().openInputStream(selectedImage);
-                byte[] jpegData = getBytes(iStream);
- 
-                String filename = getIntent().getStringExtra(FILENAME);
-                int quality = getIntent().getIntExtra(QUALITY, 80);
-                File capturedImageFile = new File(getCacheDir(), filename);
-                Bitmap capturedImage = getScaledBitmap(jpegData);
-                capturedImage = correctCaptureImageOrientation(capturedImage);
-                capturedImage.compress(CompressFormat.JPEG, quality, new FileOutputStream(capturedImageFile));
-                Intent intent = new Intent();
-                intent.putExtra(IMAGE_URI, Uri.fromFile(capturedImageFile).toString());
-                setResult(RESULT_OK, intent);
-                finish();
-            
- 
-            } else {
-                Toast.makeText(this, "You haven't picked Image",
-                        Toast.LENGTH_LONG).show();
-                finishWithError("Failed to save image");
-            }
-        } catch (Exception e) {
-            Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG)
-                    .show();
-            finishWithError("Failed to save image");
-        }
- 
-    }
-	
-	public byte[] getBytes(InputStream inputStream) throws IOException {
-	      ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
-	      int bufferSize = 1024;
-	      byte[] buffer = new byte[bufferSize];
 
-	      int len = 0;
-	      while ((len = inputStream.read(buffer)) != -1) {
-	        byteBuffer.write(buffer, 0, len);
-	      }
-	      return byteBuffer.toByteArray();
-	    }
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		try {
+			// When an Image is picked
+			if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK
+					&& null != data) {
+				// Get the Image from data
+
+				Uri selectedImage = data.getData();
+				// String[] filePathColumn = { MediaStore.Images.Media.DATA };
+				InputStream iStream = getContentResolver().openInputStream(
+						selectedImage);
+				byte[] jpegData = getBytes(iStream);
+
+				String filename = getIntent().getStringExtra(FILENAME);
+				int quality = getIntent().getIntExtra(QUALITY, 80);
+				File capturedImageFile = new File(getCacheDir(), filename);
+				Bitmap capturedImage = getScaledBitmap(jpegData);
+				capturedImage = correctCaptureImageOrientation(capturedImage);
+				capturedImage.compress(CompressFormat.JPEG, quality,
+						new FileOutputStream(capturedImageFile));
+				Intent intent = new Intent();
+				intent.putExtra(IMAGE_URI, Uri.fromFile(capturedImageFile)
+						.toString());
+				setResult(RESULT_OK, intent);
+				finish();
+
+			} else {
+				Toast.makeText(this, "You haven't picked Image",
+						Toast.LENGTH_LONG).show();
+				finishWithError("Failed to save image");
+			}
+		} catch (Exception e) {
+			Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG)
+					.show();
+			finishWithError("Failed to save image");
+		}
+
+	}
+
+	public byte[] getBytes(InputStream inputStream) throws IOException {
+		ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
+		int bufferSize = 1024;
+		byte[] buffer = new byte[bufferSize];
+
+		int len = 0;
+		while ((len = inputStream.read(buffer)) != -1) {
+			byteBuffer.write(buffer, 0, len);
+		}
+		return byteBuffer.toByteArray();
+	}
 }
