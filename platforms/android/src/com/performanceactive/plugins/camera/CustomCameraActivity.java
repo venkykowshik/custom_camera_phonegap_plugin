@@ -186,6 +186,9 @@ public class CustomCameraActivity extends Activity {
 	private void createFlashButton() {
 		// flash button....
 		flash = (Button) findViewById(fakeR.getId("id", "flash"));
+		
+		Bitmap tmpHolderBitmap = BitmapFactory.decodeResource(getResources(), fakeR.getId("drawable", "capture_button"));
+		flash.setBackgroundResource(fakeR.getId("drawable", "capture_button"));
 		// setBitmap(flash, "capture_button.png");
 		// flash.setBackgroundColor(Color.parseColor("#567678"));
 		// flash.setScaleType(ScaleType.FIT_CENTER);
