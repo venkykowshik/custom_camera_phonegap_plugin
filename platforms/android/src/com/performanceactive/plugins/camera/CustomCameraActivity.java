@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -20,14 +21,15 @@ import android.hardware.Camera.Parameters;
 import android.hardware.Camera.PictureCallback;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore.Images;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -40,6 +42,7 @@ public class CustomCameraActivity extends Activity {
 	private LinearLayout cameraPreview;
 	private boolean cameraFront = false;
 	private boolean isLighOn = false;
+	private ImageView backButton;
 
 	// private RelativeLayout layout;
 
@@ -51,6 +54,7 @@ public class CustomCameraActivity extends Activity {
 	public static String TARGET_HEIGHT = "TargetHeight";
 
 	private static int RESULT_LOAD_IMG = 1;
+	private static int PIC_CROP = 2;
 
 	private FakeR fakeR;
 
@@ -69,6 +73,17 @@ public class CustomCameraActivity extends Activity {
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		fakeR = new FakeR(this);
 		setContentView(fakeR.getId("layout", "activity_main"));
+		
+		backButton = (ImageView) findViewById(fakeR.getId("id",
+				"backArrow"));
+		backButton.setImageResource(getDrawable("close"));
+		backButton.setOnClickListener( new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				onBackPressed();
+			}
+		});
 
 		// setContentView(R.layout.activity_main);
 		// setContentView(layout);
@@ -125,13 +140,13 @@ public class CustomCameraActivity extends Activity {
 //
 //		// layoutParams.bottomMargin = dpToPixels(10);
 //		capture.setLayoutParams(layoutParams);
-		capture.setOnTouchListener(new View.OnTouchListener() {
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				setCaptureButtonImageForEvent(capture, event);
-				return false;
-			}
-		});
+//		capture.setOnTouchListener(new View.OnTouchListener() {
+//			@Override
+//			public boolean onTouch(View v, MotionEvent event) {
+//				setCaptureButtonImageForEvent(capture, event);
+//				return false;
+//			}
+//		});
 		capture.setOnClickListener(captrureListener);
 		//layout.addView(capture);
 	}
@@ -168,7 +183,7 @@ public class CustomCameraActivity extends Activity {
 		
 	//	Bitmap tmpHolderBitmap = BitmapFactory.decodeResource(getResources(), fakeR.getId("drawable", "capture_button"));
 		//flash.setBackgroundResource(fakeR.getId("drawable", "flash_off"));
-		 setBitmap(flash, "flash_on");
+		 setBitmap(flash, "flash");
 		// flash.setBackgroundColor(Color.parseColor("#567678"));
 		// flash.setScaleType(ScaleType.FIT_CENTER);
 		// RelativeLayout.LayoutParams layoutParams = new
@@ -215,19 +230,19 @@ public class CustomCameraActivity extends Activity {
 		// layout.addView(gallery);
 	}
 
-	private int dpToPixels(int dp) {
-		float density = getResources().getDisplayMetrics().density;
-		return Math.round(dp * density);
-	}
-
-	private void setCaptureButtonImageForEvent(ImageButton image,
-			MotionEvent event) {
-		if (event.getAction() == MotionEvent.ACTION_DOWN) {
-			setBitmap(image, "capture_button_pressed");
-		} else if (event.getAction() == MotionEvent.ACTION_UP) {
-			setBitmap(image, "capture_button");
-		}
-	}
+//	private int dpToPixels(int dp) {
+//		float density = getResources().getDisplayMetrics().density;
+//		return Math.round(dp * density);
+//	}
+//
+//	private void setCaptureButtonImageForEvent(ImageButton image,
+//			MotionEvent event) {
+//		if (event.getAction() == MotionEvent.ACTION_DOWN) {
+//			setBitmap(image, "capture_button_pressed");
+//		} else if (event.getAction() == MotionEvent.ACTION_UP) {
+//			setBitmap(image, "capture_button");
+//		}
+//	}
 
 	private void setBitmap(ImageButton imageView, String imageName) {
 		try {
@@ -333,7 +348,7 @@ public class CustomCameraActivity extends Activity {
 				mCamera = Camera.open();
 				Parameters p = mCamera.getParameters();
 				p.setFlashMode(Parameters.FLASH_MODE_OFF);
-				setBitmap(flash, "flash_off");
+				setBitmap(flash, "flash");
 				mCamera.setParameters(p);
 				mPreview.refreshCamera(mCamera);
 				setCameraDisplayOrientation((Activity) myContext,
@@ -344,7 +359,7 @@ public class CustomCameraActivity extends Activity {
 				mCamera = Camera.open();
 				Parameters p = mCamera.getParameters();
 				p.setFlashMode(Parameters.FLASH_MODE_TORCH);
-				setBitmap(flash, "flash_on");
+				setBitmap(flash, "flash");
 				mCamera.setParameters(p);
 				mPreview.refreshCamera(mCamera);
 				setCameraDisplayOrientation((Activity) myContext,
@@ -581,8 +596,60 @@ public class CustomCameraActivity extends Activity {
 
 				Uri selectedImage = data.getData();
 				// String[] filePathColumn = { MediaStore.Images.Media.DATA };
+				
+				
+				try {
+					//call the standard crop action intent (the user device may not support it)
+					Intent cropIntent = new Intent("com.android.camera.action.CROP"); 
+					    //indicate image type and Uri
+					cropIntent.setDataAndType(selectedImage, "image/*");
+					    //set crop properties
+					cropIntent.putExtra("crop", "true");
+					    //indicate aspect of desired crop
+					cropIntent.putExtra("aspectX", 1);
+					cropIntent.putExtra("aspectY", 1);
+					    //indicate output X and Y
+					cropIntent.putExtra("outputX", 256);
+					cropIntent.putExtra("outputY", 256);
+					    //retrieve data on return
+					cropIntent.putExtra("return-data", true);
+					    //start the activity - we handle returning in onActivityResult
+					startActivityForResult(cropIntent, PIC_CROP); 
+				}
+				catch(ActivityNotFoundException anfe){
+				    //display an error message
+				    String errorMessage = "Whoops - your device doesn't support the crop action!";
+				    Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT);
+				    toast.show();
+				    
+				    InputStream iStream = getContentResolver().openInputStream(
+							selectedImage);
+					byte[] jpegData = getBytes(iStream);
+
+					String filename = getIntent().getStringExtra(FILENAME);
+					int quality = getIntent().getIntExtra(QUALITY, 80);
+					File capturedImageFile = new File(getCacheDir(), filename);
+					Bitmap capturedImage = getScaledBitmap(jpegData);
+					capturedImage = correctCaptureImageOrientation(capturedImage);
+					capturedImage.compress(CompressFormat.JPEG, quality,
+							new FileOutputStream(capturedImageFile));
+					Intent intent = new Intent();
+					intent.putExtra(IMAGE_URI, Uri.fromFile(capturedImageFile)
+							.toString());
+					setResult(RESULT_OK, intent);
+					finish();
+				    
+				}
+
+			} else if(requestCode == PIC_CROP && resultCode == RESULT_OK
+					&& null != data) {
+				//get the returned data
+				Bundle extras = data.getExtras();
+				//get the cropped bitmap
+				Bitmap thePic = extras.getParcelable("data");
+				
 				InputStream iStream = getContentResolver().openInputStream(
-						selectedImage);
+						getImageUri(this, thePic));
 				byte[] jpegData = getBytes(iStream);
 
 				String filename = getIntent().getStringExtra(FILENAME);
@@ -597,7 +664,7 @@ public class CustomCameraActivity extends Activity {
 						.toString());
 				setResult(RESULT_OK, intent);
 				finish();
-
+				 
 			} else {
 				Toast.makeText(this, "You haven't picked Image",
 						Toast.LENGTH_LONG).show();
@@ -609,6 +676,13 @@ public class CustomCameraActivity extends Activity {
 			finishWithError("Failed to save image");
 		}
 
+	}
+	
+	public Uri getImageUri(Context inContext, Bitmap inImage) {
+		  ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+		  inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+		  String path = Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+		  return Uri.parse(path);
 	}
 
 	public byte[] getBytes(InputStream inputStream) throws IOException {
