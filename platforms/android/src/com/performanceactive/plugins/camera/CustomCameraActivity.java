@@ -67,16 +67,16 @@ public class CustomCameraActivity extends Activity {
 		fakeR = new FakeR(this);
 		setContentView(fakeR.getId("layout", "activity_main"));
 		
-		backButton = (ImageView) findViewById(fakeR.getId("id",
-				"backArrow"));
-		backButton.setImageResource(getDrawable("close"));
-		backButton.setOnClickListener( new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				finishWithError("Camera View Closed");
-			}
-		});
+//		backButton = (ImageView) findViewById(fakeR.getId("id",
+//				"backArrow"));
+//		backButton.setImageResource(getDrawable("close"));
+//		backButton.setOnClickListener( new OnClickListener() {
+//			
+//			@Override
+//			public void onClick(View v) {
+//				finishWithError("Camera View Closed");
+//			}
+//		});
 
 		initialize();
 
