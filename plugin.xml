@@ -2,7 +2,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="com.venkykowshik.plugins.camera"
-    version="1.5.2">
+    version="1.5.3">
 
     <name>Custom Camera</name>
     <description>Custom Camera Plugin</description>
@@ -110,13 +110,7 @@
 <source-file src="platforms/android/res/drawable-hdpi/close.png" target-dir="res/drawable-hdpi" />
 <source-file src="platforms/android/res/drawable-hdpi/switch_camera.png" target-dir="res/drawable-hdpi" />
 
-<source-file src="platforms/android/res/drawable-xhdpi/flash.png" target-dir="res/drawable-xhdpi" />
-<source-file src="platforms/android/res/drawable-xhdpi/close.png" target-dir="res/drawable-xhdpi" />
-<source-file src="platforms/android/res/drawable-xhdpi/switch_camera.png" target-dir="res/drawable-xhdpi" />
 
-<source-file src="platforms/android/res/drawable-mdpi/flash.png" target-dir="res/drawable-mdpi" />
-<source-file src="platforms/android/res/drawable-mdpi/close.png" target-dir="res/drawable-mdpi" />
-<source-file src="platforms/android/res/drawable-mdpi/switch_camera.gif" target-dir="res/drawable-mdpi" />
      
 
 </platform>
