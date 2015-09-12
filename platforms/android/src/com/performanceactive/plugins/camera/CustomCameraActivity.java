@@ -64,12 +64,6 @@ public class CustomCameraActivity extends Activity {
 
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		myContext = this;
-
-		// layout = new RelativeLayout(this);
-		// RelativeLayout.LayoutParams layoutParams = new
-		// RelativeLayout.LayoutParams(
-		// LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-		// layout.setLayoutParams(layoutParams);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		fakeR = new FakeR(this);
 		setContentView(fakeR.getId("layout", "activity_main"));
@@ -85,174 +79,60 @@ public class CustomCameraActivity extends Activity {
 			}
 		});
 
-		// setContentView(R.layout.activity_main);
-		// setContentView(layout);
 		initialize();
 
 	}
 
 	public void initialize() {
-		// cameraPreview = new LinearLayout(myContext);fakeR.getId("id",
-		// "camera_perview")
 		cameraPreview = (LinearLayout) findViewById(fakeR.getId("id",
 				"camera_perview"));
 
-		// cameraPreview.setLayoutParams(new LinearLayout.LayoutParams(
-		// LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-		// cameraPreview.setOrientation(LinearLayout.VERTICAL);
 
 		mPreview = new CameraPreview(myContext, mCamera);
 		cameraPreview.addView(mPreview);
-		// layout.addView(cameraPreview);
 
 		createCaptureButton();
 		createRotateButton();
 		createFlashButton();
 		createGalleryButton();
 
-		// capture = (Button) findViewById(R.id.button_capture);
-		// capture.setOnClickListener(captrureListener);
-		//
-		// switchCamera = (Button) findViewById(R.id.button_ChangeCamera);
-		// switchCamera.setOnClickListener(switchCameraListener);
-		//
-		// flash = (Button) findViewById(R.id.button_flash);
-		// flash.setOnClickListener(flashCameraListener);
 
 	}
 
 	private void createCaptureButton() {
 		capture = (ImageButton) findViewById(fakeR.getId("id", "capture"));
 		setBitmap(capture, "capture_button");
-		//capture.setBackgroundColor(Color.parseColor("#90226a"));
-		//capture.setBackgroundResource(fakeR.getId("drawable", "capture_button"));
-		
-      
-
-        
-		
-		
-//		capture.setScaleType(ScaleType.FIT_CENTER);
-//		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-//				dpToPixels(75), dpToPixels(75));
-//		layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-//		layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
-//
-//		// layoutParams.bottomMargin = dpToPixels(10);
-//		capture.setLayoutParams(layoutParams);
-//		capture.setOnTouchListener(new View.OnTouchListener() {
-//			@Override
-//			public boolean onTouch(View v, MotionEvent event) {
-//				setCaptureButtonImageForEvent(capture, event);
-//				return false;
-//			}
-//		});
 		capture.setOnClickListener(captrureListener);
-		//layout.addView(capture);
 	}
 
 	private void createRotateButton() {
 
 		// roatate camera button...
 		switchCamera = (ImageButton) findViewById(fakeR.getId("id", "switch_camera"));
-		//switchCamera.setBackgroundResource(fakeR.getId("drawable", "switch_camera"));
-		 setBitmap(switchCamera, "switch_camera");
-		// switchCamera.setBackgroundColor(Color.parseColor("#567678"));
-		// switchCamera.setScaleType(ScaleType.FIT_CENTER);
-		// RelativeLayout.LayoutParams layoutParams = new
-		// RelativeLayout.LayoutParams(
-		// dpToPixels(75), dpToPixels(75));
-		// layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-		// layoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-		// layoutParams.bottomMargin = dpToPixels(10);
-		// switchCamera.setLayoutParams(layoutParams);
-		// switchCamera.setOnTouchListener(new View.OnTouchListener() {
-		// @Override
-		// public boolean onTouch(View v, MotionEvent event) {
-		// setCaptureButtonImageForEvent(switchCamera, event);
-		// return false;
-		// }
-		// });
+		setBitmap(switchCamera, "switch_camera");
 		switchCamera.setOnClickListener(switchCameraListener);
-		// layout.addView(switchCamera);
 	}
 
 	private void createFlashButton() {
 		// flash button....
 		flash = (ImageButton) findViewById(fakeR.getId("id", "flash"));
-		
-	//	Bitmap tmpHolderBitmap = BitmapFactory.decodeResource(getResources(), fakeR.getId("drawable", "capture_button"));
-		//flash.setBackgroundResource(fakeR.getId("drawable", "flash_off"));
-		 setBitmap(flash, "flash");
-		// flash.setBackgroundColor(Color.parseColor("#567678"));
-		// flash.setScaleType(ScaleType.FIT_CENTER);
-		// RelativeLayout.LayoutParams layoutParams = new
-		// RelativeLayout.LayoutParams(
-		// dpToPixels(75), dpToPixels(75));
-		// layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-		// layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-		// layoutParams.bottomMargin = dpToPixels(10);
-		// flash.setLayoutParams(layoutParams);
-		// flash.setOnTouchListener(new View.OnTouchListener() {
-		// @Override
-		// public boolean onTouch(View v, MotionEvent event) {
-		// setCaptureButtonImageForEvent(flash, event);
-		// return false;
-		// }
-		// });
+		setBitmap(flash, "flash");
 		flash.setOnClickListener(flashCameraListener);
-		// layout.addView(flash);
 	}
 
 	private void createGalleryButton() {
 
 		// roatate camera button...
 		gallery = (ImageButton) findViewById(fakeR.getId("id", "gallery"));
-		//gallery.setBackgroundResource(fakeR.getId("drawable", "gallery"));
-		 setBitmap(gallery, "gallery");
-		// gallery.setBackgroundColor(Color.parseColor("#567678"));
-		// gallery.setScaleType(ScaleType.FIT_CENTER);
-		// RelativeLayout.LayoutParams layoutParams = new
-		// RelativeLayout.LayoutParams(
-		// dpToPixels(75), dpToPixels(75));
-		// layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-		// layoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-		// layoutParams.bottomMargin = dpToPixels(10);
-		// gallery.setLayoutParams(layoutParams);
-		// gallery.setOnTouchListener(new View.OnTouchListener() {
-		// @Override
-		// public boolean onTouch(View v, MotionEvent event) {
-		// setCaptureButtonImageForEvent(gallery, event);
-		// return false;
-		// }
-		// });
+		setBitmap(gallery, "gallery");
 		gallery.setOnClickListener(galleryListner);
-		// layout.addView(gallery);
 	}
 
-//	private int dpToPixels(int dp) {
-//		float density = getResources().getDisplayMetrics().density;
-//		return Math.round(dp * density);
-//	}
-//
-//	private void setCaptureButtonImageForEvent(ImageButton image,
-//			MotionEvent event) {
-//		if (event.getAction() == MotionEvent.ACTION_DOWN) {
-//			setBitmap(image, "capture_button_pressed");
-//		} else if (event.getAction() == MotionEvent.ACTION_UP) {
-//			setBitmap(image, "capture_button");
-//		}
-//	}
+
 
 	private void setBitmap(ImageButton imageView, String imageName) {
 		try {
-
 			imageView.setImageResource(getDrawable(imageName));
-			// InputStream imageStream = this.getAssets().open(
-			// "www/img/cameraoverlay/" + imageName);
-			// Bitmap bitmap = BitmapFactory.decodeStream(imageStream);
-			// imageView.setImageBitmap(bitmap);
-			// imageStream.close();
 		} catch (Exception e) {
 			Log.e("dsnjnsdnjk", "Could load image", e);
 		}
