@@ -21,7 +21,6 @@ import android.hardware.Camera.Parameters;
 import android.hardware.Camera.PictureCallback;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore.Images;
 import android.util.Log;
 import android.view.Surface;
 import android.view.View;
@@ -495,8 +494,7 @@ public class CustomCameraActivity extends Activity {
 					cropIntent.putExtra("return-data", true);
 					    //start the activity - we handle returning in onActivityResult
 					startActivityForResult(cropIntent, PIC_CROP); 
-				}
-				catch(ActivityNotFoundException anfe){
+				} catch(ActivityNotFoundException anfe){
 				    //display an error message
 				    String errorMessage = "Whoops - your device doesn't support the crop action!";
 				    Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT);
@@ -528,22 +526,22 @@ public class CustomCameraActivity extends Activity {
 				//get the cropped bitmap
 				Bitmap thePic = extras.getParcelable("data");
 				
-				InputStream iStream = getContentResolver().openInputStream(
-						getImageUri(this, thePic));
-				byte[] jpegData = getBytes(iStream);
-
-				String filename = getIntent().getStringExtra(FILENAME);
-				int quality = getIntent().getIntExtra(QUALITY, 80);
-				File capturedImageFile = new File(getCacheDir(), filename);
-				Bitmap capturedImage = getScaledBitmap(jpegData);
-				capturedImage = correctCaptureImageOrientation(capturedImage);
-				capturedImage.compress(CompressFormat.JPEG, quality,
-						new FileOutputStream(capturedImageFile));
-				Intent intent = new Intent();
-				intent.putExtra(IMAGE_URI, Uri.fromFile(capturedImageFile)
-						.toString());
-				setResult(RESULT_OK, intent);
-				finish();
+//				InputStream iStream = getContentResolver().openInputStream(
+//						getImageUri(this, thePic));
+//				byte[] jpegData = getBytes(iStream);
+//
+//				String filename = getIntent().getStringExtra(FILENAME);
+//				int quality = getIntent().getIntExtra(QUALITY, 80);
+//				File capturedImageFile = new File(getCacheDir(), filename);
+//				Bitmap capturedImage = getScaledBitmap(jpegData);
+//				capturedImage = correctCaptureImageOrientation(capturedImage);
+//				capturedImage.compress(CompressFormat.JPEG, quality,
+//						new FileOutputStream(capturedImageFile));
+//				Intent intent = new Intent();
+//				intent.putExtra(IMAGE_URI, Uri.fromFile(capturedImageFile)
+//						.toString());
+//				setResult(RESULT_OK, intent);
+//				finish();
 				 
 			} else {
 				Toast.makeText(this, "You haven't picked Image",
@@ -558,12 +556,12 @@ public class CustomCameraActivity extends Activity {
 
 	}
 	
-	public Uri getImageUri(Context inContext, Bitmap inImage) {
-		  ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-		  inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-		  String path = Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-		  return Uri.parse(path);
-	}
+//	public Uri getImageUri(Context inContext, Bitmap inImage) {
+//		  ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+//		  inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+//		  String path = Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+//		  return Uri.parse(path);
+//	}
 
 	public byte[] getBytes(InputStream inputStream) throws IOException {
 		ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
