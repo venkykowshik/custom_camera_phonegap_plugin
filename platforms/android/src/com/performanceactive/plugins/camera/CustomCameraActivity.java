@@ -74,7 +74,7 @@ public class CustomCameraActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				onBackPressed();
+				finishWithError("Camera View Closed");
 			}
 		});
 
