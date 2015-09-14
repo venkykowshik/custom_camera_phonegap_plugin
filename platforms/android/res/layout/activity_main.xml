@@ -54,7 +54,7 @@
             android:id="@+id/switch_camera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+        
             android:layout_above="@+id/capture_view"
             android:layout_alignParentLeft="true" />
 
@@ -99,7 +99,7 @@
 
             <ImageButton
                 android:id="@+id/gallery"
-                android:layout_width="50dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:src="@android:drawable/ic_menu_camera" />
