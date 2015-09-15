@@ -54,7 +54,8 @@
             android:id="@+id/switch_camera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-        
+        	android:background="@null"
+        	android:src="@android:drawable/ic_menu_camera"
             android:layout_above="@+id/capture_view"
             android:layout_alignParentLeft="true" />
 
@@ -69,6 +70,8 @@
                 android:id="@+id/capture"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@null"
+                android:src="@android:drawable/ic_menu_camera"
                 android:layout_gravity="center" />
         </LinearLayout>
 
@@ -102,6 +105,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
+                android:background="@null"
                 android:src="@android:drawable/ic_menu_camera" />
         </LinearLayout>
 
@@ -111,6 +115,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
+            android:background="@null"
             android:padding="8dp" />
     </RelativeLayout>
 
