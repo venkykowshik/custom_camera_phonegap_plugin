@@ -87,7 +87,9 @@ public class CustomCameraActivity extends Activity {
 		cameraPreview = (LinearLayout) findViewById(fakeR.getId("id",
 				"camera_perview"));
 
-
+		Camera.Parameters params= mCamera.getParameters();
+		cameraPreview.getLayoutParams().width=params.getPreviewSize().height;
+		cameraPreview.getLayoutParams().height=params.getPreviewSize().width;
 		mPreview = new CameraPreview(myContext, mCamera);
 		cameraPreview.addView(mPreview);
 
@@ -200,6 +202,7 @@ public class CustomCameraActivity extends Activity {
 			mPreview.refreshCamera(mCamera);
 		}
 	}
+	
 
 	@Override
 	public void onBackPressed() {
