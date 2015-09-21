@@ -23,13 +23,15 @@ import android.os.Bundle;
 import android.provider.MediaStore.Images;
 import android.util.Log;
 import android.view.Surface;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 public class CustomCameraActivity extends Activity {
@@ -38,7 +40,7 @@ public class CustomCameraActivity extends Activity {
 //	private PictureCallback mPicture;
 	private ImageButton capture, switchCamera, flash, gallery;
 	private Context myContext;
-	private LinearLayout cameraPreview;
+//	private LinearLayout cameraPreview;
 	private boolean cameraFront = false;
 	private boolean isLighOn = false;
 	private ImageView backButton;
@@ -100,14 +102,12 @@ public class CustomCameraActivity extends Activity {
 	}
 
 	public void initialize() {
-		cameraPreview = (LinearLayout) findViewById(fakeR.getId("id",
-				"camera_perview"));
-
-		Camera.Parameters params = mCamera.getParameters();
-		cameraPreview.getLayoutParams().width = params.getPreviewSize().height;
-		cameraPreview.getLayoutParams().height = params.getPreviewSize().width;
-		mPreview = new CameraPreview(myContext);
-		cameraPreview.addView(mPreview);
+	
+		mPreview = new CameraPreview(this, (SurfaceView) findViewById(fakeR.getId("id", "surfaceView")));		
+		mPreview.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+		((FrameLayout) findViewById(fakeR.getId("id",
+				"camera_perview"))).addView(mPreview);
+		mPreview.setKeepScreenOn(true);
 
 		createCaptureButton();
 		createRotateButton();
@@ -128,14 +128,14 @@ public class CustomCameraActivity extends Activity {
 		switchCamera = (ImageButton) findViewById(fakeR.getId("id",
 				"switch_camera"));
 		setBitmap(switchCamera, "switch_camera");
-		switchCamera.setOnClickListener(switchCameraListener);
+	//	switchCamera.setOnClickListener(switchCameraListener);
 	}
 
 	private void createFlashButton() {
 		// flash button....
 		flash = (ImageButton) findViewById(fakeR.getId("id", "flash"));
 		setBitmap(flash, "flash");
-		flash.setOnClickListener(flashCameraListener);
+	//	flash.setOnClickListener(flashCameraListener);
 	}
 
 	private void createGalleryButton() {
@@ -197,23 +197,34 @@ public class CustomCameraActivity extends Activity {
 	protected void onResume() {
 		super.onResume();
 
-		// Open the default i.e. the first rear facing camera.
-		mCamera = Camera.open();
-		cameraCurrentlyLocked = defaultCameraId;
-		mPreview.setCamera(mCamera);
+		int numCams = Camera.getNumberOfCameras();
+		if(numCams > 0){
+			try{
+				mCamera = Camera.open(0);
+				mCamera.startPreview();
+				mPreview.setCamera(mCamera);
+			} catch (RuntimeException ex){
+				Toast.makeText(this, "Camera Not Found", Toast.LENGTH_LONG).show();
+			}
+		}
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
 
-		// Because the Camera object is a shared resource, it's very
-		// important to release it when the activity is paused.
-		if (mCamera != null) {
+		if(mCamera != null) {
+			mCamera.stopPreview();
 			mPreview.setCamera(null);
 			mCamera.release();
 			mCamera = null;
 		}
+		super.onPause();
+	}
+	
+	private void resetCam() {
+		mCamera.startPreview();
+		mPreview.setCamera(mCamera);
 	}
 
 	@Override
@@ -292,7 +303,7 @@ public class CustomCameraActivity extends Activity {
                     .open((cameraCurrentlyLocked + 1) % numberOfCameras);
             cameraCurrentlyLocked = (cameraCurrentlyLocked + 1)
                     % numberOfCameras;
-            mPreview.switchCamera(mCamera);
+           // mPreview.switchCamera(mCamera);
 
             // Start the preview
             mCamera.startPreview();

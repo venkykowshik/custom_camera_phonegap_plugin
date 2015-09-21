@@ -43,22 +43,27 @@
         android:layout_height="fill_parent"
         android:layout_below="@+id/header" >
 
-        <LinearLayout
+        <FrameLayout
             android:id="@+id/camera_perview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/capture_view"
-            android:orientation="vertical" />
-        
+            android:layout_above="@+id/capture_view" >
+
+            <SurfaceView
+                android:id="@+id/surfaceView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </FrameLayout>
 
         <ImageButton
             android:id="@+id/switch_camera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-        	android:background="@null"
-        	android:src="@android:drawable/ic_menu_camera"
             android:layout_above="@+id/capture_view"
-            android:layout_alignParentLeft="true" />
+            android:layout_alignParentLeft="true"
+            android:background="@null"
+            android:src="@android:drawable/ic_menu_camera" />
 
         <LinearLayout
             android:id="@+id/capture_view"
@@ -71,9 +76,9 @@
                 android:id="@+id/capture"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:background="@null"
-                android:src="@android:drawable/ic_menu_camera"
-                android:layout_gravity="center" />
+                android:src="@android:drawable/ic_menu_camera" />
         </LinearLayout>
 
         <LinearLayout
@@ -105,8 +110,8 @@
                 android:id="@+id/gallery"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
                 android:background="@null"
+                android:padding="8dp"
                 android:src="@android:drawable/ic_menu_camera" />
         </LinearLayout>
 
