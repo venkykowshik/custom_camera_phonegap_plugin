@@ -10,7 +10,6 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
@@ -36,13 +35,19 @@ import android.widget.Toast;
 public class CustomCameraActivity extends Activity {
 	private Camera mCamera;
 	private CameraPreview mPreview;
-	private PictureCallback mPicture;
+//	private PictureCallback mPicture;
 	private ImageButton capture, switchCamera, flash, gallery;
 	private Context myContext;
 	private LinearLayout cameraPreview;
 	private boolean cameraFront = false;
 	private boolean isLighOn = false;
 	private ImageView backButton;
+
+	int numberOfCameras;
+	int cameraCurrentlyLocked;
+
+	// The first rear facing camera
+	int defaultCameraId;
 
 	// private RelativeLayout layout;
 
@@ -67,17 +72,28 @@ public class CustomCameraActivity extends Activity {
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		fakeR = new FakeR(this);
 		setContentView(fakeR.getId("layout", "activity_main"));
-		
-		backButton = (ImageView) findViewById(fakeR.getId("id",
-				"backArrow"));
+
+		backButton = (ImageView) findViewById(fakeR.getId("id", "backArrow"));
 		backButton.setImageResource(getDrawable("close"));
-		backButton.setOnClickListener( new OnClickListener() {
-			
+		backButton.setOnClickListener(new OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
 				finishWithError("Camera View Closed");
 			}
 		});
+
+		// Find the total number of cameras available
+		numberOfCameras = Camera.getNumberOfCameras();
+
+		// Find the ID of the default camera
+		CameraInfo cameraInfo = new CameraInfo();
+		for (int i = 0; i < numberOfCameras; i++) {
+			Camera.getCameraInfo(i, cameraInfo);
+			if (cameraInfo.facing == CameraInfo.CAMERA_FACING_BACK) {
+				defaultCameraId = i;
+			}
+		}
 
 		initialize();
 
@@ -87,17 +103,16 @@ public class CustomCameraActivity extends Activity {
 		cameraPreview = (LinearLayout) findViewById(fakeR.getId("id",
 				"camera_perview"));
 
-		Camera.Parameters params= mCamera.getParameters();
-		cameraPreview.getLayoutParams().width=params.getPreviewSize().height;
-		cameraPreview.getLayoutParams().height=params.getPreviewSize().width;
-		mPreview = new CameraPreview(myContext, mCamera);
+		Camera.Parameters params = mCamera.getParameters();
+		cameraPreview.getLayoutParams().width = params.getPreviewSize().height;
+		cameraPreview.getLayoutParams().height = params.getPreviewSize().width;
+		mPreview = new CameraPreview(myContext);
 		cameraPreview.addView(mPreview);
 
 		createCaptureButton();
 		createRotateButton();
 		createFlashButton();
 		createGalleryButton();
-
 
 	}
 
@@ -110,7 +125,8 @@ public class CustomCameraActivity extends Activity {
 	private void createRotateButton() {
 
 		// roatate camera button...
-		switchCamera = (ImageButton) findViewById(fakeR.getId("id", "switch_camera"));
+		switchCamera = (ImageButton) findViewById(fakeR.getId("id",
+				"switch_camera"));
 		setBitmap(switchCamera, "switch_camera");
 		switchCamera.setOnClickListener(switchCameraListener);
 	}
@@ -130,8 +146,6 @@ public class CustomCameraActivity extends Activity {
 		gallery.setOnClickListener(galleryListner);
 	}
 
-
-
 	private void setBitmap(ImageButton imageView, String imageName) {
 		try {
 			imageView.setImageResource(getDrawable(imageName));
@@ -145,21 +159,21 @@ public class CustomCameraActivity extends Activity {
 		return fakeR.getId("drawable", name);
 	}
 
-	private int findFrontFacingCamera() {
-		int cameraId = -1;
-		// Search for the front facing camera
-		int numberOfCameras = Camera.getNumberOfCameras();
-		for (int i = 0; i < numberOfCameras; i++) {
-			CameraInfo info = new CameraInfo();
-			Camera.getCameraInfo(i, info);
-			if (info.facing == CameraInfo.CAMERA_FACING_FRONT) {
-				cameraId = i;
-				cameraFront = true;
-				break;
-			}
-		}
-		return cameraId;
-	}
+//	private int findFrontFacingCamera() {
+//		int cameraId = -1;
+//		// Search for the front facing camera
+//		int numberOfCameras = Camera.getNumberOfCameras();
+//		for (int i = 0; i < numberOfCameras; i++) {
+//			CameraInfo info = new CameraInfo();
+//			Camera.getCameraInfo(i, info);
+//			if (info.facing == CameraInfo.CAMERA_FACING_FRONT) {
+//				cameraId = i;
+//				cameraFront = true;
+//				break;
+//			}
+//		}
+//		return cameraId;
+//	}
 
 	private int findBackFacingCamera() {
 		int cameraId = -1;
@@ -179,30 +193,28 @@ public class CustomCameraActivity extends Activity {
 		return cameraId;
 	}
 
-	public void onResume() {
+	@Override
+	protected void onResume() {
 		super.onResume();
-		if (!hasCamera(myContext)) {
-			Toast toast = Toast.makeText(myContext,
-					"Sorry, your phone does not have a camera!",
-					Toast.LENGTH_LONG);
-			toast.show();
-			finishWithError("Could not display camera preview");
-			finish();
-		}
-		if (mCamera == null) {
-			// if the front facing camera does not exist
-			if (findFrontFacingCamera() < 0) {
-				Toast.makeText(this, "No front facing camera found.",
-						Toast.LENGTH_LONG).show();
-				switchCamera.setVisibility(View.GONE);
-			}
-			mCamera = Camera.open(findBackFacingCamera());
-			setCameraDisplayOrientation(this, findBackFacingCamera(), mCamera);
-			mPicture = getPictureCallback();
-			mPreview.refreshCamera(mCamera);
+
+		// Open the default i.e. the first rear facing camera.
+		mCamera = Camera.open();
+		cameraCurrentlyLocked = defaultCameraId;
+		mPreview.setCamera(mCamera);
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+
+		// Because the Camera object is a shared resource, it's very
+		// important to release it when the activity is paused.
+		if (mCamera != null) {
+			mPreview.setCamera(null);
+			mCamera.release();
+			mCamera = null;
 		}
 	}
-	
 
 	@Override
 	public void onBackPressed() {
@@ -233,7 +245,7 @@ public class CustomCameraActivity extends Activity {
 				p.setFlashMode(Parameters.FLASH_MODE_OFF);
 				setBitmap(flash, "flash");
 				mCamera.setParameters(p);
-				mPreview.refreshCamera(mCamera);
+				//mPreview.refreshCamera(mCamera);
 				setCameraDisplayOrientation((Activity) myContext,
 						findBackFacingCamera(), mCamera);
 				isLighOn = false;
@@ -244,7 +256,7 @@ public class CustomCameraActivity extends Activity {
 				p.setFlashMode(Parameters.FLASH_MODE_TORCH);
 				setBitmap(flash, "flash");
 				mCamera.setParameters(p);
-				mPreview.refreshCamera(mCamera);
+				//mPreview.refreshCamera(mCamera);
 				setCameraDisplayOrientation((Activity) myContext,
 						findBackFacingCamera(), mCamera);
 				isLighOn = true;
@@ -256,19 +268,34 @@ public class CustomCameraActivity extends Activity {
 	OnClickListener switchCameraListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			// get the number of cameras
-			int camerasNumber = Camera.getNumberOfCameras();
-			if (camerasNumber > 1) {
-				// release the old camera instance
-				// switch camera, from the front and the back and vice versa
-				releaseCamera();
-				chooseCamera();
-			} else {
-				Toast toast = Toast.makeText(myContext,
+			
+			 // check for availability of multiple cameras
+            if (numberOfCameras == 1) {
+            	Toast toast = Toast.makeText(myContext,
 						"Sorry, your phone has only one camera!",
 						Toast.LENGTH_LONG);
 				toast.show();
-			}
+            }
+
+            // OK, we have multiple cameras.
+            // Release this camera -> cameraCurrentlyLocked
+            if (mCamera != null) {
+                mCamera.stopPreview();
+                mPreview.setCamera(null);
+                mCamera.release();
+                mCamera = null;
+            }
+
+            // Acquire the next camera and request Preview to reconfigure
+            // parameters.
+            mCamera = Camera
+                    .open((cameraCurrentlyLocked + 1) % numberOfCameras);
+            cameraCurrentlyLocked = (cameraCurrentlyLocked + 1)
+                    % numberOfCameras;
+            mPreview.switchCamera(mCamera);
+
+            // Start the preview
+            mCamera.startPreview();
 		}
 	};
 
@@ -285,51 +312,33 @@ public class CustomCameraActivity extends Activity {
 		}
 	};
 
-	public void chooseCamera() {
-		// if the camera preview is the front
-
-		if (cameraFront) {
-			int cameraId = findBackFacingCamera();
-			if (cameraId >= 0) {
-				// open the backFacingCamera
-				// set a picture callback
-				// refresh the preview
-				mCamera = Camera.open(cameraId);
-				setCameraDisplayOrientation(this, cameraId, mCamera);
-				mPicture = getPictureCallback();
-				mPreview.refreshCamera(mCamera);
-			}
-		} else {
-			int cameraId = findFrontFacingCamera();
-			if (cameraId >= 0) {
-				// open the backFacingCamera
-				// set a picture callback
-				// refresh the preview
-				mCamera = Camera.open(cameraId);
-				setCameraDisplayOrientation(this, cameraId, mCamera);
-				mPicture = getPictureCallback();
-				mPreview.refreshCamera(mCamera);
-			}
-		}
-	}
-
-	@Override
-	protected void onPause() {
-		super.onPause();
-		// when on Pause, release camera in order to be used from other
-		// applications
-		releaseCamera();
-	}
-
-	private boolean hasCamera(Context context) {
-		// check if the device has camera
-		if (context.getPackageManager().hasSystemFeature(
-				PackageManager.FEATURE_CAMERA)) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+//	private void chooseCamera() {
+//		// if the camera preview is the front
+//
+//		if (cameraFront) {
+//			int cameraId = findBackFacingCamera();
+//			if (cameraId >= 0) {
+//				// open the backFacingCamera
+//				// set a picture callback
+//				// refresh the preview
+//				mCamera = Camera.open(cameraId);
+//				setCameraDisplayOrientation(this, cameraId, mCamera);
+//				mPicture = getPictureCallback();
+//				//mPreview.refreshCamera(mCamera);
+//			}
+//		} else {
+//			int cameraId = findFrontFacingCamera();
+//			if (cameraId >= 0) {
+//				// open the backFacingCamera
+//				// set a picture callback
+//				// refresh the preview
+//				mCamera = Camera.open(cameraId);
+//				setCameraDisplayOrientation(this, cameraId, mCamera);
+//				mPicture = getPictureCallback();
+//			//	mPreview.refreshCamera(mCamera);
+//			}
+//		}
+//	}
 
 	private PictureCallback getPictureCallback() {
 		PictureCallback picture = new PictureCallback() {
@@ -361,7 +370,7 @@ public class CustomCameraActivity extends Activity {
 	OnClickListener captrureListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			mCamera.takePicture(null, null, mPicture);
+			mCamera.takePicture(null, null, getPictureCallback());
 		}
 	};
 
@@ -479,32 +488,35 @@ public class CustomCameraActivity extends Activity {
 
 				Uri selectedImage = data.getData();
 				// String[] filePathColumn = { MediaStore.Images.Media.DATA };
-				
-				
+
 				try {
-					//call the standard crop action intent (the user device may not support it)
-					Intent cropIntent = new Intent("com.android.camera.action.CROP"); 
-					    //indicate image type and Uri
+					// call the standard crop action intent (the user device may
+					// not support it)
+					Intent cropIntent = new Intent(
+							"com.android.camera.action.CROP");
+					// indicate image type and Uri
 					cropIntent.setDataAndType(selectedImage, "image/*");
-					    //set crop properties
+					// set crop properties
 					cropIntent.putExtra("crop", "true");
-					    //indicate aspect of desired crop
+					// indicate aspect of desired crop
 					cropIntent.putExtra("aspectX", 1);
 					cropIntent.putExtra("aspectY", 1);
-					    //indicate output X and Y
+					// indicate output X and Y
 					cropIntent.putExtra("outputX", 256);
 					cropIntent.putExtra("outputY", 256);
-					    //retrieve data on return
+					// retrieve data on return
 					cropIntent.putExtra("return-data", true);
-					    //start the activity - we handle returning in onActivityResult
-					startActivityForResult(cropIntent, PIC_CROP); 
-				} catch(ActivityNotFoundException anfe){
-				    //display an error message
-				    String errorMessage = "Whoops - your device doesn't support the crop action!";
-				    Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT);
-				    toast.show();
-				    
-				    InputStream iStream = getContentResolver().openInputStream(
+					// start the activity - we handle returning in
+					// onActivityResult
+					startActivityForResult(cropIntent, PIC_CROP);
+				} catch (ActivityNotFoundException anfe) {
+					// display an error message
+					String errorMessage = "Whoops - your device doesn't support the crop action!";
+					Toast toast = Toast.makeText(this, errorMessage,
+							Toast.LENGTH_SHORT);
+					toast.show();
+
+					InputStream iStream = getContentResolver().openInputStream(
 							selectedImage);
 					byte[] jpegData = getBytes(iStream);
 
@@ -520,16 +532,16 @@ public class CustomCameraActivity extends Activity {
 							.toString());
 					setResult(RESULT_OK, intent);
 					finish();
-				    
+
 				}
 
-			} else if(requestCode == PIC_CROP && resultCode == RESULT_OK
+			} else if (requestCode == PIC_CROP && resultCode == RESULT_OK
 					&& null != data) {
-				//get the returned data
+				// get the returned data
 				Bundle extras = data.getExtras();
-				//get the cropped bitmap
+				// get the cropped bitmap
 				Bitmap thePic = extras.getParcelable("data");
-				
+
 				InputStream iStream = getContentResolver().openInputStream(
 						getImageUri(this, thePic));
 				byte[] jpegData = getBytes(iStream);
@@ -546,7 +558,7 @@ public class CustomCameraActivity extends Activity {
 						.toString());
 				setResult(RESULT_OK, intent);
 				finish();
-				 
+
 			} else {
 				Toast.makeText(this, "You haven't picked Image",
 						Toast.LENGTH_LONG).show();
@@ -559,12 +571,13 @@ public class CustomCameraActivity extends Activity {
 		}
 
 	}
-	
+
 	public Uri getImageUri(Context inContext, Bitmap inImage) {
-		  ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-		  inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-		  String path = Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-		  return Uri.parse(path);
+		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+		inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+		String path = Images.Media.insertImage(inContext.getContentResolver(),
+				inImage, "Title", null);
+		return Uri.parse(path);
 	}
 
 	public byte[] getBytes(InputStream inputStream) throws IOException {
