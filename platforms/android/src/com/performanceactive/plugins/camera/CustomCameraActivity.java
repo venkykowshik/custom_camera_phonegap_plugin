@@ -34,6 +34,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.venkykowshik.squarecamera.CameraActivity;
+
 public class CustomCameraActivity extends Activity {
 	private Camera mCamera;
 	private CameraPreview mPreview;
@@ -62,6 +64,7 @@ public class CustomCameraActivity extends Activity {
 
 	private static int RESULT_LOAD_IMG = 1;
 	private static int PIC_CROP = 2;
+	private static final int REQUEST_CAMERA = 0;
 
 	private FakeR fakeR;
 
@@ -81,7 +84,8 @@ public class CustomCameraActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				finishWithError("Camera View Closed");
+				 Intent startCustomCameraIntent = new Intent(CustomCameraActivity.this, CameraActivity.class);
+			        startActivityForResult(startCustomCameraIntent, REQUEST_CAMERA);
 			}
 		});
 
@@ -492,6 +496,21 @@ public class CustomCameraActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		try {
+			
+			if (requestCode == REQUEST_CAMERA) {
+
+	            if (data.getExtras() != null) {
+	                Toast.makeText(this,"Camera View Closed",Toast.LENGTH_LONG).show();
+	            } else {
+	                Uri photoUri = data.getData();
+	                // Get the bitmap in according to the width of the device
+	                Intent intent = new Intent();
+					intent.putExtra(IMAGE_URI, photoUri.toString());
+					setResult(RESULT_OK, intent);
+					finish();
+	            }
+	        }
+			
 			// When an Image is picked
 			if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK
 					&& null != data) {
