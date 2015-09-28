@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.widget.Toast;
 
 import com.venkykowshik.squarecamera.CameraActivity;
 
@@ -29,10 +30,13 @@ public class CustomCamera extends CordovaPlugin {
 	    }
 	    this.callbackContext = callbackContext;
 	    Context context = this.cordova.getActivity();
+	    Toast.makeText(context, "Testing Camera", Toast.LENGTH_SHORT).show();
+	   
 	    Intent intent = new Intent(context, CameraActivity.class);
 	    intent.putExtra(FILENAME, args.getString(0));
 	    intent.putExtra(QUALITY, args.getInt(1));
 	    cordova.startActivityForResult(this, intent, 0);
+	    Toast.makeText(context, "Opend Camera", Toast.LENGTH_SHORT).show();
         return true;
     }
 
