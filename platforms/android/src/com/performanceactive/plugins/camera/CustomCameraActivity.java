@@ -6,6 +6,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import com.venkykowshik.squarecamera.CameraActivity;
+
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -33,8 +35,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
-
-import com.venkykowshik.squarecamera.CameraActivity;
 
 public class CustomCameraActivity extends Activity {
 	private Camera mCamera;

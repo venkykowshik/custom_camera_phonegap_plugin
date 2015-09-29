@@ -2,7 +2,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="com.venkykowshik.plugins.camera"
-    version="1.6.2">
+    version="1.6.3">
 
     <name>Custom Camera</name>
     <description>Custom Camera Plugin</description>
@@ -95,7 +95,7 @@
         </activity>
     </config-file>
     
-    <source-file src="platforms/android/libs/Camera.jar" target-dir="libs"/>
+    <source-file src="platforms/android/libs/squarecameralibrary.jar" target-dir="libs"/>
     
     <source-file src="platforms/android/src/com/performanceactive/plugins/camera/CustomCamera.java" target-dir="src/com/performanceactive/plugins/camera" />
     <source-file src="platforms/android/src/com/performanceactive/plugins/camera/CustomCameraActivity.java" target-dir="src/com/performanceactive/plugins/camera" />
