@@ -1,27 +1,23 @@
 package com.performanceactive.plugins.camera;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
+import static com.performanceactive.plugins.camera.CustomCameraActivity.ERROR_MESSAGE;
+import static com.performanceactive.plugins.camera.CustomCameraActivity.IMAGE_URI;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaArgs;
 import org.apache.cordova.CordovaPlugin;
 import org.json.JSONException;
 
-import com.venkykowshik.squarecamera.CameraActivity;
-
-import static com.performanceactive.plugins.camera.CustomCameraActivity.ERROR_MESSAGE;
-import static com.performanceactive.plugins.camera.CustomCameraActivity.FILENAME;
-import static com.performanceactive.plugins.camera.CustomCameraActivity.IMAGE_URI;
-import static com.performanceactive.plugins.camera.CustomCameraActivity.QUALITY;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 
 
 public class CustomCamera extends CordovaPlugin {
 
     private CallbackContext callbackContext;
-    private static final int REQUEST_CAMERA = 0;
+   
 
 	@Override
     public boolean execute(String action, CordovaArgs args, CallbackContext callbackContext) throws JSONException {
@@ -31,12 +27,11 @@ public class CustomCamera extends CordovaPlugin {
 	    }
 	    this.callbackContext = callbackContext;
 	    Context context = this.cordova.getActivity();
-//	    Intent intent = new Intent(context, CustomCameraActivity.class);
+	    Intent intent = new Intent(context, CustomCameraActivity.class);
 //	    intent.putExtra(FILENAME, args.getString(0));
 //	    intent.putExtra(QUALITY, args.getInt(1));
-//	    cordova.startActivityForResult(this, intent, 0);
-	    Intent startCustomCameraIntent = new Intent(context, CameraActivity.class);
-	    cordova.startActivityForResult(this,startCustomCameraIntent, REQUEST_CAMERA);
+	    cordova.startActivityForResult(this, intent, 0);
+	   
         return true;
     }
 

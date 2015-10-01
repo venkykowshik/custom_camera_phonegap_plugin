@@ -39,31 +39,26 @@
 
     <RelativeLayout
         android:id="@+id/layout_view"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_below="@+id/header" >
 
-        <FrameLayout
-            android:id="@+id/camera_perview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/capture_view" >
-
-            <SurfaceView
-                android:id="@+id/surfaceView"
+         <com.performanceactive.plugins.camera.SquareCameraPreview
+                android:id="@+id/camera_preview_view"
+                android:layout_above="@+id/capture_view"
                 android:layout_width="match_parent"
+                android:layout_centerInParent="true"
                 android:layout_height="match_parent" />
 
-        </FrameLayout>
-
-        <ImageButton
-            android:id="@+id/switch_camera"
+        <ImageView
+            android:id="@+id/change_camera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/capture_view"
             android:layout_alignParentLeft="true"
-            android:background="@null"
             android:src="@android:drawable/ic_menu_camera" />
+
+        
 
         <LinearLayout
             android:id="@+id/capture_view"
@@ -72,7 +67,7 @@
             android:layout_above="@+id/gallery_view"
             android:orientation="vertical" >
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/capture"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -115,14 +110,32 @@
                 android:src="@android:drawable/ic_menu_camera" />
         </LinearLayout>
 
-        <ImageButton
+        <LinearLayout
             android:id="@+id/flash"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:background="@null"
-            android:padding="8dp" />
+            android:gravity="center_horizontal"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/flash_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/ic_menu_camera" />
+
+            <TextView
+                android:id="@+id/auto_flash_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:text="Auto"
+                android:textColor="@android:color/white"
+                android:textSize="14sp" />
+        </LinearLayout>
     </RelativeLayout>
 
 </RelativeLayout>

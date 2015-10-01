@@ -1,82 +1,92 @@
 package com.performanceactive.plugins.camera;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
-import com.venkykowshik.squarecamera.CameraActivity;
-
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
-import android.graphics.Bitmap.CompressFormat;
-import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
-import android.hardware.Camera.Parameters;
-import android.hardware.Camera.PictureCallback;
+import android.hardware.Camera.Size;
+import android.hardware.SensorManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore.Images;
 import android.util.Log;
+import android.view.OrientationEventListener;
 import android.view.Surface;
-import android.view.SurfaceView;
+import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
-public class CustomCameraActivity extends Activity {
-	private Camera mCamera;
-	private CameraPreview mPreview;
-//	private PictureCallback mPicture;
-	private ImageButton capture, switchCamera, flash, gallery;
-	private Context myContext;
-//	private LinearLayout cameraPreview;
-	private boolean cameraFront = false;
-	private boolean isLighOn = false;
-	private ImageView backButton;
+@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+public class CustomCameraActivity extends Activity implements SurfaceHolder.Callback, Camera.PictureCallback {
 
-	int numberOfCameras;
-	int cameraCurrentlyLocked;
-
-	// The first rear facing camera
-	int defaultCameraId;
-
-	// private RelativeLayout layout;
-
-	public static String FILENAME = "Filename";
-	public static String QUALITY = "Quality";
+	public static final String TAG = CustomCameraActivity.class.getSimpleName();
+	public static final String CAMERA_ID_KEY = "camera_id";
+	public static final String CAMERA_FLASH_KEY = "flash_mode";
+	public static final String IMAGE_INFO = "image_info";
 	public static String IMAGE_URI = "ImageUri";
 	public static String ERROR_MESSAGE = "ErrorMessage";
-	public static String TARGET_WIDTH = "TargetWidth";
-	public static String TARGET_HEIGHT = "TargetHeight";
 
-	private static int RESULT_LOAD_IMG = 1;
-	private static int PIC_CROP = 2;
-	private static final int REQUEST_CAMERA = 0;
+	private static final int PICTURE_SIZE_MAX_WIDTH = 1280;
+	private static final int PREVIEW_SIZE_MAX_WIDTH = 640;
+
+	private int mCameraID;
+	private String mFlashMode;
+	private Camera mCamera;
+	private SquareCameraPreview mPreviewView;
+	private SurfaceHolder mSurfaceHolder;
+
+	private ImageParameters mImageParameters;
+
+	private static int RESULT_LOAD_IMG = 2;
+	private static int PIC_CROP = 1;
+
+	private CameraOrientationListener mOrientationListener;
 
 	private FakeR fakeR;
+
+	private ImageView backButton;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		if (savedInstanceState == null) {
+			mCameraID = getBackCameraID();
+			mFlashMode = Camera.Parameters.FLASH_MODE_AUTO;
+			mImageParameters = new ImageParameters();
+		} else {
+			mCameraID = savedInstanceState.getInt(CAMERA_ID_KEY);
+			mFlashMode = savedInstanceState.getString(CAMERA_FLASH_KEY);
+			mImageParameters = savedInstanceState.getParcelable(IMAGE_INFO);
+		}
 
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-		myContext = this;
+
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		fakeR = new FakeR(this);
+		mOrientationListener = new CameraOrientationListener(this);
 		setContentView(fakeR.getId("layout", "activity_main"));
+
+		mOrientationListener = new CameraOrientationListener(this);
 
 		backButton = (ImageView) findViewById(fakeR.getId("id", "backArrow"));
 		backButton.setImageResource(getDrawable("close"));
@@ -84,70 +94,434 @@ public class CustomCameraActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				 Intent startCustomCameraIntent = new Intent(CustomCameraActivity.this, CameraActivity.class);
-			        startActivityForResult(startCustomCameraIntent, REQUEST_CAMERA);
+					finishWithError("Camera View Closed...");
 			}
 		});
 
-		// Find the total number of cameras available
-		numberOfCameras = Camera.getNumberOfCameras();
+		mOrientationListener.enable();
 
-		// Find the ID of the default camera
+		mPreviewView = (SquareCameraPreview) findViewById(fakeR.getId("id", "camera_preview_view"));
+		mPreviewView.getHolder().addCallback(this);
+
+		final ImageView flashIconBtn = (ImageView) findViewById(fakeR.getId("id", "flash_icon"));
+		flashIconBtn.setImageResource(getDrawable("flash"));
+
+		mImageParameters.mIsPortrait = getResources()
+				.getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
+
+		Log.d(TAG, "onViewCreated");
+		if (savedInstanceState == null) {
+			ViewTreeObserver observer = mPreviewView.getViewTreeObserver();
+			observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+				@SuppressWarnings("deprecation")
+				@Override
+				public void onGlobalLayout() {
+					mImageParameters.mPreviewWidth = mPreviewView.getWidth();
+					mImageParameters.mPreviewHeight = mPreviewView.getHeight();
+
+					mImageParameters.mCoverWidth = mImageParameters.mCoverHeight = mImageParameters
+							.calculateCoverWidthHeight();
+
+					// Log.d(TAG, "parameters: " +
+					// mImageParameters.getStringValues());
+					// Log.d(TAG, "cover height " + topCoverView.getHeight());
+
+					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+						mPreviewView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+					} else {
+						mPreviewView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+					}
+				}
+			});
+		} else {
+
+		}
+
+		final ImageView swapCameraBtn = (ImageView) findViewById(fakeR.getId("id", "change_camera"));
+		swapCameraBtn.setImageResource(getDrawable("switch_camera"));
+		swapCameraBtn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (mCameraID == CameraInfo.CAMERA_FACING_FRONT) {
+					mCameraID = getBackCameraID();
+				} else {
+					mCameraID = getFrontCameraID();
+				}
+				restartPreview();
+			}
+		});
+
+		final View changeCameraFlashModeBtn = findViewById(fakeR.getId("id", "flash"));
+		changeCameraFlashModeBtn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (mFlashMode.equalsIgnoreCase(Camera.Parameters.FLASH_MODE_AUTO)) {
+					mFlashMode = Camera.Parameters.FLASH_MODE_ON;
+				} else if (mFlashMode.equalsIgnoreCase(Camera.Parameters.FLASH_MODE_ON)) {
+					mFlashMode = Camera.Parameters.FLASH_MODE_OFF;
+				} else if (mFlashMode.equalsIgnoreCase(Camera.Parameters.FLASH_MODE_OFF)) {
+					mFlashMode = Camera.Parameters.FLASH_MODE_AUTO;
+				}
+
+				setupFlashMode();
+				setupCamera();
+			}
+		});
+		setupFlashMode();
+
+		final ImageView takePhotoBtn = (ImageView) findViewById(fakeR.getId("id", "capture"));
+		takePhotoBtn.setImageResource(getDrawable("capture_button"));
+		takePhotoBtn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				takePicture();
+			}
+		});
+
+		final ImageButton gallery = (ImageButton) findViewById(fakeR.getId("id", "gallery"));
+		setBitmap(gallery, "gallery");
+
+		final LinearLayout gallery_view = (LinearLayout) findViewById(fakeR.getId("id", "gallery_view"));
+		gallery_view.setOnClickListener(galleryListner);
+
+	}
+
+	OnClickListener galleryListner = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			// Create intent to Open Image applications like Gallery, Google
+			// Photos
+			Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+					android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+			// Start the Intent
+			startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
+		}
+	};
+
+	public int getDrawable(String name) {
+
+		return fakeR.getId("drawable", name);
+	}
+
+	private void setupFlashMode() {
+
+		final TextView autoFlashIcon = (TextView) findViewById(fakeR.getId("id", "auto_flash_icon"));
+		if (Camera.Parameters.FLASH_MODE_AUTO.equalsIgnoreCase(mFlashMode)) {
+			autoFlashIcon.setText("Auto");
+		} else if (Camera.Parameters.FLASH_MODE_ON.equalsIgnoreCase(mFlashMode)) {
+			autoFlashIcon.setText("On");
+		} else if (Camera.Parameters.FLASH_MODE_OFF.equalsIgnoreCase(mFlashMode)) {
+			autoFlashIcon.setText("Off");
+		}
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		// Log.d(TAG, "onSaveInstanceState");
+		outState.putInt(CAMERA_ID_KEY, mCameraID);
+		outState.putString(CAMERA_FLASH_KEY, mFlashMode);
+		outState.putParcelable(IMAGE_INFO, mImageParameters);
+		super.onSaveInstanceState(outState);
+	}
+
+	// private void resizeTopAndBtmCover( final View topCover, final View
+	// bottomCover) {
+	// ResizeAnimation resizeTopAnimation
+	// = new ResizeAnimation(topCover, mImageParameters);
+	// resizeTopAnimation.setDuration(800);
+	// resizeTopAnimation.setInterpolator(new
+	// AccelerateDecelerateInterpolator());
+	// topCover.startAnimation(resizeTopAnimation);
+	//
+	// ResizeAnimation resizeBtmAnimation
+	// = new ResizeAnimation(bottomCover, mImageParameters);
+	// resizeBtmAnimation.setDuration(800);
+	// resizeBtmAnimation.setInterpolator(new
+	// AccelerateDecelerateInterpolator());
+	// bottomCover.startAnimation(resizeBtmAnimation);
+	// }
+
+	private void getCamera(int cameraID) {
+		try {
+			mCamera = Camera.open(cameraID);
+			mPreviewView.setCamera(mCamera);
+		} catch (Exception e) {
+			Log.d(TAG, "Can't open camera with id " + cameraID);
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Start the camera preview
+	 */
+	private void startCameraPreview() {
+		determineDisplayOrientation();
+		setupCamera();
+
+		try {
+			mCamera.setPreviewDisplay(mSurfaceHolder);
+			mCamera.startPreview();
+		} catch (IOException e) {
+			Log.d(TAG, "Can't start camera preview due to IOException " + e);
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Stop the camera preview
+	 */
+	private void stopCameraPreview() {
+		// Nulls out callbacks, stops face detection
+		mCamera.stopPreview();
+		mPreviewView.setCamera(null);
+	}
+
+	/**
+	 * Determine the current display orientation and rotate the camera preview
+	 * accordingly
+	 */
+	private void determineDisplayOrientation() {
 		CameraInfo cameraInfo = new CameraInfo();
-		for (int i = 0; i < numberOfCameras; i++) {
-			Camera.getCameraInfo(i, cameraInfo);
-			if (cameraInfo.facing == CameraInfo.CAMERA_FACING_BACK) {
-				defaultCameraId = i;
+		Camera.getCameraInfo(mCameraID, cameraInfo);
+
+		// Clockwise rotation needed to align the window display to the natural
+		// position
+		int rotation = this.getWindowManager().getDefaultDisplay().getRotation();
+		int degrees = 0;
+
+		switch (rotation) {
+		case Surface.ROTATION_0: {
+			degrees = 0;
+			break;
+		}
+		case Surface.ROTATION_90: {
+			degrees = 90;
+			break;
+		}
+		case Surface.ROTATION_180: {
+			degrees = 180;
+			break;
+		}
+		case Surface.ROTATION_270: {
+			degrees = 270;
+			break;
+		}
+		}
+
+		int displayOrientation;
+
+		// CameraInfo.Orientation is the angle relative to the natural position
+		// of the device
+		// in clockwise rotation (angle that is rotated clockwise from the
+		// natural position)
+		if (cameraInfo.facing == CameraInfo.CAMERA_FACING_FRONT) {
+			// Orientation is angle of rotation when facing the camera for
+			// the camera image to match the natural orientation of the device
+			displayOrientation = (cameraInfo.orientation + degrees) % 360;
+			displayOrientation = (360 - displayOrientation) % 360;
+		} else {
+			displayOrientation = (cameraInfo.orientation - degrees + 360) % 360;
+		}
+
+		mImageParameters.mDisplayOrientation = displayOrientation;
+		mImageParameters.mLayoutOrientation = degrees;
+
+		mCamera.setDisplayOrientation(mImageParameters.mDisplayOrientation);
+	}
+
+	/**
+	 * Setup the camera parameters
+	 */
+	private void setupCamera() {
+		// Never keep a global parameters
+		Camera.Parameters parameters = mCamera.getParameters();
+
+		Size bestPreviewSize = determineBestPreviewSize(parameters);
+		Size bestPictureSize = determineBestPictureSize(parameters);
+
+		parameters.setPreviewSize(bestPreviewSize.width, bestPreviewSize.height);
+		parameters.setPictureSize(bestPictureSize.width, bestPictureSize.height);
+
+		// Set continuous picture focus, if it's supported
+		if (parameters.getSupportedFocusModes().contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE)) {
+			parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+		}
+
+		final View changeCameraFlashModeBtn = findViewById(fakeR.getId("id", "flash"));
+		List<String> flashModes = parameters.getSupportedFlashModes();
+		if (flashModes != null && flashModes.contains(mFlashMode)) {
+			parameters.setFlashMode(mFlashMode);
+			changeCameraFlashModeBtn.setVisibility(View.VISIBLE);
+		} else {
+			changeCameraFlashModeBtn.setVisibility(View.INVISIBLE);
+		}
+
+		// Lock in the changes
+		mCamera.setParameters(parameters);
+	}
+
+	private Size determineBestPreviewSize(Camera.Parameters parameters) {
+		return determineBestSize(parameters.getSupportedPreviewSizes(), PREVIEW_SIZE_MAX_WIDTH);
+	}
+
+	private Size determineBestPictureSize(Camera.Parameters parameters) {
+		return determineBestSize(parameters.getSupportedPictureSizes(), PICTURE_SIZE_MAX_WIDTH);
+	}
+
+	private Size determineBestSize(List<Size> sizes, int widthThreshold) {
+		Size bestSize = null;
+		Size size;
+		int numOfSizes = sizes.size();
+		for (int i = 0; i < numOfSizes; i++) {
+			size = sizes.get(i);
+			boolean isDesireRatio = (size.width / 4) == (size.height / 3);
+			boolean isBetterSize = (bestSize == null) || size.width > bestSize.width;
+
+			if (isDesireRatio && isBetterSize) {
+				bestSize = size;
 			}
 		}
 
-		initialize();
+		if (bestSize == null) {
+			Log.d(TAG, "cannot find the best camera size");
+			return sizes.get(sizes.size() - 1);
+		}
+
+		return bestSize;
+	}
+
+	private void restartPreview() {
+		if (mCamera != null) {
+			stopCameraPreview();
+			mCamera.release();
+			mCamera = null;
+		}
+
+		getCamera(mCameraID);
+		startCameraPreview();
+	}
+
+	private int getFrontCameraID() {
+		PackageManager pm = this.getPackageManager();
+		if (pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_FRONT)) {
+			return CameraInfo.CAMERA_FACING_FRONT;
+		}
+
+		return getBackCameraID();
+	}
+
+	private int getBackCameraID() {
+		return CameraInfo.CAMERA_FACING_BACK;
+	}
+
+	/**
+	 * Take a picture
+	 */
+	private void takePicture() {
+		mOrientationListener.rememberOrientation();
+
+		// Shutter callback occurs after the image is captured. This can
+		// be used to trigger a sound to let the user know that image is taken
+		Camera.ShutterCallback shutterCallback = null;
+
+		// Raw callback occurs when the raw image data is available
+		Camera.PictureCallback raw = null;
+
+		// postView callback occurs when a scaled, fully processed
+		// postView image is available.
+		Camera.PictureCallback postView = null;
+
+		// jpeg callback occurs when the compressed image is available
+		mCamera.takePicture(shutterCallback, raw, postView, this);
+	}
+
+	@Override
+	public void onStop() {
+		mOrientationListener.disable();
+
+		// stop the preview
+		if (mCamera != null) {
+			stopCameraPreview();
+			mCamera.release();
+			mCamera = null;
+		}
+
+		super.onStop();
+	}
+
+	@Override
+	public void surfaceCreated(SurfaceHolder holder) {
+		mSurfaceHolder = holder;
+
+		getCamera(mCameraID);
+		startCameraPreview();
+	}
+
+	@Override
+	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
 
 	}
 
-	public void initialize() {
-	
-		mPreview = new CameraPreview(this, (SurfaceView) findViewById(fakeR.getId("id", "surfaceView")));		
-		mPreview.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-		((FrameLayout) findViewById(fakeR.getId("id",
-				"camera_perview"))).addView(mPreview);
-		mPreview.setKeepScreenOn(true);
-
-		createCaptureButton();
-		createRotateButton();
-		createFlashButton();
-		createGalleryButton();
-
+	@Override
+	public void surfaceDestroyed(SurfaceHolder holder) {
+		// The surface is destroyed with the visibility of the SurfaceView is
+		// set to View.Invisible
 	}
 
-	private void createCaptureButton() {
-		capture = (ImageButton) findViewById(fakeR.getId("id", "capture"));
-		setBitmap(capture, "capture_button");
-		capture.setOnClickListener(captrureListener);
-	}
+	/**
+	 * When orientation changes, onOrientationChanged(int) of the listener will
+	 * be called
+	 */
+	private static class CameraOrientationListener extends OrientationEventListener {
 
-	private void createRotateButton() {
+		private int mCurrentNormalizedOrientation;
+		private int mRememberedNormalOrientation;
 
-		// roatate camera button...
-		switchCamera = (ImageButton) findViewById(fakeR.getId("id",
-				"switch_camera"));
-		setBitmap(switchCamera, "switch_camera");
-	//	switchCamera.setOnClickListener(switchCameraListener);
-	}
+		public CameraOrientationListener(Context context) {
+			super(context, SensorManager.SENSOR_DELAY_NORMAL);
+		}
 
-	private void createFlashButton() {
-		// flash button....
-		flash = (ImageButton) findViewById(fakeR.getId("id", "flash"));
-		setBitmap(flash, "flash");
-	//	flash.setOnClickListener(flashCameraListener);
-	}
+		@Override
+		public void onOrientationChanged(int orientation) {
+			if (orientation != ORIENTATION_UNKNOWN) {
+				mCurrentNormalizedOrientation = normalize(orientation);
+			}
+		}
 
-	private void createGalleryButton() {
+		/**
+		 * @param degrees
+		 *            Amount of clockwise rotation from the device's natural
+		 *            position
+		 * @return Normalized degrees to just 0, 90, 180, 270
+		 */
+		private int normalize(int degrees) {
+			if (degrees > 315 || degrees <= 45) {
+				return 0;
+			}
 
-		// roatate camera button...
-		gallery = (ImageButton) findViewById(fakeR.getId("id", "gallery"));
-		setBitmap(gallery, "gallery");
-		gallery.setOnClickListener(galleryListner);
+			if (degrees > 45 && degrees <= 135) {
+				return 90;
+			}
+
+			if (degrees > 135 && degrees <= 225) {
+				return 180;
+			}
+
+			if (degrees > 225 && degrees <= 315) {
+				return 270;
+			}
+
+			throw new RuntimeException("The physics as we know them are no more. Watch out for anomalies.");
+		}
+
+		public void rememberOrientation() {
+			mRememberedNormalOrientation = mCurrentNormalizedOrientation;
+		}
+
+		public int getRememberedNormalOrientation() {
+			rememberOrientation();
+			return mRememberedNormalOrientation;
+		}
 	}
 
 	private void setBitmap(ImageButton imageView, String imageName) {
@@ -158,362 +532,60 @@ public class CustomCameraActivity extends Activity {
 		}
 	}
 
-	public int getDrawable(String name) {
-
-		return fakeR.getId("drawable", name);
-	}
-
-//	private int findFrontFacingCamera() {
-//		int cameraId = -1;
-//		// Search for the front facing camera
-//		int numberOfCameras = Camera.getNumberOfCameras();
-//		for (int i = 0; i < numberOfCameras; i++) {
-//			CameraInfo info = new CameraInfo();
-//			Camera.getCameraInfo(i, info);
-//			if (info.facing == CameraInfo.CAMERA_FACING_FRONT) {
-//				cameraId = i;
-//				cameraFront = true;
-//				break;
-//			}
-//		}
-//		return cameraId;
-//	}
-
-	private int findBackFacingCamera() {
-		int cameraId = -1;
-		// Search for the back facing camera
-		// get the number of cameras
-		int numberOfCameras = Camera.getNumberOfCameras();
-		// for every camera check
-		for (int i = 0; i < numberOfCameras; i++) {
-			CameraInfo info = new CameraInfo();
-			Camera.getCameraInfo(i, info);
-			if (info.facing == CameraInfo.CAMERA_FACING_BACK) {
-				cameraId = i;
-				cameraFront = false;
-				break;
-			}
-		}
-		return cameraId;
-	}
-
+	/**
+	 * A picture has been taken
+	 * 
+	 * @param data
+	 * @param camera
+	 */
 	@Override
-	protected void onResume() {
-		super.onResume();
+	public void onPictureTaken(byte[] data, Camera camera) {
+		int rotation = getPhotoRotation();
 
-		int numCams = Camera.getNumberOfCameras();
-		if(numCams > 0){
-			try{
-				mCamera = Camera.open(0);
-				mCamera.startPreview();
-				mPreview.setCamera(mCamera);
-			} catch (RuntimeException ex){
-				Toast.makeText(this, "Camera Not Found", Toast.LENGTH_LONG).show();
-			}
-		}
-	}
+		Bitmap bitmap = ImageUtility.decodeSampledBitmapFromByte(this, data);
+		// Log.d(TAG, "original bitmap width " + bitmap.getWidth() + " height "
+		// + bitmap.getHeight());
+		if (rotation != 0) {
+			Bitmap oldBitmap = bitmap;
 
-	@Override
-	protected void onPause() {
-		super.onPause();
+			Matrix matrix = new Matrix();
+			matrix.postRotate(rotation);
 
-		if(mCamera != null) {
-			mCamera.stopPreview();
-			mPreview.setCamera(null);
-			mCamera.release();
-			mCamera = null;
-		}
-		super.onPause();
-	}
-	
-	private void resetCam() {
-		mCamera.startPreview();
-		mPreview.setCamera(mCamera);
-	}
+			bitmap = Bitmap.createBitmap(oldBitmap, 0, 0, oldBitmap.getWidth(), oldBitmap.getHeight(), matrix, false);
 
-	@Override
-	public void onBackPressed() {
-		// code here to show dialog
-		finishWithError("Camera View Closed");
-		super.onBackPressed(); // optional depending on your needs
-	}
-
-	OnClickListener flashCameraListener = new OnClickListener() {
-
-		@Override
-		public void onClick(View v) {
-
-			if (cameraFront) {
-				Toast toast = Toast
-						.makeText(
-								myContext,
-								"Sorry, your phone doesn't have Flash For Front Camera",
-								Toast.LENGTH_LONG);
-				toast.show();
-				return;
-			}
-
-			if (isLighOn) {
-				releaseCamera();
-				mCamera = Camera.open();
-				Parameters p = mCamera.getParameters();
-				p.setFlashMode(Parameters.FLASH_MODE_OFF);
-				setBitmap(flash, "flash");
-				mCamera.setParameters(p);
-				//mPreview.refreshCamera(mCamera);
-				setCameraDisplayOrientation((Activity) myContext,
-						findBackFacingCamera(), mCamera);
-				isLighOn = false;
-			} else {
-				releaseCamera();
-				mCamera = Camera.open();
-				Parameters p = mCamera.getParameters();
-				p.setFlashMode(Parameters.FLASH_MODE_TORCH);
-				setBitmap(flash, "flash");
-				mCamera.setParameters(p);
-				//mPreview.refreshCamera(mCamera);
-				setCameraDisplayOrientation((Activity) myContext,
-						findBackFacingCamera(), mCamera);
-				isLighOn = true;
-			}
-
-		}
-	};
-
-	OnClickListener switchCameraListener = new OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			
-			 // check for availability of multiple cameras
-            if (numberOfCameras == 1) {
-            	Toast toast = Toast.makeText(myContext,
-						"Sorry, your phone has only one camera!",
-						Toast.LENGTH_LONG);
-				toast.show();
-            }
-
-            // OK, we have multiple cameras.
-            // Release this camera -> cameraCurrentlyLocked
-            if (mCamera != null) {
-                mCamera.stopPreview();
-                mPreview.setCamera(null);
-                mCamera.release();
-                mCamera = null;
-            }
-
-            // Acquire the next camera and request Preview to reconfigure
-            // parameters.
-            mCamera = Camera
-                    .open((cameraCurrentlyLocked + 1) % numberOfCameras);
-            cameraCurrentlyLocked = (cameraCurrentlyLocked + 1)
-                    % numberOfCameras;
-           // mPreview.switchCamera(mCamera);
-
-            // Start the preview
-            mCamera.startPreview();
-		}
-	};
-
-	OnClickListener galleryListner = new OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			// Create intent to Open Image applications like Gallery, Google
-			// Photos
-			Intent galleryIntent = new Intent(
-					Intent.ACTION_PICK,
-					android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-			// Start the Intent
-			startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
-		}
-	};
-
-//	private void chooseCamera() {
-//		// if the camera preview is the front
-//
-//		if (cameraFront) {
-//			int cameraId = findBackFacingCamera();
-//			if (cameraId >= 0) {
-//				// open the backFacingCamera
-//				// set a picture callback
-//				// refresh the preview
-//				mCamera = Camera.open(cameraId);
-//				setCameraDisplayOrientation(this, cameraId, mCamera);
-//				mPicture = getPictureCallback();
-//				//mPreview.refreshCamera(mCamera);
-//			}
-//		} else {
-//			int cameraId = findFrontFacingCamera();
-//			if (cameraId >= 0) {
-//				// open the backFacingCamera
-//				// set a picture callback
-//				// refresh the preview
-//				mCamera = Camera.open(cameraId);
-//				setCameraDisplayOrientation(this, cameraId, mCamera);
-//				mPicture = getPictureCallback();
-//			//	mPreview.refreshCamera(mCamera);
-//			}
-//		}
-//	}
-
-	private PictureCallback getPictureCallback() {
-		PictureCallback picture = new PictureCallback() {
-
-			@Override
-			public void onPictureTaken(byte[] jpegData, Camera camera) {
-				try {
-					String filename = getIntent().getStringExtra(FILENAME);
-					int quality = getIntent().getIntExtra(QUALITY, 80);
-					File capturedImageFile = new File(getCacheDir(), filename);
-					Bitmap capturedImage = getScaledBitmap(jpegData);
-					capturedImage = correctCaptureImageOrientation(capturedImage);
-					capturedImage.compress(CompressFormat.JPEG, quality,
-							new FileOutputStream(capturedImageFile));
-					Intent data = new Intent();
-					data.putExtra(IMAGE_URI, Uri.fromFile(capturedImageFile)
-							.toString());
-					setResult(RESULT_OK, data);
-					finish();
-				} catch (Exception e) {
-					finishWithError("Failed to save image");
-				}
-
-			}
-		};
-		return picture;
-	}
-
-	OnClickListener captrureListener = new OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			mCamera.takePicture(null, null, getPictureCallback());
-		}
-	};
-
-	private Bitmap getScaledBitmap(byte[] jpegData) {
-		int targetWidth = getIntent().getIntExtra(TARGET_WIDTH, -1);
-		int targetHeight = getIntent().getIntExtra(TARGET_HEIGHT, -1);
-		if (targetWidth <= 0 && targetHeight <= 0) {
-			return BitmapFactory.decodeByteArray(jpegData, 0, jpegData.length);
+			oldBitmap.recycle();
 		}
 
-		// get dimensions of image without scaling
-		BitmapFactory.Options options = new BitmapFactory.Options();
-		options.inJustDecodeBounds = true;
-		BitmapFactory.decodeByteArray(jpegData, 0, jpegData.length, options);
-
-		// decode image as close to requested scale as possible
-		options.inJustDecodeBounds = false;
-		options.inSampleSize = calculateInSampleSize(options, targetWidth,
-				targetHeight);
-		Bitmap bitmap = BitmapFactory.decodeByteArray(jpegData, 0,
-				jpegData.length, options);
-
-		// set missing width/height based on aspect ratio
-		float aspectRatio = ((float) options.outHeight) / options.outWidth;
-		if (targetWidth > 0 && targetHeight <= 0) {
-			targetHeight = Math.round(targetWidth * aspectRatio);
-		} else if (targetWidth <= 0 && targetHeight > 0) {
-			targetWidth = Math.round(targetHeight / aspectRatio);
-		}
-
-		// make sure we also
-		Matrix matrix = new Matrix();
-		matrix.postRotate(90);
-		return Bitmap.createScaledBitmap(bitmap, targetWidth, targetHeight,
-				true);
-	}
-
-	private int calculateInSampleSize(BitmapFactory.Options options,
-			int requestedWidth, int requestedHeight) {
-		int originalHeight = options.outHeight;
-		int originalWidth = options.outWidth;
-		int inSampleSize = 1;
-		if (originalHeight > requestedHeight || originalWidth > requestedWidth) {
-			int halfHeight = originalHeight / 2;
-			int halfWidth = originalWidth / 2;
-			while ((halfHeight / inSampleSize) > requestedHeight
-					&& (halfWidth / inSampleSize) > requestedWidth) {
-				inSampleSize *= 2;
-			}
-		}
-		return inSampleSize;
-	}
-
-	private Bitmap correctCaptureImageOrientation(Bitmap bitmap) {
-		Matrix matrix = new Matrix();
-		matrix.postRotate(90);
-		return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(),
-				bitmap.getHeight(), matrix, true);
-	}
-
-	private void releaseCamera() {
-		// stop and release camera
-		if (mCamera != null) {
-			mCamera.release();
-			mCamera = null;
-		}
-	}
-
-	private void finishWithError(String message) {
-		Intent data = new Intent().putExtra(ERROR_MESSAGE, message);
-		setResult(RESULT_CANCELED, data);
+		Uri photoUri = ImageUtility.savePicture(this, bitmap);
+		Intent intent = new Intent();
+		intent.putExtra(IMAGE_URI, photoUri.toString());
+		setResult(RESULT_OK, intent);
 		finish();
+
 	}
 
-	public void setCameraDisplayOrientation(Activity activity, int cameraId,
-			android.hardware.Camera camera) {
-		android.hardware.Camera.CameraInfo info = new android.hardware.Camera.CameraInfo();
-		android.hardware.Camera.getCameraInfo(cameraId, info);
-		int rotation = activity.getWindowManager().getDefaultDisplay()
-				.getRotation();
-		int degrees = 0;
-		switch (rotation) {
-		case Surface.ROTATION_0:
-			degrees = 0;
-			break;
-		case Surface.ROTATION_90:
-			degrees = 90;
-			break;
-		case Surface.ROTATION_180:
-			degrees = 180;
-			break;
-		case Surface.ROTATION_270:
-			degrees = 270;
-			break;
+	private int getPhotoRotation() {
+		int rotation;
+		int orientation = mOrientationListener.getRememberedNormalOrientation();
+		CameraInfo info = new CameraInfo();
+		Camera.getCameraInfo(mCameraID, info);
+
+		if (info.facing == CameraInfo.CAMERA_FACING_FRONT) {
+			rotation = (info.orientation - orientation + 360) % 360;
+		} else {
+			rotation = (info.orientation + orientation) % 360;
 		}
 
-		int result;
-		if (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
-			result = (info.orientation + degrees) % 360;
-			result = (360 - result) % 360; // compensate the mirror
-		} else { // back-facing
-			result = (info.orientation - degrees + 360) % 360;
-		}
-		camera.setDisplayOrientation(result);
+		return rotation;
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		try {
-			
-			if (requestCode == REQUEST_CAMERA) {
 
-	            if (data.getExtras() != null) {
-	                Toast.makeText(this,"Camera View Closed",Toast.LENGTH_LONG).show();
-	            } else {
-	                Uri photoUri = data.getData();
-	                // Get the bitmap in according to the width of the device
-	                Intent intent = new Intent();
-					intent.putExtra(IMAGE_URI, photoUri.toString());
-					setResult(RESULT_OK, intent);
-					finish();
-	            }
-	        }
-			
 			// When an Image is picked
-			if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK
-					&& null != data) {
+			if (requestCode == RESULT_LOAD_IMG && resultCode == RESULT_OK && null != data) {
 				// Get the Image from data
 
 				Uri selectedImage = data.getData();
@@ -522,8 +594,7 @@ public class CustomCameraActivity extends Activity {
 				try {
 					// call the standard crop action intent (the user device may
 					// not support it)
-					Intent cropIntent = new Intent(
-							"com.android.camera.action.CROP");
+					Intent cropIntent = new Intent("com.android.camera.action.CROP");
 					// indicate image type and Uri
 					cropIntent.setDataAndType(selectedImage, "image/*");
 					// set crop properties
@@ -542,72 +613,47 @@ public class CustomCameraActivity extends Activity {
 				} catch (ActivityNotFoundException anfe) {
 					// display an error message
 					String errorMessage = "Whoops - your device doesn't support the crop action!";
-					Toast toast = Toast.makeText(this, errorMessage,
-							Toast.LENGTH_SHORT);
+					Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT);
 					toast.show();
 
-					InputStream iStream = getContentResolver().openInputStream(
-							selectedImage);
+					InputStream iStream = getContentResolver().openInputStream(selectedImage);
 					byte[] jpegData = getBytes(iStream);
 
-					String filename = getIntent().getStringExtra(FILENAME);
-					int quality = getIntent().getIntExtra(QUALITY, 80);
-					File capturedImageFile = new File(getCacheDir(), filename);
-					Bitmap capturedImage = getScaledBitmap(jpegData);
-					capturedImage = correctCaptureImageOrientation(capturedImage);
-					capturedImage.compress(CompressFormat.JPEG, quality,
-							new FileOutputStream(capturedImageFile));
+					Bitmap bitmap = ImageUtility.decodeSampledBitmapFromByte(this, jpegData);
+					Uri photoUri = ImageUtility.savePicture(this, bitmap);
 					Intent intent = new Intent();
-					intent.putExtra(IMAGE_URI, Uri.fromFile(capturedImageFile)
-							.toString());
+					intent.putExtra(IMAGE_URI, photoUri.toString());
 					setResult(RESULT_OK, intent);
 					finish();
 
 				}
 
-			} else if (requestCode == PIC_CROP && resultCode == RESULT_OK
-					&& null != data) {
+			} else if (requestCode == PIC_CROP && resultCode == RESULT_OK && null != data) {
 				// get the returned data
 				Bundle extras = data.getExtras();
 				// get the cropped bitmap
 				Bitmap thePic = extras.getParcelable("data");
-
-				InputStream iStream = getContentResolver().openInputStream(
-						getImageUri(this, thePic));
-				byte[] jpegData = getBytes(iStream);
-
-				String filename = getIntent().getStringExtra(FILENAME);
-				int quality = getIntent().getIntExtra(QUALITY, 80);
-				File capturedImageFile = new File(getCacheDir(), filename);
-				Bitmap capturedImage = getScaledBitmap(jpegData);
-				capturedImage = correctCaptureImageOrientation(capturedImage);
-				capturedImage.compress(CompressFormat.JPEG, quality,
-						new FileOutputStream(capturedImageFile));
+				Uri photoUri = ImageUtility.savePicture(this, thePic);
 				Intent intent = new Intent();
-				intent.putExtra(IMAGE_URI, Uri.fromFile(capturedImageFile)
-						.toString());
+				intent.putExtra(IMAGE_URI, photoUri.toString());
 				setResult(RESULT_OK, intent);
 				finish();
 
 			} else {
-				Toast.makeText(this, "You haven't picked Image",
-						Toast.LENGTH_LONG).show();
+				Toast.makeText(this, "You haven't picked Image", Toast.LENGTH_LONG).show();
 				finishWithError("Failed to save image");
 			}
 		} catch (Exception e) {
-			Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG)
-					.show();
+			Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
 			finishWithError("Failed to save image");
 		}
 
 	}
 
-	public Uri getImageUri(Context inContext, Bitmap inImage) {
-		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-		inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-		String path = Images.Media.insertImage(inContext.getContentResolver(),
-				inImage, "Title", null);
-		return Uri.parse(path);
+	private void finishWithError(String message) {
+		Intent data = new Intent().putExtra(ERROR_MESSAGE, message);
+		setResult(RESULT_CANCELED, data);
+		finish();
 	}
 
 	public byte[] getBytes(InputStream inputStream) throws IOException {
@@ -621,4 +667,5 @@ public class CustomCameraActivity extends Activity {
 		}
 		return byteBuffer.toByteArray();
 	}
+
 }
