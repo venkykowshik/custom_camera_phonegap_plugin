@@ -1,6 +1,6 @@
 ### Description
 
-Phonegap plugin which allows the caller to customise a camera preview, including a custom button and overlaying a border image in each corner.
+Phonegap plugin which allows the caller to customise a camera preview, including a custom button.
 
 ### Using the plugin
 
