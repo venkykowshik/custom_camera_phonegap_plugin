@@ -74,7 +74,7 @@ public class ImageFiltersActivity extends Activity {
 
 		Toast.makeText(this, "Processing...", Toast.LENGTH_SHORT).show();
 		ImageFilters imgFilter = new ImageFilters();
-		if (v.getId() == R.id.effect_none) {
+		if (v.getId() == fakeR.getId("id", "effect_none")) {
 			
 		}
 		else if (v.getId() == fakeR.getId("id", "effect_brightness"))
