@@ -50,6 +50,11 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name="com.performanceactive.plugins.camera.ImageFiltersActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>

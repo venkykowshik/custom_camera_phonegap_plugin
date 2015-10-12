@@ -59,6 +59,7 @@ public class CustomCameraActivity extends Activity implements SurfaceHolder.Call
 
 	private static int RESULT_LOAD_IMG = 2;
 	private static int PIC_CROP = 1;
+	private static int PIC_FILTERS = 3;
 
 	private CameraOrientationListener mOrientationListener;
 
@@ -557,11 +558,16 @@ public class CustomCameraActivity extends Activity implements SurfaceHolder.Call
 		}
 
 		Uri photoUri = ImageUtility.savePicture(this, bitmap);
-		Intent intent = new Intent();
+//		Intent intent = new Intent();
+//		intent.putExtra(IMAGE_URI, photoUri.toString());
+//		setResult(RESULT_OK, intent);
+//		finish();
+		
+		Intent intent = new Intent(this,ImageFiltersActivity.class);
 		intent.putExtra(IMAGE_URI, photoUri.toString());
-		setResult(RESULT_OK, intent);
-		finish();
-
+		startActivityForResult(intent, PIC_FILTERS);
+		
+		
 	}
 
 	private int getPhotoRotation() {
@@ -639,11 +645,23 @@ public class CustomCameraActivity extends Activity implements SurfaceHolder.Call
 				setResult(RESULT_OK, intent);
 				finish();
 
+			} else if (requestCode == PIC_FILTERS && resultCode == RESULT_OK && null != data) {
+				//Toast.makeText(this, "Pic Filters Callback", Toast.LENGTH_LONG).show();
+				Bundle bundle = data.getExtras();
+				String uriStr = bundle.getString(CustomCameraActivity.IMAGE_URI);
+				Intent intent = new Intent();
+				intent.putExtra(IMAGE_URI, uriStr);
+				setResult(RESULT_OK, intent);
+				finish();
+				
+			} else if (requestCode == PIC_FILTERS) {
+				finishWithError("User Cancelled at Filetrs Page.");	
 			} else {
 				Toast.makeText(this, "You haven't picked Image", Toast.LENGTH_LONG).show();
 				finishWithError("Failed to save image");
 			}
 		} catch (Exception e) {
+			Log.e("Saving", e.getMessage());
 			Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
 			finishWithError("Failed to save image");
 		}

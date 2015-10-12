@@ -2,7 +2,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="com.venkykowshik.plugins.camera"
-    version="1.6.5">
+    version="1.7">
 
     <name>Custom Camera</name>
     <description>Custom Camera Plugin</description>
@@ -95,11 +95,14 @@
     <config-file target="AndroidManifest.xml" parent="/manifest/application">
         <activity android:name="com.performanceactive.plugins.camera.CustomCameraActivity" android:screenOrientation="portrait" android:configChanges="orientation">
         </activity>
+        <activity android:name="com.performanceactive.plugins.camera.ImageFiltersActivity" android:screenOrientation="portrait" android:configChanges="orientation">
+        </activity>
     </config-file>
     
 
     <source-file src="platforms/android/src/com/performanceactive/plugins/camera/CustomCamera.java" target-dir="src/com/performanceactive/plugins/camera" />
     <source-file src="platforms/android/src/com/performanceactive/plugins/camera/CustomCameraActivity.java" target-dir="src/com/performanceactive/plugins/camera" />
+     <source-file src="platforms/android/src/com/performanceactive/plugins/camera/ImageFiltersActivity.java" target-dir="src/com/performanceactive/plugins/camera" />
     <source-file src="platforms/android/src/com/performanceactive/plugins/camera/CameraPreview.java" target-dir="src/com/performanceactive/plugins/camera" />
     <source-file src="platforms/android/src/com/performanceactive/plugins/camera/FakeR.java" target-dir="src/com/performanceactive/plugins/camera" />
     
@@ -107,8 +110,11 @@
      <source-file src="platforms/android/src/com/performanceactive/plugins/camera/ImageUtility.java" target-dir="src/com/performanceactive/plugins/camera" />
      <source-file src="platforms/android/src/com/performanceactive/plugins/camera/ResizeAnimation.java" target-dir="src/com/performanceactive/plugins/camera" />
      <source-file src="platforms/android/src/com/performanceactive/plugins/camera/SquareCameraPreview.java" target-dir="src/com/performanceactive/plugins/camera" />
+     <source-file src="platforms/android/src/com/performanceactive/plugins/camera/ConvolutionMatrix.java" target-dir="src/com/performanceactive/plugins/camera" />
+     <source-file src="platforms/android/src/com/performanceactive/plugins/camera/ImageFilters.java" target-dir="src/com/performanceactive/plugins/camera" />
     
     <source-file src="platforms/android/res/layout/activity_main.xml" target-dir="res/layout" />
+    <source-file src="platforms/android/res/layout/activity_filters.xml" target-dir="res/layout" />
    
 
 <source-file src="platforms/android/res/drawable-hdpi/capture_button.png" target-dir="res/drawable-hdpi" />
@@ -116,6 +122,16 @@
 <source-file src="platforms/android/res/drawable-hdpi/flash.png" target-dir="res/drawable-hdpi" />
 <source-file src="platforms/android/res/drawable-hdpi/close.png" target-dir="res/drawable-hdpi" />
 <source-file src="platforms/android/res/drawable-hdpi/switch_camera.png" target-dir="res/drawable-hdpi" />
+
+<source-file src="platforms/android/res/drawable-hdpi/bluer.png" target-dir="res/drawable-hdpi" />
+<source-file src="platforms/android/res/drawable-hdpi/brighten.png" target-dir="res/drawable-hdpi" />
+<source-file src="platforms/android/res/drawable-hdpi/darken.png" target-dir="res/drawable-hdpi" />
+<source-file src="platforms/android/res/drawable-hdpi/grayscale.png" target-dir="res/drawable-hdpi" />
+<source-file src="platforms/android/res/drawable-hdpi/greener.png" target-dir="res/drawable-hdpi" />
+<source-file src="platforms/android/res/drawable-hdpi/noise.png" target-dir="res/drawable-hdpi" />
+<source-file src="platforms/android/res/drawable-hdpi/none.png" target-dir="res/drawable-hdpi" />
+<source-file src="platforms/android/res/drawable-hdpi/redder.png" target-dir="res/drawable-hdpi" />
+<source-file src="platforms/android/res/drawable-hdpi/sepia.png" target-dir="res/drawable-hdpi" />
 
 
      
