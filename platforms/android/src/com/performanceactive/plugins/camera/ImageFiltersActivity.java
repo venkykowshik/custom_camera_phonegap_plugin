@@ -77,21 +77,21 @@ public class ImageFiltersActivity extends Activity {
 		if (v.getId() == R.id.effect_none) {
 			
 		}
-		else if (v.getId() == R.id.effect_brightness)
+		else if (v.getId() == fakeR.getId("id", "effect_brightness"))
 			imgMain.setImageBitmap(imgFilter.applyBrightnessEffect(src, 80));
-		else if (v.getId() == R.id.effect_contrast)
+		else if (v.getId() == fakeR.getId("id", "effect_contrast"))
 			imgMain.setImageBitmap(imgFilter.applyContrastEffect(src, 70));
-		else if (v.getId() == R.id.effect_flea)
+		else if (v.getId() == fakeR.getId("id", "effect_flea"))
 			imgMain.setImageBitmap(imgFilter.applyFleaEffect(src));
-		else if (v.getId() == R.id.effect_gaussian_blue)
+		else if (v.getId() == fakeR.getId("id", "effect_gaussian_blue"))
 			imgMain.setImageBitmap(imgFilter.applyGaussianBlurEffect(src));
-		else if (v.getId() == R.id.effect_gamma)
+		else if (v.getId() == fakeR.getId("id", "effect_gamma"))
 			imgMain.setImageBitmap(imgFilter.applyGammaEffect(src, 1.8, 1.8, 1.8));
-		else if (v.getId() == R.id.effect_grayscale)
+		else if (v.getId() == fakeR.getId("id", "effect_grayscale"))
 			imgMain.setImageBitmap(imgFilter.applyGreyscaleEffect(src));
-		else if (v.getId() == R.id.effect_mean_remove)
+		else if (v.getId() == fakeR.getId("id", "effect_mean_remove"))
 			imgMain.setImageBitmap(imgFilter.applyMeanRemovalEffect(src));
-		else if (v.getId() == R.id.effect_sepia)
+		else if (v.getId() == fakeR.getId("id", "effect_sepia"))
 			imgMain.setImageBitmap(imgFilter.applySepiaToningEffect(src, 10, 1.5, 0.6, 0.12));
 
 	}
