@@ -2,7 +2,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="com.venkykowshik.plugins.camera"
-    version="1.7.2">
+    version="1.7.3">
 
     <name>Custom Camera</name>
     <description>Custom Camera Plugin</description>
@@ -108,6 +108,8 @@
     <source-file src="platforms/android/res/drawable-hdpi/none.png" target-dir="res/drawable-hdpi" />
     <source-file src="platforms/android/res/drawable-hdpi/redder.png" target-dir="res/drawable-hdpi" />
     <source-file src="platforms/android/res/drawable-hdpi/sepia.png" target-dir="res/drawable-hdpi" />
+     <source-file src="platforms/android/res/drawable-hdpi/arrow_back_icon.png" target-dir="res/drawable-hdpi" />
+      <source-file src="platforms/android/res/drawable-hdpi/right_icon.png" target-dir="res/drawable-hdpi" />
     
 
     <source-file src="platforms/android/src/com/performanceactive/plugins/camera/CustomCamera.java" target-dir="src/com/performanceactive/plugins/camera" />

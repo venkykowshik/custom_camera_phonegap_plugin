@@ -654,7 +654,11 @@ public class CustomCameraActivity extends Activity implements SurfaceHolder.Call
 				setResult(RESULT_OK, intent);
 				finish();
 				
+			}  else if (requestCode == PIC_FILTERS && resultCode == RESULT_FIRST_USER) {
+				
+					
 			} else if (requestCode == PIC_FILTERS) {
+				
 				finishWithError("User Cancelled at Filetrs Page.");	
 			} else {
 				Toast.makeText(this, "You haven't picked Image", Toast.LENGTH_LONG).show();

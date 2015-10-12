@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 public class ImageFiltersActivity extends Activity {
@@ -59,6 +60,17 @@ public class ImageFiltersActivity extends Activity {
 				Intent intent = new Intent();
 				intent.putExtra(CustomCameraActivity.IMAGE_URI, photoUri.toString());
 				setResult(RESULT_OK, intent);
+				finish();
+			}
+		});
+		
+		final LinearLayout back_view = (LinearLayout) findViewById(fakeR.getId("id", "bottom_view"));
+		back_view.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent data = new Intent().putExtra(CustomCameraActivity.ERROR_MESSAGE, "User Closed View");
+				setResult(RESULT_FIRST_USER, data);
 				finish();
 			}
 		});
