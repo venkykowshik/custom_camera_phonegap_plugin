@@ -627,10 +627,9 @@ public class CustomCameraActivity extends Activity implements SurfaceHolder.Call
 
 					Bitmap bitmap = ImageUtility.decodeSampledBitmapFromByte(this, jpegData);
 					Uri photoUri = ImageUtility.savePicture(this, bitmap);
-					Intent intent = new Intent();
+					Intent intent = new Intent(this,ImageFiltersActivity.class);
 					intent.putExtra(IMAGE_URI, photoUri.toString());
-					setResult(RESULT_OK, intent);
-					finish();
+					startActivityForResult(intent, PIC_FILTERS);
 
 				}
 
@@ -640,10 +639,9 @@ public class CustomCameraActivity extends Activity implements SurfaceHolder.Call
 				// get the cropped bitmap
 				Bitmap thePic = extras.getParcelable("data");
 				Uri photoUri = ImageUtility.savePicture(this, thePic);
-				Intent intent = new Intent();
+				Intent intent = new Intent(this,ImageFiltersActivity.class);
 				intent.putExtra(IMAGE_URI, photoUri.toString());
-				setResult(RESULT_OK, intent);
-				finish();
+				startActivityForResult(intent, PIC_FILTERS);
 
 			} else if (requestCode == PIC_FILTERS && resultCode == RESULT_OK && null != data) {
 				//Toast.makeText(this, "Pic Filters Callback", Toast.LENGTH_LONG).show();

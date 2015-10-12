@@ -49,7 +49,7 @@ public class ImageFiltersActivity extends Activity {
 		});
 		
 		doneImg = (ImageView) findViewById(fakeR.getId("id", "doneButton"));
-		doneImg.setImageResource(getDrawable("close"));
+		//doneImg.setImageResource(getDrawable("close"));
 		doneImg.setOnClickListener(new OnClickListener() {
 
 			@Override
