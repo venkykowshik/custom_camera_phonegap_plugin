@@ -30,6 +30,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -95,7 +96,7 @@ public class CustomCameraActivity extends Activity implements SurfaceHolder.Call
 
 			@Override
 			public void onClick(View v) {
-					finishWithError("Camera View Closed...");
+				finishWithError("Camera View Closed...");
 			}
 		});
 
@@ -103,6 +104,9 @@ public class CustomCameraActivity extends Activity implements SurfaceHolder.Call
 
 		mPreviewView = (SquareCameraPreview) findViewById(fakeR.getId("id", "camera_preview_view"));
 		mPreviewView.getHolder().addCallback(this);
+
+		//final View topCoverView = findViewById(fakeR.getId("id", "cover_top_view"));
+		//final View btnCoverView = findViewById(fakeR.getId("id", "cover_bottom_view"));
 
 		final ImageView flashIconBtn = (ImageView) findViewById(fakeR.getId("id", "flash_icon"));
 		flashIconBtn.setImageResource(getDrawable("flash"));
@@ -126,6 +130,7 @@ public class CustomCameraActivity extends Activity implements SurfaceHolder.Call
 					// Log.d(TAG, "parameters: " +
 					// mImageParameters.getStringValues());
 					// Log.d(TAG, "cover height " + topCoverView.getHeight());
+					//resizeTopAndBtmCover(topCoverView, btnCoverView);
 
 					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
 						mPreviewView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
@@ -135,7 +140,13 @@ public class CustomCameraActivity extends Activity implements SurfaceHolder.Call
 				}
 			});
 		} else {
-
+//			 if (mImageParameters.isPortrait()) {
+//	                topCoverView.getLayoutParams().height = mImageParameters.mCoverHeight;
+//	                btnCoverView.getLayoutParams().height = mImageParameters.mCoverHeight;
+//	            } else {
+//	                topCoverView.getLayoutParams().width = mImageParameters.mCoverWidth;
+//	                btnCoverView.getLayoutParams().width = mImageParameters.mCoverWidth;
+//	            }
 		}
 
 		final ImageView swapCameraBtn = (ImageView) findViewById(fakeR.getId("id", "change_camera"));
@@ -170,7 +181,7 @@ public class CustomCameraActivity extends Activity implements SurfaceHolder.Call
 		});
 		setupFlashMode();
 
-		final ImageView takePhotoBtn = (ImageView) findViewById(fakeR.getId("id", "capture"));
+		final ImageView takePhotoBtn = (ImageView) findViewById(fakeR.getId("id", "capture_image_button"));
 		takePhotoBtn.setImageResource(getDrawable("capture_button"));
 		takePhotoBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -225,22 +236,17 @@ public class CustomCameraActivity extends Activity implements SurfaceHolder.Call
 		super.onSaveInstanceState(outState);
 	}
 
-	// private void resizeTopAndBtmCover( final View topCover, final View
-	// bottomCover) {
-	// ResizeAnimation resizeTopAnimation
-	// = new ResizeAnimation(topCover, mImageParameters);
-	// resizeTopAnimation.setDuration(800);
-	// resizeTopAnimation.setInterpolator(new
-	// AccelerateDecelerateInterpolator());
-	// topCover.startAnimation(resizeTopAnimation);
-	//
-	// ResizeAnimation resizeBtmAnimation
-	// = new ResizeAnimation(bottomCover, mImageParameters);
-	// resizeBtmAnimation.setDuration(800);
-	// resizeBtmAnimation.setInterpolator(new
-	// AccelerateDecelerateInterpolator());
-	// bottomCover.startAnimation(resizeBtmAnimation);
-	// }
+	private void resizeTopAndBtmCover(final View topCover, final View bottomCover) {
+		ResizeAnimation resizeTopAnimation = new ResizeAnimation(topCover, mImageParameters);
+		resizeTopAnimation.setDuration(800);
+		resizeTopAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+		topCover.startAnimation(resizeTopAnimation);
+
+		ResizeAnimation resizeBtmAnimation = new ResizeAnimation(bottomCover, mImageParameters);
+		resizeBtmAnimation.setDuration(800);
+		resizeBtmAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+		bottomCover.startAnimation(resizeBtmAnimation);
+	 }
 
 	private void getCamera(int cameraID) {
 		try {
@@ -558,16 +564,15 @@ public class CustomCameraActivity extends Activity implements SurfaceHolder.Call
 		}
 
 		Uri photoUri = ImageUtility.savePicture(this, bitmap);
-//		Intent intent = new Intent();
-//		intent.putExtra(IMAGE_URI, photoUri.toString());
-//		setResult(RESULT_OK, intent);
-//		finish();
-		
-		Intent intent = new Intent(this,ImageFiltersActivity.class);
+		// Intent intent = new Intent();
+		// intent.putExtra(IMAGE_URI, photoUri.toString());
+		// setResult(RESULT_OK, intent);
+		// finish();
+
+		Intent intent = new Intent(this, ImageFiltersActivity.class);
 		intent.putExtra(IMAGE_URI, photoUri.toString());
 		startActivityForResult(intent, PIC_FILTERS);
-		
-		
+
 	}
 
 	private int getPhotoRotation() {
@@ -627,7 +632,7 @@ public class CustomCameraActivity extends Activity implements SurfaceHolder.Call
 
 					Bitmap bitmap = ImageUtility.decodeSampledBitmapFromByte(this, jpegData);
 					Uri photoUri = ImageUtility.savePicture(this, bitmap);
-					Intent intent = new Intent(this,ImageFiltersActivity.class);
+					Intent intent = new Intent(this, ImageFiltersActivity.class);
 					intent.putExtra(IMAGE_URI, photoUri.toString());
 					startActivityForResult(intent, PIC_FILTERS);
 
@@ -639,25 +644,25 @@ public class CustomCameraActivity extends Activity implements SurfaceHolder.Call
 				// get the cropped bitmap
 				Bitmap thePic = extras.getParcelable("data");
 				Uri photoUri = ImageUtility.savePicture(this, thePic);
-				Intent intent = new Intent(this,ImageFiltersActivity.class);
+				Intent intent = new Intent(this, ImageFiltersActivity.class);
 				intent.putExtra(IMAGE_URI, photoUri.toString());
 				startActivityForResult(intent, PIC_FILTERS);
 
 			} else if (requestCode == PIC_FILTERS && resultCode == RESULT_OK && null != data) {
-				//Toast.makeText(this, "Pic Filters Callback", Toast.LENGTH_LONG).show();
+				// Toast.makeText(this, "Pic Filters Callback",
+				// Toast.LENGTH_LONG).show();
 				Bundle bundle = data.getExtras();
 				String uriStr = bundle.getString(CustomCameraActivity.IMAGE_URI);
 				Intent intent = new Intent();
 				intent.putExtra(IMAGE_URI, uriStr);
 				setResult(RESULT_OK, intent);
 				finish();
-				
-			}  else if (requestCode == PIC_FILTERS && resultCode == RESULT_FIRST_USER) {
-				
-					
+
+			} else if (requestCode == PIC_FILTERS && resultCode == RESULT_FIRST_USER) {
+
 			} else if (requestCode == PIC_FILTERS) {
-				
-				finishWithError("User Cancelled at Filetrs Page.");	
+
+				finishWithError("User Cancelled at Filetrs Page.");
 			} else {
 				Toast.makeText(this, "You haven't picked Image", Toast.LENGTH_LONG).show();
 				finishWithError("Failed to save image");
