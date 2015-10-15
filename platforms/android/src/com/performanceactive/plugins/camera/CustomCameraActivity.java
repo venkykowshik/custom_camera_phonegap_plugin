@@ -614,8 +614,8 @@ public class CustomCameraActivity extends Activity implements SurfaceHolder.Call
 					cropIntent.putExtra("aspectX", 1);
 					cropIntent.putExtra("aspectY", 1);
 					// indicate output X and Y
-					cropIntent.putExtra("outputX", 256);
-					cropIntent.putExtra("outputY", 256);
+					cropIntent.putExtra("outputX", 1280);
+					cropIntent.putExtra("outputY", 640);
 					// retrieve data on return
 					cropIntent.putExtra("return-data", true);
 					// start the activity - we handle returning in
