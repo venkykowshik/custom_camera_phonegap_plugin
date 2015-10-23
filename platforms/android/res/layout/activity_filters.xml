@@ -44,7 +44,7 @@
             android:src="@drawable/right_icon" />
     </LinearLayout>
 
-    <ImageView
+    <android.opengl.GLSurfaceView
         android:id="@+id/effect_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

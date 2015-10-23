@@ -2,7 +2,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="com.venkykowshik.plugins.camera"
-    version="1.7.6">
+    version="1.7.7">
 
     <name>Custom Camera</name>
     <description>Custom Camera Plugin</description>
@@ -117,6 +117,8 @@
      <source-file src="platforms/android/src/com/performanceactive/plugins/camera/ImageFiltersActivity.java" target-dir="src/com/performanceactive/plugins/camera" />
     <source-file src="platforms/android/src/com/performanceactive/plugins/camera/CameraPreview.java" target-dir="src/com/performanceactive/plugins/camera" />
     <source-file src="platforms/android/src/com/performanceactive/plugins/camera/FakeR.java" target-dir="src/com/performanceactive/plugins/camera" />
+     <source-file src="platforms/android/src/com/performanceactive/plugins/camera/TextureRenderer.java" target-dir="src/com/performanceactive/plugins/camera" />
+      <source-file src="platforms/android/src/com/performanceactive/plugins/camera/GLToolbox.java" target-dir="src/com/performanceactive/plugins/camera" />
     
      <source-file src="platforms/android/src/com/performanceactive/plugins/camera/ImageParameters.java" target-dir="src/com/performanceactive/plugins/camera" />
      <source-file src="platforms/android/src/com/performanceactive/plugins/camera/ImageUtility.java" target-dir="src/com/performanceactive/plugins/camera" />

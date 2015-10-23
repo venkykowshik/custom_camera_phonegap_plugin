@@ -93,7 +93,7 @@
         android:padding="10dp"
         android:src="@android:drawable/ic_menu_camera" />
 
-     <LinearLayout
+    <LinearLayout
         android:id="@+id/camera_tools_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -127,10 +127,10 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:gravity="center_vertical|right"
+                    android:lines="2"
                     android:paddingRight="10dp"
-                    android:text="كاميرا"
-                    android:textColor="@android:color/white"
-                    android:textSize="20dp" />
+                    android:text="كاميرا \nكاميرا"
+                    android:textColor="@android:color/white" />
             </LinearLayout>
 
             <ImageButton
