@@ -16,7 +16,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:src="@android:drawable/ic_menu_camera" />
+            android:src="@drawable/exist" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -31,17 +31,10 @@
                 android:layout_gravity="center"
                 android:gravity="center_vertical|right"
                 android:paddingRight="10dp"
-                android:text="كاميرا"
+                android:text="تأثيرات الصورة"
                 android:textColor="@android:color/white"
                 android:textSize="20dp" />
         </LinearLayout>
-
-        <ImageView
-            android:id="@+id/doneButton"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:padding="8dp"
-            android:src="@drawable/right_icon" />
     </LinearLayout>
 
     <android.opengl.GLSurfaceView
@@ -66,7 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="buttonClicked"
-                android:padding="2dp"
+                android:padding="18dp"
                 android:src="@drawable/none" />
 
             <ImageView
@@ -74,7 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="buttonClicked"
-                android:padding="2dp"
+                android:padding="18dp"
                 android:src="@drawable/bluer" />
 
             <ImageView
@@ -82,7 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="buttonClicked"
-                android:padding="2dp"
+                android:padding="18dp"
                 android:src="@drawable/brighten" />
 
             <ImageView
@@ -90,7 +83,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="buttonClicked"
-                android:padding="2dp"
+                android:padding="18dp"
                 android:src="@drawable/darken" />
 
             <ImageView
@@ -98,7 +91,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="buttonClicked"
-                android:padding="2dp"
+                android:padding="18dp"
                 android:src="@drawable/grayscale" />
 
             <ImageView
@@ -106,7 +99,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="buttonClicked"
-                android:padding="2dp"
+                android:padding="18dp"
                 android:src="@drawable/greener" />
 
             <ImageView
@@ -114,7 +107,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="buttonClicked"
-                android:padding="2dp"
+                android:padding="18dp"
                 android:src="@drawable/noise" />
 
             <ImageView
@@ -122,7 +115,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="buttonClicked"
-                android:padding="2dp"
+                android:padding="18dp"
                 android:src="@drawable/redder" />
 
             <ImageView
@@ -130,7 +123,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="buttonClicked"
-                android:padding="2dp"
+                android:padding="18dp"
                 android:src="@drawable/sepia" />
         </LinearLayout>
     </HorizontalScrollView>
@@ -140,31 +133,59 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:background="#606060" >
+        android:background="#606060"
+        android:orientation="horizontal"
+        android:weightSum="2" >
 
-        <ImageView
-            android:id="@+id/back_button"
-            android:layout_width="56dp"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:src="@drawable/arrow_back_icon" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" >
+
+            <ImageView
+                android:id="@+id/back_button"
+                android:layout_width="56dp"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:src="@drawable/back" />
+
+            <TextView
+                android:id="@+id/back_text"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center_vertical|left"
+                android:paddingRight="10dp"
+                android:text="عودة"
+                android:textColor="@android:color/white"
+                android:textSize="20dp" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:baselineAligned="false"
+            android:gravity="end"
             android:orientation="horizontal" >
 
             <TextView
-                android:id="@+id/back_text"
-                android:layout_width="match_parent"
+                android:id="@+id/next_text"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:gravity="center_vertical|left"
+                android:gravity="center_vertical|right"
                 android:paddingRight="10dp"
-                android:text="كاميرا"
+                android:text="التالي"
                 android:textColor="@android:color/white"
                 android:textSize="20dp" />
+
+            <ImageView
+                android:id="@+id/doneButton"
+                android:layout_width="56dp"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:src="@drawable/next" />
         </LinearLayout>
     </LinearLayout>
 

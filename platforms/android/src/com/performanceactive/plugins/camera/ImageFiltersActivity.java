@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.media.effect.Effect;
 import android.media.effect.EffectContext;
 import android.media.effect.EffectFactory;
@@ -25,6 +26,7 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class ImageFiltersActivity extends Activity implements GLSurfaceView.Renderer {
 
@@ -65,6 +67,7 @@ public class ImageFiltersActivity extends Activity implements GLSurfaceView.Rend
 		mEffectView.setEGLContextClientVersion(2);
 		mEffectView.setRenderer(this);
 		mEffectView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+		mEffectView.getHolder().setFixedSize(mEffectView.getWidth(),mEffectView.getHeight());
 		mCurrentEffect = fakeR.getId("id", "effect_none");
 		Bundle bundle = getIntent().getExtras();
 		String uriStr = bundle.getString(CustomCameraActivity.IMAGE_URI);
@@ -83,7 +86,7 @@ public class ImageFiltersActivity extends Activity implements GLSurfaceView.Rend
 		
 
 		backButton = (ImageView) findViewById(fakeR.getId("id", "backArrow"));
-		backButton.setImageResource(getDrawable("close"));
+		backButton.setImageResource(getDrawable("exist"));
 		backButton.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -118,6 +121,17 @@ public class ImageFiltersActivity extends Activity implements GLSurfaceView.Rend
 				finish();
 			}
 		});
+		
+		TextView header = (TextView) findViewById(fakeR.getId("id", "titletxt"));
+		 Typeface face= Typeface.createFromAsset(this.getAssets(), "Fonts/ARIALUNI.TTF");
+		 header.setTypeface(face);
+		 
+		 TextView next = (TextView) findViewById(fakeR.getId("id", "next_text"));
+		 TextView back = (TextView) findViewById(fakeR.getId("id", "back_text"));
+		 
+		 next.setTypeface(face);
+		 back.setTypeface(face);
+		 
 	}
 
 	private void finishWithError(String message) {

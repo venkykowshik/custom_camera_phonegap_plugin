@@ -14,6 +14,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
+import android.graphics.Typeface;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.hardware.Camera.Size;
@@ -67,6 +68,9 @@ public class CustomCameraActivity extends Activity implements SurfaceHolder.Call
 	private FakeR fakeR;
 
 	private ImageView backButton;
+	
+	private TextView header;
+	private TextView gallery_text;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -87,7 +91,14 @@ public class CustomCameraActivity extends Activity implements SurfaceHolder.Call
 		fakeR = new FakeR(this);
 		mOrientationListener = new CameraOrientationListener(this);
 		setContentView(fakeR.getId("layout", "activity_main"));
-
+		
+		header = (TextView) findViewById(fakeR.getId("id", "titletxt"));
+		 Typeface face= Typeface.createFromAsset(this.getAssets(), "Fonts/ARIALUNI.TTF");
+		 header.setTypeface(face);
+		 
+		 gallery_text = (TextView) findViewById(fakeR.getId("id", "gallery_text"));
+		 gallery_text.setTypeface(face);
+		 
 		mOrientationListener = new CameraOrientationListener(this);
 
 		backButton = (ImageView) findViewById(fakeR.getId("id", "backArrow"));
@@ -218,12 +229,14 @@ public class CustomCameraActivity extends Activity implements SurfaceHolder.Call
 	private void setupFlashMode() {
 
 		final TextView autoFlashIcon = (TextView) findViewById(fakeR.getId("id", "auto_flash_icon"));
+		 Typeface face= Typeface.createFromAsset(this.getAssets(), "Fonts/ARIALUNI.TTF");
+		 autoFlashIcon.setTypeface(face);
 		if (Camera.Parameters.FLASH_MODE_AUTO.equalsIgnoreCase(mFlashMode)) {
-			autoFlashIcon.setText("Auto");
+			autoFlashIcon.setText("تلقائي");
 		} else if (Camera.Parameters.FLASH_MODE_ON.equalsIgnoreCase(mFlashMode)) {
-			autoFlashIcon.setText("On");
+			autoFlashIcon.setText("على");
 		} else if (Camera.Parameters.FLASH_MODE_OFF.equalsIgnoreCase(mFlashMode)) {
-			autoFlashIcon.setText("Off");
+			autoFlashIcon.setText("بعيدا");
 		}
 	}
 
