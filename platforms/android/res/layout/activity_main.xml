@@ -58,6 +58,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignBottom="@id/camera_preview_view"
+        android:layout_above="@+id/camera_tools_view"
         android:background="@android:color/black" />
 
     <LinearLayout
@@ -68,13 +69,6 @@
         android:layout_below="@+id/cover_top_view"
         android:orientation="horizontal"
         android:padding="10dp" >
-
-        <ImageView
-            android:id="@+id/flash_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_menu_camera" />
-
         <TextView
             android:id="@+id/auto_flash_icon"
             android:layout_width="wrap_content"
@@ -85,6 +79,14 @@
             android:text="Auto"
             android:textColor="@android:color/white"
             android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/flash_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_camera" />
+
+        
     </LinearLayout>
 
     <ImageView

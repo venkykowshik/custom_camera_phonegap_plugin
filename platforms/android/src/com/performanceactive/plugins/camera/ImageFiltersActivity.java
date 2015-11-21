@@ -170,8 +170,8 @@ public class ImageFiltersActivity extends Activity implements GLSurfaceView.Rend
 
 		// Load input bitmap
 		Bitmap bitmap = src;
-		mImageWidth = bitmap.getWidth();
-		mImageHeight = bitmap.getHeight();
+		mImageWidth = mEffectView.getWidth();
+		mImageHeight = mEffectView.getHeight();
 		mTexRenderer.updateTextureSize(mImageWidth, mImageHeight);
 
 		// Upload to texture
