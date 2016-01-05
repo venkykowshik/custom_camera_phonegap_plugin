@@ -102,7 +102,7 @@ public class CustomCameraActivity extends Activity implements SurfaceHolder.Call
 		mOrientationListener = new CameraOrientationListener(this);
 
 		backButton = (ImageView) findViewById(fakeR.getId("id", "backArrow"));
-		backButton.setImageResource(getDrawable("close"));
+		backButton.setImageResource(getDrawable("exist"));
 		backButton.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -116,8 +116,8 @@ public class CustomCameraActivity extends Activity implements SurfaceHolder.Call
 		mPreviewView = (SquareCameraPreview) findViewById(fakeR.getId("id", "camera_preview_view"));
 		mPreviewView.getHolder().addCallback(this);
 
-		//final View topCoverView = findViewById(fakeR.getId("id", "cover_top_view"));
-		//final View btnCoverView = findViewById(fakeR.getId("id", "cover_bottom_view"));
+		final View topCoverView = findViewById(fakeR.getId("id", "cover_top_view"));
+		final View btnCoverView = findViewById(fakeR.getId("id", "cover_bottom_view"));
 
 		final ImageView flashIconBtn = (ImageView) findViewById(fakeR.getId("id", "flash_icon"));
 		flashIconBtn.setImageResource(getDrawable("flash"));
@@ -138,10 +138,9 @@ public class CustomCameraActivity extends Activity implements SurfaceHolder.Call
 					mImageParameters.mCoverWidth = mImageParameters.mCoverHeight = mImageParameters
 							.calculateCoverWidthHeight();
 
-					// Log.d(TAG, "parameters: " +
-					// mImageParameters.getStringValues());
+					// Log.d(TAG, "parameters: " + mImageParameters.getStringValues());
 					// Log.d(TAG, "cover height " + topCoverView.getHeight());
-					//resizeTopAndBtmCover(topCoverView, btnCoverView);
+					resizeTopAndBtmCover(topCoverView, btnCoverView);
 
 					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
 						mPreviewView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
@@ -151,13 +150,13 @@ public class CustomCameraActivity extends Activity implements SurfaceHolder.Call
 				}
 			});
 		} else {
-//			 if (mImageParameters.isPortrait()) {
-//	                topCoverView.getLayoutParams().height = mImageParameters.mCoverHeight;
-//	                btnCoverView.getLayoutParams().height = mImageParameters.mCoverHeight;
-//	            } else {
-//	                topCoverView.getLayoutParams().width = mImageParameters.mCoverWidth;
-//	                btnCoverView.getLayoutParams().width = mImageParameters.mCoverWidth;
-//	            }
+			 if (mImageParameters.isPortrait()) {
+	                topCoverView.getLayoutParams().height = mImageParameters.mCoverHeight;
+	                btnCoverView.getLayoutParams().height = mImageParameters.mCoverHeight;
+	            } else {
+	                topCoverView.getLayoutParams().width = mImageParameters.mCoverWidth;
+	                btnCoverView.getLayoutParams().width = mImageParameters.mCoverWidth;
+	            }
 		}
 
 		final ImageView swapCameraBtn = (ImageView) findViewById(fakeR.getId("id", "change_camera"));
@@ -675,7 +674,7 @@ public class CustomCameraActivity extends Activity implements SurfaceHolder.Call
 
 			} else if (requestCode == PIC_FILTERS) {
 
-				finishWithError("User Cancelled at Filetrs Page.");
+				finishWithError("User Cancelled Closed Page.");
 			} else {
 				Toast.makeText(this, "You haven't picked Image", Toast.LENGTH_LONG).show();
 				finishWithError("Failed to save image");

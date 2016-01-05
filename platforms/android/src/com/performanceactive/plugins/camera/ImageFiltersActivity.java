@@ -21,12 +21,14 @@ import android.opengl.GLSurfaceView;
 import android.opengl.GLUtils;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ImageFiltersActivity extends Activity implements GLSurfaceView.Renderer {
 
@@ -50,6 +52,8 @@ public class ImageFiltersActivity extends Activity implements GLSurfaceView.Rend
 	private int mImageHeight;
 	private boolean mInitialized = false;
 	private volatile boolean saveFrame;
+	
+	private static int PRODUCT_SCREEN = 4;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -104,10 +108,13 @@ public class ImageFiltersActivity extends Activity implements GLSurfaceView.Rend
 
 				Bitmap bitmap = src;
 				Uri photoUri = ImageUtility.savePicture(ImageFiltersActivity.this, bitmap);
-				Intent intent = new Intent();
+//				Intent intent = new Intent();
+//				intent.putExtra(CustomCameraActivity.IMAGE_URI, photoUri.toString());
+//				setResult(RESULT_OK, intent);
+//				finish();
+				Intent intent = new Intent(ImageFiltersActivity.this, ProductScreenActivity.class);
 				intent.putExtra(CustomCameraActivity.IMAGE_URI, photoUri.toString());
-				setResult(RESULT_OK, intent);
-				finish();
+				startActivityForResult(intent, PRODUCT_SCREEN);
 			}
 		});
 
@@ -348,5 +355,25 @@ public class ImageFiltersActivity extends Activity implements GLSurfaceView.Rend
 		Bitmap mBitmap = Bitmap.createBitmap(mWidth, mHeight, Bitmap.Config.ARGB_8888);
 		mBitmap.copyPixelsFromBuffer(ibt);
 		return mBitmap;
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		try {
+			if (requestCode == PRODUCT_SCREEN && resultCode == RESULT_FIRST_USER) {
+				
+			} else if (requestCode == PRODUCT_SCREEN) {
+				finishWithError("User Cancelled at Product Page.");
+			} else {
+				Toast.makeText(this, "You haven't picked Image", Toast.LENGTH_LONG).show();
+				finishWithError("Failed to save image");
+			}
+			
+		} catch (Exception e) {
+			Log.e("Saving", e.getMessage());
+			Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show();
+			finishWithError("Failed to save image");
+		}
 	}
 }
