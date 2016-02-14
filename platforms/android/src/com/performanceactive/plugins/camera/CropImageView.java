@@ -190,12 +190,12 @@ public class CropImageView extends FrameLayout {
         }
 
         LayoutInflater inflater = LayoutInflater.from(context);
-        View v = inflater.inflate(R.layout.crop_image_view, this, true);
+        View v = inflater.inflate(fakeR.getId("layout", "crop_image_view"), this, true);
 
-        mImageView = (ImageView) v.findViewById(R.id.ImageView_image);
+        mImageView = (ImageView) v.findViewById(fakeR.getId("id", "ImageView_image"));
         mImageView.setScaleType(scaleType);
 
-        mCropOverlayView = (CropOverlayView) v.findViewById(R.id.CropOverlayView);
+        mCropOverlayView = (CropOverlayView) v.findViewById(fakeR.getId("id", "CropOverlayView"));
         mCropOverlayView.setInitialAttributeValues(
                 cropShape, snapRadius, touchRadius, guidelines,
                 fixAspectRatio, aspectRatioX, aspectRatioY,
@@ -208,7 +208,7 @@ public class CropImageView extends FrameLayout {
                 minCropResultWidth, minCropResultHeight,
                 maxCropResultWidth, maxCropResultHeight);
 
-        mProgressBar = (ProgressBar) v.findViewById(R.id.CropProgressBar);
+        mProgressBar = (ProgressBar) v.findViewById(fakeR.getId("id", "CropProgressBar"));
         setProgressBarVisibility();
     }
     
