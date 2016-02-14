@@ -1,19 +1,10 @@
 package com.performanceactive.plugins.camera;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Activity;
-import android.content.ComponentName;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.provider.MediaStore;
 import android.view.View;
 import android.view.Window;
 import android.widget.Toast;
@@ -36,6 +27,8 @@ public class CropActivity extends Activity
 	private int mAspectRatioY = DEFAULT_ASPECT_RATIO_VALUES;
 
 	Bitmap croppedImage;
+	
+	private FakeR fakeR;
 	// endregion
 
 	// Saves the state upon rotating the screen/restarting the activity
@@ -55,13 +48,15 @@ public class CropActivity extends Activity
 	}
 
 	public void onCreate(Bundle savedInstanceState) {
+		
+		fakeR = new FakeR(this);
 
 		super.onCreate(savedInstanceState);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.activity_crop);
+		setContentView(fakeR.getId("layout", "activity_crop"));
 
 		// Initialize components of the app
-		mCropImageView = (CropImageView) findViewById(R.id.CropImageView);
+		mCropImageView = (CropImageView) findViewById(fakeR.getId("id", "CropImageView"));
 		
 		Bundle bundle = getIntent().getExtras();
 		String uriStr = bundle.getString(CustomCameraActivity.IMAGE_URI);
@@ -70,7 +65,7 @@ public class CropActivity extends Activity
 		// Sets initial aspect ratio to 10/10, for demonstration purposes
 		mCropImageView.setAspectRatio(DEFAULT_ASPECT_RATIO_VALUES, DEFAULT_ASPECT_RATIO_VALUES);
 
-		findViewById(R.id.titletxt).setOnClickListener(new View.OnClickListener() {
+		findViewById(fakeR.getId("id", "titletxt")).setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
