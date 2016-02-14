@@ -2,7 +2,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="com.venkykowshik.plugins.camera"
-    version="1.9">
+    version="1.9.1">
 
     <name>Custom Camera</name>
     <description>Custom Camera Plugin</description>
@@ -101,9 +101,13 @@
         </activity>
         <activity android:name="com.performanceactive.plugins.camera.ProductScreenActivity" android:screenOrientation="portrait" android:configChanges="orientation">
         </activity>
+        <activity android:name="com.performanceactive.plugins.camera.CropActivity" android:screenOrientation="portrait" android:configChanges="orientation">
+        </activity>
     </config-file>
     
      <source-file src="platforms/android/assets/Fonts/ARIALUNI.TTF" target-dir="assets/Fonts" />
+     
+     <source-file src="platforms/android/res/values/attrs.xml" target-dir="res/values" />
     
     <source-file src="platforms/android/res/drawable-hdpi/bluer.png" target-dir="res/drawable-hdpi" />
     <source-file src="platforms/android/res/drawable-hdpi/brighten.png" target-dir="res/drawable-hdpi" />
@@ -125,6 +129,7 @@
     <source-file src="platforms/android/src/com/performanceactive/plugins/camera/CustomCameraActivity.java" target-dir="src/com/performanceactive/plugins/camera" />
      <source-file src="platforms/android/src/com/performanceactive/plugins/camera/ImageFiltersActivity.java" target-dir="src/com/performanceactive/plugins/camera" />
      <source-file src="platforms/android/src/com/performanceactive/plugins/camera/ProductScreenActivity.java" target-dir="src/com/performanceactive/plugins/camera" />
+       <source-file src="platforms/android/src/com/performanceactive/plugins/camera/CropActivity.java" target-dir="src/com/performanceactive/plugins/camera" />
     <source-file src="platforms/android/src/com/performanceactive/plugins/camera/CameraPreview.java" target-dir="src/com/performanceactive/plugins/camera" />
     <source-file src="platforms/android/src/com/performanceactive/plugins/camera/FakeR.java" target-dir="src/com/performanceactive/plugins/camera" />
      <source-file src="platforms/android/src/com/performanceactive/plugins/camera/TextureRenderer.java" target-dir="src/com/performanceactive/plugins/camera" />
@@ -136,10 +141,22 @@
      <source-file src="platforms/android/src/com/performanceactive/plugins/camera/SquareCameraPreview.java" target-dir="src/com/performanceactive/plugins/camera" />
      <source-file src="platforms/android/src/com/performanceactive/plugins/camera/ConvolutionMatrix.java" target-dir="src/com/performanceactive/plugins/camera" />
      <source-file src="platforms/android/src/com/performanceactive/plugins/camera/ImageFilters.java" target-dir="src/com/performanceactive/plugins/camera" />
+     
+     <source-file src="platforms/android/src/com/performanceactive/plugins/camera/BitmapCroppingWorkerTask.java" target-dir="src/com/performanceactive/plugins/camera" />
+     <source-file src="platforms/android/src/com/performanceactive/plugins/camera/BitmapLoadingWorkerTask.java" target-dir="src/com/performanceactive/plugins/camera" />
+     <source-file src="platforms/android/src/com/performanceactive/plugins/camera/BitmapUtils.java" target-dir="src/com/performanceactive/plugins/camera" />
+       <source-file src="platforms/android/src/com/performanceactive/plugins/camera/CropDefaults.java" target-dir="src/com/performanceactive/plugins/camera" />
+     <source-file src="platforms/android/src/com/performanceactive/plugins/camera/CropImageView.java" target-dir="src/com/performanceactive/plugins/camera" />
+     <source-file src="platforms/android/src/com/performanceactive/plugins/camera/CropOverlayView.java" target-dir="src/com/performanceactive/plugins/camera" />
+     <source-file src="platforms/android/src/com/performanceactive/plugins/camera/CropWindowHandler.java" target-dir="src/com/performanceactive/plugins/camera" />
+     <source-file src="platforms/android/src/com/performanceactive/plugins/camera/CropWindowMoveHandler.java" target-dir="src/com/performanceactive/plugins/camera" />
     
     <source-file src="platforms/android/res/layout/activity_main.xml" target-dir="res/layout" />
     <source-file src="platforms/android/res/layout/activity_filters.xml" target-dir="res/layout" />
      <source-file src="platforms/android/res/layout/activity_add_product.xml" target-dir="res/layout" />
+     <source-file src="platforms/android/res/layout/crop_image_view.xml" target-dir="res/layout" />
+     <source-file src="platforms/android/res/layout/activity_crop.xml" target-dir="res/layout" />
+     
    
 
 <source-file src="platforms/android/res/drawable-hdpi/capture_button.png" target-dir="res/drawable-hdpi" />

@@ -617,22 +617,25 @@ public class CustomCameraActivity extends Activity implements SurfaceHolder.Call
 				try {
 					// call the standard crop action intent (the user device may
 					// not support it)
-					Intent cropIntent = new Intent("com.android.camera.action.CROP");
-					// indicate image type and Uri
-					cropIntent.setDataAndType(selectedImage, "image/*");
-					// set crop properties
-					cropIntent.putExtra("crop", "true");
-					// indicate aspect of desired crop
-					cropIntent.putExtra("aspectX", 1);
-					cropIntent.putExtra("aspectY", 1);
-					// indicate output X and Y
-					cropIntent.putExtra("outputX", 1280);
-					cropIntent.putExtra("outputY", 640);
-					// retrieve data on return
-					cropIntent.putExtra("return-data", true);
-					// start the activity - we handle returning in
-					// onActivityResult
-					startActivityForResult(cropIntent, PIC_CROP);
+//					Intent cropIntent = new Intent("com.android.camera.action.CROP");
+//					// indicate image type and Uri
+//					cropIntent.setDataAndType(selectedImage, "image/*");
+//					// set crop properties
+//					cropIntent.putExtra("crop", "true");
+//					// indicate aspect of desired crop
+//					cropIntent.putExtra("aspectX", 10);
+//					cropIntent.putExtra("aspectY", 10);
+//					// indicate output X and Y
+//					cropIntent.putExtra("outputX", 1280);
+//					cropIntent.putExtra("outputY", 640);
+//					// retrieve data on return
+//					cropIntent.putExtra("return-data", true);
+//					// start the activity - we handle returning in
+//					// onActivityResult
+//					startActivityForResult(cropIntent, PIC_CROP);
+					Intent intent = new Intent(this, CropActivity.class);
+					intent.putExtra(IMAGE_URI, selectedImage.toString());
+					startActivityForResult(intent, PIC_CROP);
 				} catch (ActivityNotFoundException anfe) {
 					// display an error message
 					String errorMessage = "Whoops - your device doesn't support the crop action!";
@@ -653,9 +656,9 @@ public class CustomCameraActivity extends Activity implements SurfaceHolder.Call
 			} else if (requestCode == PIC_CROP && resultCode == RESULT_OK && null != data) {
 				// get the returned data
 				Bundle extras = data.getExtras();
-				// get the cropped bitmap
-				Bitmap thePic = extras.getParcelable("data");
-				Uri photoUri = ImageUtility.savePicture(this, thePic);
+				
+				
+				Uri photoUri = Uri.parse(extras.getString(CustomCameraActivity.IMAGE_URI));
 				Intent intent = new Intent(this, ImageFiltersActivity.class);
 				intent.putExtra(IMAGE_URI, photoUri.toString());
 				startActivityForResult(intent, PIC_FILTERS);
