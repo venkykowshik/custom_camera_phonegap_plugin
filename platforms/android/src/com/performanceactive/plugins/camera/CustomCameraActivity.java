@@ -238,6 +238,19 @@ public class CustomCameraActivity extends Activity implements SurfaceHolder.Call
 			autoFlashIcon.setText("بعيدا");
 		}
 	}
+	
+	@Override
+	protected void onPause() {
+		stopCameraPreview();
+		super.onPause();
+	}
+	
+	@Override
+	protected void onRestart() {
+		startCameraPreview();
+		super.onRestart();
+	}
+	
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
@@ -269,6 +282,8 @@ public class CustomCameraActivity extends Activity implements SurfaceHolder.Call
 			e.printStackTrace();
 		}
 	}
+	
+	
 
 	/**
 	 * Start the camera preview
@@ -581,10 +596,13 @@ public class CustomCameraActivity extends Activity implements SurfaceHolder.Call
 		// setResult(RESULT_OK, intent);
 		// finish();
 
-		Intent intent = new Intent(this, ImageFiltersActivity.class);
-		intent.putExtra(IMAGE_URI, photoUri.toString());
-		startActivityForResult(intent, PIC_FILTERS);
+//		Intent intent = new Intent(this, ImageFiltersActivity.class);
+//		intent.putExtra(IMAGE_URI, photoUri.toString());
+//		startActivityForResult(intent, PIC_FILTERS);
 
+		Intent intent = new Intent(this, CropActivity.class);
+		intent.putExtra(IMAGE_URI, photoUri.toString());
+		startActivityForResult(intent, PIC_CROP);
 	}
 
 	private int getPhotoRotation() {
