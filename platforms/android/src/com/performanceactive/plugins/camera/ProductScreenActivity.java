@@ -106,10 +106,10 @@ public class ProductScreenActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				if (isConnectingToInternet()) {
+					
 					 loading.show();
 					// WebServer Request URL
-					String serverURL = "http://uaegwu.com/create.php?title=" + Uri.encode(title.getText() + "&description="
-							+ desc.getText() + "&price=" + price.getText());
+					String serverURL = "http://uaegwu.com/create.php";
 					
 					
 					byte[] inputData = null;
@@ -125,6 +125,9 @@ public class ProductScreenActivity extends Activity {
 				        HttpClient client = new DefaultHttpClient();  
 				        HttpPost post = new HttpPost(serverURL); 
 				            List<NameValuePair> params = new ArrayList<NameValuePair>();
+				            params.add(new BasicNameValuePair("title", title.getText().toString()));
+				            params.add(new BasicNameValuePair("description", desc.getText().toString()));
+				            params.add(new BasicNameValuePair("price", price.getText().toString()));
 				            params.add(new BasicNameValuePair("img", encodedImage));
 				            
 				            UrlEncodedFormEntity ent = new UrlEncodedFormEntity(params,HTTP.UTF_8);

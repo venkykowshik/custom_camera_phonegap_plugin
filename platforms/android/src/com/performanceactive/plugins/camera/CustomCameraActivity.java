@@ -241,7 +241,9 @@ public class CustomCameraActivity extends Activity implements SurfaceHolder.Call
 	
 	@Override
 	protected void onPause() {
-		stopCameraPreview();
+		if (mCamera != null) {
+			stopCameraPreview();
+		}
 		super.onPause();
 	}
 	
