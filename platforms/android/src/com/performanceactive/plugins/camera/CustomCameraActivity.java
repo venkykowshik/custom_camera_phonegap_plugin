@@ -68,7 +68,7 @@ public class CustomCameraActivity extends Activity implements SurfaceHolder.Call
 	private FakeR fakeR;
 
 	private ImageView backButton;
-	
+
 	private TextView header;
 	private TextView gallery_text;
 
@@ -91,14 +91,14 @@ public class CustomCameraActivity extends Activity implements SurfaceHolder.Call
 		fakeR = new FakeR(this);
 		mOrientationListener = new CameraOrientationListener(this);
 		setContentView(fakeR.getId("layout", "activity_main"));
-		
+
 		header = (TextView) findViewById(fakeR.getId("id", "titletxt"));
-		 Typeface face= Typeface.createFromAsset(this.getAssets(), "Fonts/ARIALUNI.TTF");
-		 header.setTypeface(face);
-		 
-		 gallery_text = (TextView) findViewById(fakeR.getId("id", "gallery_text"));
-		 gallery_text.setTypeface(face);
-		 
+		Typeface face = Typeface.createFromAsset(this.getAssets(), "Fonts/ARIALUNI.TTF");
+		header.setTypeface(face);
+
+		gallery_text = (TextView) findViewById(fakeR.getId("id", "gallery_text"));
+		gallery_text.setTypeface(face);
+
 		mOrientationListener = new CameraOrientationListener(this);
 
 		backButton = (ImageView) findViewById(fakeR.getId("id", "backArrow"));
@@ -138,7 +138,8 @@ public class CustomCameraActivity extends Activity implements SurfaceHolder.Call
 					mImageParameters.mCoverWidth = mImageParameters.mCoverHeight = mImageParameters
 							.calculateCoverWidthHeight();
 
-					// Log.d(TAG, "parameters: " + mImageParameters.getStringValues());
+					// Log.d(TAG, "parameters: " +
+					// mImageParameters.getStringValues());
 					// Log.d(TAG, "cover height " + topCoverView.getHeight());
 					resizeTopAndBtmCover(topCoverView, btnCoverView);
 
@@ -150,13 +151,13 @@ public class CustomCameraActivity extends Activity implements SurfaceHolder.Call
 				}
 			});
 		} else {
-			 if (mImageParameters.isPortrait()) {
-	                topCoverView.getLayoutParams().height = mImageParameters.mCoverHeight;
-	                btnCoverView.getLayoutParams().height = mImageParameters.mCoverHeight;
-	            } else {
-	                topCoverView.getLayoutParams().width = mImageParameters.mCoverWidth;
-	                btnCoverView.getLayoutParams().width = mImageParameters.mCoverWidth;
-	            }
+			if (mImageParameters.isPortrait()) {
+				topCoverView.getLayoutParams().height = mImageParameters.mCoverHeight;
+				btnCoverView.getLayoutParams().height = mImageParameters.mCoverHeight;
+			} else {
+				topCoverView.getLayoutParams().width = mImageParameters.mCoverWidth;
+				btnCoverView.getLayoutParams().width = mImageParameters.mCoverWidth;
+			}
 		}
 
 		final ImageView swapCameraBtn = (ImageView) findViewById(fakeR.getId("id", "change_camera"));
@@ -228,8 +229,8 @@ public class CustomCameraActivity extends Activity implements SurfaceHolder.Call
 	private void setupFlashMode() {
 
 		final TextView autoFlashIcon = (TextView) findViewById(fakeR.getId("id", "auto_flash_icon"));
-		 Typeface face= Typeface.createFromAsset(this.getAssets(), "Fonts/ARIALUNI.TTF");
-		 autoFlashIcon.setTypeface(face);
+		Typeface face = Typeface.createFromAsset(this.getAssets(), "Fonts/ARIALUNI.TTF");
+		autoFlashIcon.setTypeface(face);
 		if (Camera.Parameters.FLASH_MODE_AUTO.equalsIgnoreCase(mFlashMode)) {
 			autoFlashIcon.setText("تلقائي");
 		} else if (Camera.Parameters.FLASH_MODE_ON.equalsIgnoreCase(mFlashMode)) {
@@ -238,21 +239,6 @@ public class CustomCameraActivity extends Activity implements SurfaceHolder.Call
 			autoFlashIcon.setText("بعيدا");
 		}
 	}
-	
-	@Override
-	protected void onPause() {
-		if (mCamera != null) {
-			stopCameraPreview();
-		}
-		super.onPause();
-	}
-	
-	@Override
-	protected void onRestart() {
-		startCameraPreview();
-		super.onRestart();
-	}
-	
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
@@ -273,7 +259,7 @@ public class CustomCameraActivity extends Activity implements SurfaceHolder.Call
 		resizeBtmAnimation.setDuration(800);
 		resizeBtmAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
 		bottomCover.startAnimation(resizeBtmAnimation);
-	 }
+	}
 
 	private void getCamera(int cameraID) {
 		try {
@@ -284,8 +270,6 @@ public class CustomCameraActivity extends Activity implements SurfaceHolder.Call
 			e.printStackTrace();
 		}
 	}
-	
-	
 
 	/**
 	 * Start the camera preview
@@ -598,9 +582,9 @@ public class CustomCameraActivity extends Activity implements SurfaceHolder.Call
 		// setResult(RESULT_OK, intent);
 		// finish();
 
-//		Intent intent = new Intent(this, ImageFiltersActivity.class);
-//		intent.putExtra(IMAGE_URI, photoUri.toString());
-//		startActivityForResult(intent, PIC_FILTERS);
+		// Intent intent = new Intent(this, ImageFiltersActivity.class);
+		// intent.putExtra(IMAGE_URI, photoUri.toString());
+		// startActivityForResult(intent, PIC_FILTERS);
 
 		Intent intent = new Intent(this, CropActivity.class);
 		intent.putExtra(IMAGE_URI, photoUri.toString());
@@ -637,22 +621,23 @@ public class CustomCameraActivity extends Activity implements SurfaceHolder.Call
 				try {
 					// call the standard crop action intent (the user device may
 					// not support it)
-//					Intent cropIntent = new Intent("com.android.camera.action.CROP");
-//					// indicate image type and Uri
-//					cropIntent.setDataAndType(selectedImage, "image/*");
-//					// set crop properties
-//					cropIntent.putExtra("crop", "true");
-//					// indicate aspect of desired crop
-//					cropIntent.putExtra("aspectX", 10);
-//					cropIntent.putExtra("aspectY", 10);
-//					// indicate output X and Y
-//					cropIntent.putExtra("outputX", 1280);
-//					cropIntent.putExtra("outputY", 640);
-//					// retrieve data on return
-//					cropIntent.putExtra("return-data", true);
-//					// start the activity - we handle returning in
-//					// onActivityResult
-//					startActivityForResult(cropIntent, PIC_CROP);
+					// Intent cropIntent = new
+					// Intent("com.android.camera.action.CROP");
+					// // indicate image type and Uri
+					// cropIntent.setDataAndType(selectedImage, "image/*");
+					// // set crop properties
+					// cropIntent.putExtra("crop", "true");
+					// // indicate aspect of desired crop
+					// cropIntent.putExtra("aspectX", 10);
+					// cropIntent.putExtra("aspectY", 10);
+					// // indicate output X and Y
+					// cropIntent.putExtra("outputX", 1280);
+					// cropIntent.putExtra("outputY", 640);
+					// // retrieve data on return
+					// cropIntent.putExtra("return-data", true);
+					// // start the activity - we handle returning in
+					// // onActivityResult
+					// startActivityForResult(cropIntent, PIC_CROP);
 					Intent intent = new Intent(this, CropActivity.class);
 					intent.putExtra(IMAGE_URI, selectedImage.toString());
 					startActivityForResult(intent, PIC_CROP);
@@ -676,8 +661,7 @@ public class CustomCameraActivity extends Activity implements SurfaceHolder.Call
 			} else if (requestCode == PIC_CROP && resultCode == RESULT_OK && null != data) {
 				// get the returned data
 				Bundle extras = data.getExtras();
-				
-				
+
 				Uri photoUri = Uri.parse(extras.getString(CustomCameraActivity.IMAGE_URI));
 				Intent intent = new Intent(this, ImageFiltersActivity.class);
 				intent.putExtra(IMAGE_URI, photoUri.toString());
