@@ -109,8 +109,8 @@ public class ProductScreenActivity extends Activity {
 					
 					 loading.show();
 					// WebServer Request URL
-					String serverURL = "http://uaegwu.com/create.php?title=" + Uri.encode(title.getText().toString() + "&description="
-							+ desc.getText().toString() + "&price=" + price.getText().toString());
+					String serverURL = "http://uaegwu.com/create.php?title=" + title.getText().toString() + "&description="
+							+ desc.getText().toString() + "&price=" + price.getText().toString();
 					
 					
 					byte[] inputData = null;
