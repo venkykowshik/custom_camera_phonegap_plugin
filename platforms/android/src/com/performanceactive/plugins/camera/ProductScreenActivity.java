@@ -3,6 +3,8 @@ package com.performanceactive.plugins.camera;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -109,9 +111,8 @@ public class ProductScreenActivity extends Activity {
 					
 					 loading.show();
 					// WebServer Request URL
-					String serverURL = "http://uaegwu.com/create.php?title=" + title.getText().toString() + "&description="
-							+ desc.getText().toString() + "&price=" + price.getText().toString();
-					
+					String serverURL = "http://uaegwu.com/create.php?title=" + Uri.encode(title.getText().toString() + "&description="
+							+ desc.getText().toString() + "&price=" + price.getText().toString());
 					
 					byte[] inputData = null;
 					try {
@@ -150,6 +151,9 @@ public class ProductScreenActivity extends Activity {
 				                loading.hide();
 				            }
 				    } catch (Exception e) {
+				    	 loading.hide();
+				    	Toast.makeText(ProductScreenActivity.this, "Request failed: " + e.toString(),
+				                Toast.LENGTH_LONG).show();
 				        e.printStackTrace();
 				    }
 					
