@@ -582,13 +582,13 @@ public class CustomCameraActivity extends Activity implements SurfaceHolder.Call
 		// setResult(RESULT_OK, intent);
 		// finish();
 
-		// Intent intent = new Intent(this, ImageFiltersActivity.class);
-		// intent.putExtra(IMAGE_URI, photoUri.toString());
-		// startActivityForResult(intent, PIC_FILTERS);
+		 Intent intent = new Intent(this, ImageFiltersActivity.class);
+		 intent.putExtra(IMAGE_URI, photoUri.toString());
+		 startActivityForResult(intent, PIC_FILTERS);
 
-		Intent intent = new Intent(this, CropActivity.class);
-		intent.putExtra(IMAGE_URI, photoUri.toString());
-		startActivityForResult(intent, PIC_CROP);
+//		Intent intent = new Intent(this, CropActivity.class);
+//		intent.putExtra(IMAGE_URI, photoUri.toString());
+//		startActivityForResult(intent, PIC_CROP);
 	}
 
 	private int getPhotoRotation() {

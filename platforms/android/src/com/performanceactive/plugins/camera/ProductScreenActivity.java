@@ -144,6 +144,10 @@ public class ProductScreenActivity extends Activity {
 								intent.putExtra(CustomCameraActivity.IMAGE_URI, uriStr);
 								setResult(RESULT_OK, intent);
 								finish();
+				            } else {
+				            	String response = EntityUtils.toString(resEntity);
+				            	Log.i("RESPONSE",response);
+				                loading.hide();
 				            }
 				    } catch (Exception e) {
 				        e.printStackTrace();
