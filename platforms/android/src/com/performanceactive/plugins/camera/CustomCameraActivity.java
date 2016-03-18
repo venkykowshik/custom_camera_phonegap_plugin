@@ -45,6 +45,7 @@ public class CustomCameraActivity extends Activity implements SurfaceHolder.Call
 	public static final String CAMERA_ID_KEY = "camera_id";
 	public static final String CAMERA_FLASH_KEY = "flash_mode";
 	public static final String IMAGE_INFO = "image_info";
+	public static String STORE_ID = "StoreID";
 	public static String IMAGE_URI = "ImageUri";
 	public static String ERROR_MESSAGE = "ErrorMessage";
 
